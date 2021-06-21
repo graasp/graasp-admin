@@ -35,6 +35,7 @@ export const OWNED_ITEMS_ID = 'ownedItems';
 export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
 export const buildMembersTableRowId = (id) => `membersTableRow-${id}`;
 export const MEMBERS_TABLE_EMPTY_ROW_ID = 'membersTableEmptyRow';
+export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
 export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
   'itemsTableDeleteSelectedItems';
 export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';
