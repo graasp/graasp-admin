@@ -1,13 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import IconButton from '@material-ui/core/IconButton';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { ReactComponent as GraaspLogo } from '../../resources/graasp-logo.svg';
+import { APP_NAME, HEADER_HEIGHT } from '../../config/constants';
+import SettingsHeader from '../common/SettingsHeader';
+import { HEADER_APP_BAR_ID } from '../../config/selectors';
+import { HOME_PATH } from '../../config/paths';
 
 const useStyles = makeStyles((theme) => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
+    zIndex: theme.zIndex.drawer + 1,
   },
   headerLeft: {
     display: 'flex',
@@ -15,30 +24,59 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   logo: {
-    height: '48px',
-    marginRight: theme.spacing(2),
+    height: '40px',
+    margin: theme.spacing(0, 2),
+  },
+  link: {
+    textDecoration: 'none',
+    color: 'inherit',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  appBarBlank: {
+    height: HEADER_HEIGHT,
   },
 }));
 
-const Header = () => {
+const Header = ({ isMenuOpen, toggleMenu }) => {
   const classes = useStyles();
+
+  const renderMenuIcon = () => {
+    if (isMenuOpen) {
+      return (
+        <IconButton onClick={() => toggleMenu(false)} color="inherit">
+          <MenuOpenIcon />
+        </IconButton>
+      );
+    }
+    return (
+      <IconButton onClick={() => toggleMenu(true)} color="inherit">
+        <MenuIcon />
+      </IconButton>
+    );
+  };
+
   return (
-    <header>
-      <AppBar position="static">
-        <Toolbar className={classes.header}>
-          <div className={classes.headerLeft}>
+    <AppBar position="fixed" id={HEADER_APP_BAR_ID}>
+      <Toolbar className={classes.header}>
+        <div className={classes.headerLeft}>
+          {renderMenuIcon()}
+          <Link to={HOME_PATH} className={classes.link}>
             <GraaspLogo className={classes.logo} />
             <Typography variant="h6" color="inherit">
-              Graasp-Admin
+              {APP_NAME}
             </Typography>
-          </div>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    </header>
+          </Link>
+        </div>
+        <SettingsHeader />
+      </Toolbar>
+    </AppBar>
   );
+};
+
+Header.propTypes = {
+  toggleMenu: PropTypes.func.isRequired,
+  isMenuOpen: PropTypes.bool.isRequired,
 };
 
 export default Header;
