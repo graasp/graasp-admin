@@ -36,7 +36,6 @@ MembersHeaderActions.propTypes = {
 MembersHeaderActions.defaultProps = {
   onClick: () => {},
   id: null,
-  itemType: null,
 };
 
 export default MembersHeaderActions;

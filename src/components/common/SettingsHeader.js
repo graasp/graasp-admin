@@ -5,10 +5,10 @@ import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import truncate from 'lodash.truncate';
-import { USERNAME_MAX_LENGTH } from '../../config/constants';
-import { HEADER_USER_ID } from '../../config/selectors';
 import { MenuItem } from '@graasp/ui';
 import { Menu } from '@material-ui/core';
+import { USERNAME_MAX_LENGTH } from '../../config/constants';
+import { HEADER_USER_ID } from '../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -52,8 +52,8 @@ function SettingsHeader() {
         onClick={handleClick}
         id={HEADER_USER_ID}
       >
-        <Tooltip title={'Admin'}>
-          <Avatar className={classes.avatar} alt={'Admin'} />
+        <Tooltip title="Admin">
+          <Avatar className={classes.avatar} alt="Admin" />
         </Tooltip>
 
         <Typography variant="subtitle1" className={classes.username}>

@@ -1,4 +1,4 @@
-export const membersData = [
+const membersData = [
   {
     id: '12345678-1234-1234-1234-123456789012',
     name: 'Graasp',
@@ -36,3 +36,5 @@ export const membersData = [
     updatedAt: '2021-06-19T20:33:58.251Z',
   },
 ];
+
+export default membersData;

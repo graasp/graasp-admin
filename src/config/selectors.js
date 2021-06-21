@@ -33,7 +33,8 @@ export const MODE_GRID_BUTTON_ID = 'modeCardButton';
 export const SHARED_ITEMS_ID = 'sharedItems';
 export const OWNED_ITEMS_ID = 'ownedItems';
 export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
-export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
+export const buildMembersTableRowId = (id) => `membersTableRow-${id}`;
+export const MEMBERS_TABLE_EMPTY_ROW_ID = 'membersTableEmptyRow';
 export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
   'itemsTableDeleteSelectedItems';
 export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';

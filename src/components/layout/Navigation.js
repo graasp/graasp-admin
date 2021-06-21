@@ -4,7 +4,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { buildMemberPath } from '../../config/paths';
 import { buildNavigationLink } from '../../config/selectors';
-import { membersData } from '../../data/membersData';
+import membersData from '../../data/membersData';
 
 const Navigation = () => {
   const match = useRouteMatch(buildMemberPath());
@@ -28,11 +28,11 @@ const Navigation = () => {
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
-      {/*{renderRootLink()}*/}
+      {/* {renderRootLink()} */}
       {memberId && (
         <Link key={memberId} to={buildMemberPath(memberId)}>
           <Typography id={buildNavigationLink(memberId)}>
-            {member['name']}
+            {member.name}
           </Typography>
         </Link>
       )}
