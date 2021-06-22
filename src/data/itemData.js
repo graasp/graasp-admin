@@ -1,4 +1,4 @@
-const itemsData = [
+const itemData = [
   {
     id: '107d7dfa-5930-4018-aa10-a949065e2c09',
     name: 'Item 2',
@@ -195,4 +195,4 @@ const itemsData = [
   },
 ];
 
-export default itemsData;
+export default itemData;

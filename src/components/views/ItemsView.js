@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { List } from 'immutable';
 // import ItemHeader from '../item/header/ItemHeader';
 import Items from '../items/Items';
-import itemsData from '../../data/itemsData';
+import itemData from '../../data/itemData';
 import membersData from '../../data/membersData';
 
 const getOwner = (itemOwnerId) => {
@@ -21,11 +21,10 @@ const insertCreatorWithItems = (items) =>
 
 const ItemsView = () => {
   // Will be removed later
-  const itemsWithCreators = insertCreatorWithItems(itemsData);
+  const itemsWithCreators = insertCreatorWithItems(itemData);
 
   return (
     <>
-      {/* <ItemHeader /> */}
       <Items id="All Items" title="All Items" items={List(itemsWithCreators)} />
     </>
   );
