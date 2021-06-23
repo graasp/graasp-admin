@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import {
@@ -9,6 +10,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { List } from 'immutable';
+import ReactJson from 'react-json-view';
 import { buildItemPath, buildMemberPath, ITEMS_PATH } from '../../config/paths';
 import itemData from '../../data/itemData';
 import ItemIcon from './ItemIcon';
@@ -83,6 +85,7 @@ const ItemScreen = () => {
       </span>
     );
   };
+
   return (
     <div>
       <Box
@@ -202,6 +205,10 @@ const ItemScreen = () => {
               id={`${item?.name}_MEMBERS_TABLE`}
             />
           )}
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Typography>Extra:</Typography>
+          <ReactJson src={item?.extra} />
         </TabPanel>
       </div>
     </div>

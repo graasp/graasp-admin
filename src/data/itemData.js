@@ -28,7 +28,11 @@ const itemData = [
     description: null,
     type: 'document',
     path: '1ec1d78c_4f77_4b9c_a75f_3e1bc13a17cd',
-    extra: '{"document": {"content": "<p>rgergrwggwg</p>"}}',
+    extra: {
+      document: {
+        content: '<p>rgergrwggwg</p>',
+      },
+    },
     creator: '72a64a54-11b5-4678-81d7-0bb194924e41',
     createdAt: '2021-06-03 11:53:38.200077',
     updatedAt: '2021-06-21 18:13:55.867143',
@@ -52,8 +56,15 @@ const itemData = [
     type: 'file',
     path:
       'ab053485_b622_4b08_8f0d_fca0e0de0adb.3521dde6_48b9_45d0_b40d_990bba99ba05',
-    extra:
-      '{"file": {"name": "abdallah.jpeg", "path": "9307/b47e/32db-1624373254133", "size": 13648, "encoding": "7bit", "mimetype": "image/jpeg"}}',
+    extra: {
+      file: {
+        name: 'abdallah.jpeg',
+        path: '9307/b47e/32db-1624373254133',
+        size: 13648,
+        encoding: '7bit',
+        mimetype: 'image/jpeg',
+      },
+    },
     creator: 'd2c4875f-e721-4cba-be90-e0dc1538181a',
     createdAt: '2021-06-22 14:47:34.139128',
     updatedAt: '2021-06-22 14:47:34.139128',
@@ -168,8 +179,15 @@ const itemData = [
     type: 'file',
     path:
       'f1b73427_63ec_4973_ad99_f8e719b1c381.9e157e5c_2665_4eae_9c72_9c0056ffcc2a',
-    extra:
-      '{"file": {"name": "hadi 35 X 45.jpg", "path": "ea58/aaee/6cac-1624299556275", "size": 142895, "encoding": "7bit", "mimetype": "image/jpeg"}}',
+    extra: {
+      file: {
+        name: 'hadi 35 X 45.jpg',
+        path: 'ea58/aaee/6cac-1624299556275',
+        size: 142895,
+        encoding: '7bit',
+        mimetype: 'image/jpeg',
+      },
+    },
     creator: 'd2c4875f-e721-4cba-be90-e0dc1538181a',
     createdAt: '2021-06-21 18:19:16.294328',
     updatedAt: '2021-06-21 18:19:16.294328',
@@ -214,7 +232,11 @@ const itemData = [
     description: null,
     type: 'folder',
     path: 'ab053485_b622_4b08_8f0d_fca0e0de0adb',
-    extra: '{"itemLogin": {"loginSchema": "username"}}',
+    extra: {
+      itemLogin: {
+        loginSchema: 'username',
+      },
+    },
     creator: 'd2c4875f-e721-4cba-be90-e0dc1538181a',
     createdAt: '2021-06-20 19:22:27.581226',
     updatedAt: '2021-06-21 18:16:07.149229',
