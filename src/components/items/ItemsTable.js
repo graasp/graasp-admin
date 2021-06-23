@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
+const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { push } = useHistory();
@@ -199,16 +199,19 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        <Toolbar className={classes.toolbar}>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            id="tableTitle"
-            component="div"
-          >
-            {tableTitle}
-          </Typography>
-        </Toolbar>
+        {tableTitle !== '' && (
+          <Toolbar className={classes.toolbar}>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              id="tableTitle"
+              component="div"
+            >
+              {tableTitle}
+            </Typography>
+          </Toolbar>
+        )}
+
         <TableContainer>
           <Table
             id={tableId}
@@ -267,7 +270,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
                   </TableRow>
                 );
               })}
-              {emptyRows > 0 && (
+              {emptyRows > 0 && empty && (
                 <TableRow
                   id={ITEMS_TABLE_EMPTY_ROW_ID}
                   style={{ height: 53 * emptyRows }}
@@ -294,13 +297,16 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId }) => {
 
 ItemsTable.propTypes = {
   items: PropTypes.instanceOf(List),
-  tableTitle: PropTypes.string.isRequired,
+  tableTitle: PropTypes.string,
   id: PropTypes.string,
+  empty: PropTypes.bool,
 };
 
 ItemsTable.defaultProps = {
   id: '',
   items: List(),
+  empty: true,
+  tableTitle: '',
 };
 
 export default ItemsTable;

@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MembersTable = ({ members: rows, tableTitle, id: tableId }) => {
+const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
   const classes = useStyles();
   const { push } = useHistory();
   const [order, setOrder] = React.useState(ORDERING.DESC);
@@ -194,16 +194,18 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId }) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        <Toolbar className={classes.toolbar}>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            id="tableTitle"
-            component="div"
-          >
-            {tableTitle}
-          </Typography>
-        </Toolbar>
+        {tableTitle !== '' && (
+          <Toolbar className={classes.toolbar}>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              id="tableTitle"
+              component="div"
+            >
+              {tableTitle}
+            </Typography>
+          </Toolbar>
+        )}
         <TableContainer>
           <Table
             id={tableId}
@@ -258,7 +260,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId }) => {
                   </TableRow>
                 );
               })}
-              {emptyRows > 0 && (
+              {emptyRows > 0 && empty && (
                 <TableRow
                   id={MEMBERS_TABLE_EMPTY_ROW_ID}
                   style={{ height: 53 * emptyRows }}
@@ -285,13 +287,16 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId }) => {
 
 MembersTable.propTypes = {
   members: PropTypes.instanceOf(List),
-  tableTitle: PropTypes.string.isRequired,
+  tableTitle: PropTypes.string,
   id: PropTypes.string,
+  empty: PropTypes.bool,
 };
 
 MembersTable.defaultProps = {
   id: '',
   members: List(),
+  tableTitle: '',
+  empty: true,
 };
 
 export default MembersTable;

@@ -3,6 +3,8 @@
 import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
 import { ITEM_TYPES } from '../enums';
 import { getDocumentExtra, getEmbeddedLinkExtra } from './itemExtra';
+import itemData from '../data/itemData';
+import itemMembershipData from '../data/itemMembershipData';
 
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id) => id.replace(/\-/g, '_');
@@ -27,6 +29,9 @@ export const getParentsIdsFromPath = (path, { ignoreSelf = false } = {}) => {
   const ids = p.replace(/_/g, '-').split('.');
   return ids;
 };
+
+export const getItemFromIds = (itemsIds) =>
+  itemsIds.map((itemId) => itemData.find(({ id }) => itemId === id));
 
 export const buildPath = ({ prefix, ids }) =>
   `${prefix}${ids.map((id) => transformIdForPath(id)).join('.')}`;
@@ -75,6 +80,9 @@ export const isUrlValid = (str) => {
   ); // fragment locator
   return str && pattern.test(str);
 };
+
+export const getMembershipsByItemPath = (path) =>
+  itemMembershipData.filter(({ itemPath }) => path === itemPath);
 
 export const isItemValid = (item) => {
   if (!item) {

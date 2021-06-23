@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ItemIcon = ({ name, type, extra }) => {
+const ItemIcon = ({ name, type, extra, size }) => {
   const classes = useStyles();
 
   const mimetype =
@@ -85,10 +85,11 @@ const ItemIcon = ({ name, type, extra }) => {
       break;
   }
 
-  return <Icon style={{ color: ITEMS_TABLE_ROW_ICON_COLOR }} />;
+  return <Icon style={{ color: ITEMS_TABLE_ROW_ICON_COLOR, fontSize: size }} />;
 };
 
 ItemIcon.propTypes = {
+  size: PropTypes.string,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   extra: PropTypes.oneOfType([
@@ -102,6 +103,10 @@ ItemIcon.propTypes = {
       [ITEM_TYPES.LINK]: linkExtraPropTypes,
     }),
   ]).isRequired,
+};
+
+ItemIcon.defaultProps = {
+  size: 'default',
 };
 
 export default ItemIcon;
