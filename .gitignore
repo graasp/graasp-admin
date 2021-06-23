@@ -22,8 +22,4 @@ yarn-error.log*
 .env*
 !.env.*.encrypted
 
-yarn.lock
-
-package-lock.json
-
 .idea
