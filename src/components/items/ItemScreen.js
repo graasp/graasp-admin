@@ -189,7 +189,9 @@ const ItemScreen = () => {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          {children.length !== 0 && (
+          {children.length === 0 ? (
+            <Typography>No Children found</Typography>
+          ) : (
             <ItemsTable
               empty={false}
               items={List(children)}
