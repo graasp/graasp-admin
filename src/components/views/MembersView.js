@@ -1,6 +1,5 @@
 import React from 'react';
 import { List } from 'immutable';
-import { withRouter } from 'react-router';
 import membersData from '../../data/membersData';
 import Members from '../members/Members';
 
@@ -12,4 +11,4 @@ const MembersView = () => {
   );
 };
 
-export default withRouter(MembersView);
+export default MembersView;

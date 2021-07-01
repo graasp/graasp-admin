@@ -1,9 +1,9 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import {
   AppBar,
   Box,
+  Breadcrumbs,
   makeStyles,
   Tab,
   Tabs,
@@ -14,7 +14,11 @@ import ReactJson from 'react-json-view';
 import { buildItemPath, buildMemberPath, ITEMS_PATH } from '../../config/paths';
 import itemData from '../../data/itemData';
 import ItemIcon from './ItemIcon';
-import { buildNavigationLink } from '../../config/selectors';
+import {
+  buildChildrenItemsTableId,
+  buildMembersTableId,
+  buildNavigationLink,
+} from '../../config/selectors';
 import membersData from '../../data/membersData';
 import {
   getChildren,
@@ -75,17 +79,6 @@ const ItemScreen = () => {
     setValue(newValue);
   };
 
-  const renderRootLink = () => {
-    return (
-      <span>
-        <Link color="inherit" to={ITEMS_PATH}>
-          All Items
-        </Link>
-        {' / '}
-      </span>
-    );
-  };
-
   return (
     <div>
       <Box
@@ -105,58 +98,45 @@ const ItemScreen = () => {
           </Box>
           <Box display="flex" p={2} flexDirection="column">
             <Typography align="left" id={buildNavigationLink(item?.id)}>
-              Id: {item?.id}
+              {`Id: ${item?.id}`}
             </Typography>
             <Typography align="left" id={buildNavigationLink(item?.id)}>
-              Type:
-              {'  '}
-              {item?.type}
+              {`Type: ${item?.type}`}
             </Typography>
             <Typography align="left" id={buildNavigationLink(item?.id)}>
-              Name:
-              {'  '}
-              {item?.name}
+              {`Name: ${item?.name}`}
             </Typography>
             <Typography align="left" id={buildNavigationLink(item?.id)}>
-              Description:
-              {'  '}
-              {item?.description}
+              {`Description: ${item?.description}`}
             </Typography>
           </Box>
           <Box display="flex" p={2} flexDirection="column">
             <Typography align="left" id={buildNavigationLink(item?.id)}>
-              Owner:
-              {'  '}
+              {`Owner `}
               <Link color="inherit" to={buildMemberPath(item?.creator)}>
                 {item?.owner}
               </Link>
             </Typography>
             <Typography align="left" id={buildNavigationLink(item?.id)}>
-              Created At:
-              {'  '}
-              {formatDate(item?.createdAt)}
+              {`Created At: ${formatDate(item?.createdAt)}`}
             </Typography>
             <Typography align="left" id={buildNavigationLink(item?.id)}>
-              Last time updated:
-              {'  '}
-              {formatDate(item?.updatedAt)}
+              {`Last time updated: ${formatDate(item?.updatedAt)}`}
             </Typography>
 
             <Typography align="left" id={buildNavigationLink(item?.id)}>
-              Parents:
-              {'  '}
-              {renderRootLink()}
-              {parents
-                .slice(0, parents.length - 1)
-                .map(({ name, id }, index) => (
-                  <span>
-                    <Link color="inherit" to={buildItemPath(id)}>
-                      {name}
-                    </Link>
-                    {index !== parents.length - 2 && ' / '}
-                  </span>
-                ))}
+              {`Parents: `}
             </Typography>
+            <Breadcrumbs maxItems={2} aria-label="breadcrumb">
+              <Link color="inherit" to={ITEMS_PATH}>
+                All Items
+              </Link>
+              {parents.map(({ name, id }) => (
+                <Link color="inherit" to={buildItemPath(id)}>
+                  {name}
+                </Link>
+              ))}
+            </Breadcrumbs>
           </Box>
         </Box>
       </Box>
@@ -168,11 +148,11 @@ const ItemScreen = () => {
             variant="fullWidth"
             scrollButtons="off"
             textColor="primary"
-            aria-label="scrollable prevent tabs example"
+            aria-label="scrollable-prevent-tabs"
             indicatorColor="primary"
           >
             <Tab
-              label={`${item?.name}'s Children`}
+              label="Children"
               id={`scrollable-prevent-tab-${0}`}
               aria-controls={`scrollable-prevent-tabpanel-${0}`}
             />
@@ -195,18 +175,16 @@ const ItemScreen = () => {
             <ItemsTable
               empty={false}
               items={List(children)}
-              id={`${item?.name}_TABLE`}
+              id={buildChildrenItemsTableId(itemId)}
             />
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {members.length !== 0 && (
-            <MembersTable
-              empty={false}
-              members={List(members)}
-              id={`${item?.name}_MEMBERS_TABLE`}
-            />
-          )}
+          <MembersTable
+            empty={false}
+            members={List(members)}
+            id={buildMembersTableId(itemId)}
+          />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Typography>Extra:</Typography>

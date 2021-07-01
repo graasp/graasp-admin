@@ -1,6 +1,6 @@
 // synchronous functions to manage items from redux
 
-import { DEFAULT_IMAGE_SRC, UUID_LENGTH } from '../config/constants';
+import { UUID_LENGTH } from '../config/constants';
 import { ITEM_TYPES } from '../enums';
 import { getDocumentExtra, getEmbeddedLinkExtra } from './itemExtra';
 import itemData from '../data/itemData';
@@ -26,8 +26,7 @@ export const getParentsIdsFromPath = (path, { ignoreSelf = false } = {}) => {
     }
     [p] = els;
   }
-  const ids = p.replace(/_/g, '-').split('.');
-  return ids;
+  return p.replace(/_/g, '-').split('.');
 };
 
 export const getItemFromIds = (itemsIds) =>
@@ -111,8 +110,3 @@ export const isItemValid = (item) => {
 
   return shouldHaveName && hasValidTypeProperties;
 };
-
-export const getItemImage = ({ extra }) =>
-  extra?.image ||
-  getEmbeddedLinkExtra(extra)?.thumbnails?.[0] ||
-  DEFAULT_IMAGE_SRC;

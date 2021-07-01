@@ -1,6 +1,10 @@
-import moment from 'moment';
+import { DEFAULT_LOCALE } from '../config/constants';
 
-// eslint-disable-next-line import/prefer-default-export
 export const formatDate = (d) => {
-  return moment(d).format('MMMM Do YYYY, h:mm:ss a');
+  const datetime = new Date(d);
+  const time = datetime.toLocaleTimeString(DEFAULT_LOCALE);
+  const date = datetime.toLocaleDateString(DEFAULT_LOCALE);
+  return `${date} ${time}`;
 };
+
+export default formatDate;

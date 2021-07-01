@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -21,9 +21,13 @@ import ItemIcon from './ItemIcon';
 import TableHead from '../common/TableHead';
 import {
   buildItemsTableRowId,
+  buildItemsTableTitle,
   ITEMS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
-import { ROWS_PER_PAGE_OPTIONS } from '../../config/constants';
+import {
+  EMPTY_ROW_HEIGHT,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../config/constants';
 import { getShortcutTarget } from '../../utils/itemExtra';
 
 const useStyles = makeStyles((theme) => ({
@@ -71,17 +75,6 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(
     ROWS_PER_PAGE_OPTIONS[0],
   );
-
-  useEffect(() => {
-    // remove deleted rows from selection
-    const newSelected = selected.filter(
-      (id) => rows.findIndex(({ id: thisId }) => thisId === id) >= 0,
-    );
-    if (newSelected.length !== selected.length) {
-      setSelected(newSelected);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows]);
 
   const headCells = [
     {
@@ -199,19 +192,13 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        {tableTitle !== '' && (
+        {Boolean(tableTitle) && (
           <Toolbar className={classes.toolbar}>
-            <Typography
-              className={classes.title}
-              variant="h6"
-              id="tableTitle"
-              component="div"
-            >
+            <Typography variant="h6" id={buildItemsTableTitle(tableTitle)}>
               {tableTitle}
             </Typography>
           </Toolbar>
         )}
-
         <TableContainer>
           <Table
             id={tableId}
@@ -273,7 +260,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
               {emptyRows > 0 && empty && (
                 <TableRow
                   id={ITEMS_TABLE_EMPTY_ROW_ID}
-                  style={{ height: 53 * emptyRows }}
+                  style={{ height: EMPTY_ROW_HEIGHT * emptyRows }}
                 >
                   <TableCell colSpan={6} />
                 </TableRow>

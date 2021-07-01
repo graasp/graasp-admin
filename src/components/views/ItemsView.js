@@ -1,7 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import { List } from 'immutable';
-// import ItemHeader from '../item/header/ItemHeader';
 import Items from '../items/Items';
 import itemData from '../../data/itemData';
 import membersData from '../../data/membersData';
@@ -24,10 +22,8 @@ const ItemsView = () => {
   const itemsWithCreators = insertCreatorWithItems(itemData);
 
   return (
-    <>
-      <Items id="All Items" title="All Items" items={List(itemsWithCreators)} />
-    </>
+    <Items id="All Items" title="All Items" items={List(itemsWithCreators)} />
   );
 };
 
-export default withRouter(ItemsView);
+export default ItemsView;

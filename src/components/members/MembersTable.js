@@ -20,10 +20,14 @@ import { formatDate } from '../../utils/date';
 
 import {
   buildMembersTableRowId,
+  buildMembersTableTitle,
   MEMBERS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
 import TableHead from '../common/TableHead';
-import { ROWS_PER_PAGE_OPTIONS } from '../../config/constants';
+import {
+  EMPTY_ROW_HEIGHT,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
   },
   itemName: {
     paddingLeft: theme.spacing(1),
+  },
+  emptyRow: {
+    height: 53,
   },
 }));
 
@@ -176,9 +183,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
   };
 
   const handleOnClickRow = ({ id }) => {
-    const targetId = id;
-
-    push(buildMemberPath(targetId));
+    push(buildMemberPath(id));
   };
 
   // format entry data given type
@@ -194,14 +199,9 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        {tableTitle !== '' && (
+        {Boolean(tableTitle) && (
           <Toolbar className={classes.toolbar}>
-            <Typography
-              className={classes.title}
-              variant="h6"
-              id="tableTitle"
-              component="div"
-            >
+            <Typography variant="h6" id={buildMembersTableTitle(tableTitle)}>
               {tableTitle}
             </Typography>
           </Toolbar>
@@ -263,7 +263,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
               {emptyRows > 0 && empty && (
                 <TableRow
                   id={MEMBERS_TABLE_EMPTY_ROW_ID}
-                  style={{ height: 53 * emptyRows }}
+                  style={{ height: EMPTY_ROW_HEIGHT * emptyRows }}
                 >
                   <TableCell colSpan={6} />
                 </TableRow>
