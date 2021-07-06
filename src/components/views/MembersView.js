@@ -6,7 +6,7 @@ import Members from '../members/Members';
 const MembersView = () => {
   return (
     <>
-      <Members id="All Members" title="All Members" items={List(membersData)} />
+      <Members title="All Members" items={List(membersData)} />
     </>
   );
 };

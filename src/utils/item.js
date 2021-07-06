@@ -5,6 +5,7 @@ import { ITEM_TYPES } from '../enums';
 import { getDocumentExtra, getEmbeddedLinkExtra } from './itemExtra';
 import itemData from '../data/itemData';
 import itemMembershipData from '../data/itemMembershipData';
+import membersData from '../data/membersData';
 
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id) => id.replace(/\-/g, '_');
@@ -110,3 +111,16 @@ export const isItemValid = (item) => {
 
   return shouldHaveName && hasValidTypeProperties;
 };
+
+export const getOwner = (itemOwnerId) => {
+  return membersData.find(({ id }) => itemOwnerId === id);
+};
+
+// Will be removed later
+export const insertCreatorWithItems = (items) =>
+  items.map((item) => {
+    return {
+      ...item,
+      owner: getOwner(item.creator).name,
+    };
+  });

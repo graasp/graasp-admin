@@ -1,8 +1,10 @@
 import membersData from '../data/membersData';
+import itemMembershipData from '../data/itemMembershipData';
 
-const getMembersByMemberships = (memberships) =>
+export const getMembersByMemberships = (memberships) =>
   memberships.map((membership) =>
     membersData.find(({ id }) => membership.memberId === id),
   );
 
-export default getMembersByMemberships;
+export const getMembershipsByMemberId = (_memberId) =>
+  itemMembershipData.filter(({ memberId }) => memberId === _memberId);

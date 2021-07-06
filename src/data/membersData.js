@@ -1,8 +1,8 @@
 const membersData = [
   {
     id: '12345678-1234-1234-1234-123456789012',
-    name: 'Graasp',
-    email: 'graasp@graasp.org',
+    name: 'Juan Carlos',
+    email: 'juancarlos.farah@epfl.ch',
     type: 'individual',
     extra: {},
     createdAt: '2021-06-01T10:51:23.461Z',
@@ -28,8 +28,8 @@ const membersData = [
   },
   {
     id: 'd2c4875f-e721-4cba-be90-e0dc1538181a',
-    name: 'Hadi 2',
-    email: 'hadikhairallah@outlook.com',
+    name: 'Denis ',
+    email: 'denis.gillet@epfl.ch',
     type: 'individual',
     extra: {},
     createdAt: '2021-06-19T20:33:58.251Z',

@@ -21,9 +21,7 @@ const ItemsView = () => {
   // Will be removed later
   const itemsWithCreators = insertCreatorWithItems(itemData);
 
-  return (
-    <Items id="All Items" title="All Items" items={List(itemsWithCreators)} />
-  );
+  return <Items title="All Items" items={List(itemsWithCreators)} />;
 };
 
 export default ItemsView;

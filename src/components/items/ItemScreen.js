@@ -19,16 +19,16 @@ import {
   buildMembersTableId,
   buildNavigationLink,
 } from '../../config/selectors';
-import membersData from '../../data/membersData';
 import {
   getChildren,
   getItemFromIds,
   getMembershipsByItemPath,
   getParentsIdsFromPath,
+  insertCreatorWithItems,
 } from '../../utils/item';
 import ItemsTable from './ItemsTable';
 import { formatDate } from '../../utils/date';
-import getMembersByMemberships from '../../utils/member';
+import { getMembersByMemberships } from '../../utils/member';
 import MembersTable from '../members/MembersTable';
 import TabPanel from '../common/TabPanel';
 
@@ -42,20 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getOwner = (itemOwnerId) => {
-  return membersData.find(({ id }) => itemOwnerId === id);
-};
-
-// Will be removed later
-const insertCreatorWithItems = (items) =>
-  items.map((item) => {
-    return {
-      ...item,
-      owner: getOwner(item.creator).name,
-    };
-  });
-
 const ItemScreen = () => {
+  const [value, setValue] = React.useState(0);
+
   const classes = useStyles();
   const match = useRouteMatch(buildItemPath());
   const itemId = match?.params?.itemId;
@@ -65,8 +54,6 @@ const ItemScreen = () => {
   const parentsIds = getParentsIdsFromPath(item?.path);
   const parents = getItemFromIds(parentsIds);
   const children = getChildren(itemsWithCreators, itemId);
-
-  const [value, setValue] = React.useState(0);
 
   const members = parents
     .map((parent) => {
