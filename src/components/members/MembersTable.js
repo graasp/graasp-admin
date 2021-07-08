@@ -65,9 +65,6 @@ const useStyles = makeStyles((theme) => ({
   itemName: {
     paddingLeft: theme.spacing(1),
   },
-  emptyRow: {
-    height: 53,
-  },
 }));
 
 const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
