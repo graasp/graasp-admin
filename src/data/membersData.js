@@ -28,7 +28,7 @@ const membersData = [
   },
   {
     id: 'd2c4875f-e721-4cba-be90-e0dc1538181a',
-    name: 'HADIKHAI',
+    name: 'Hadi 2',
     email: 'hadikhairallah@outlook.com',
     type: 'individual',
     extra: {},

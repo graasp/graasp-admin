@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
-import FolderSharedIcon from '@material-ui/icons/FolderShared';
 import ListItem from '@material-ui/core/ListItem';
 import PollIcon from '@material-ui/icons/Poll';
 import FolderIcon from '@material-ui/icons/Folder';
+import PeopleIcon from '@material-ui/icons/People';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useTranslation } from 'react-i18next';
@@ -29,7 +29,7 @@ const MainMenu = () => {
         selected={pathname === HOME_PATH}
       >
         <ListItemIcon>
-          <FolderIcon />
+          <PeopleIcon />
         </ListItemIcon>
 
         <ListItemText primary={t('Members')} />
@@ -40,7 +40,7 @@ const MainMenu = () => {
         selected={pathname === ITEMS_PATH}
       >
         <ListItemIcon>
-          <FolderSharedIcon />
+          <FolderIcon />
         </ListItemIcon>
         <ListItemText primary={t('Items')} />
       </ListItem>

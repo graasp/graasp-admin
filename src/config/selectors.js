@@ -29,12 +29,22 @@ export const buildPermissionOptionId = (id) => `permission-${id}`;
 export const SHARE_ITEM_MODAL_SHARE_BUTTON_ID = 'shareItemModalShareButton';
 export const MODE_LIST_BUTTON_ID = 'modeListButton';
 
+export const MEMBERS_FULL_TABLE = `itemsTable-all`;
+export const ITEMS_FULL_TABLE = `membersTable-all`;
 export const MODE_GRID_BUTTON_ID = 'modeCardButton';
 export const SHARED_ITEMS_ID = 'sharedItems';
 export const OWNED_ITEMS_ID = 'ownedItems';
+export const buildItemsTabId = (id) => `itemsTab-${id}`;
+
+export const buildChildrenItemsTableId = (id) => `itemsChildrenTable${id}`;
+export const buildMembersTableId = (id) => `membersTable-item-${id}`;
+export const buildMembersTableTitle = (title) => `membersTable-title-${title}`;
+export const buildItemsTableTitle = (title) => `itemsTable-title-${title}`;
+
 export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
 export const buildMembersTableRowId = (id) => `membersTableRow-${id}`;
 export const MEMBERS_TABLE_EMPTY_ROW_ID = 'membersTableEmptyRow';
+export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
 export const ITEMS_TABLE_DELETE_SELECTED_ITEMS_ID =
   'itemsTableDeleteSelectedItems';
 export const ITEMS_TABLE_ROW_CHECKBOX_CLASS = 'itemsTableRowCheckbox';
