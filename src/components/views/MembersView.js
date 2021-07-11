@@ -4,11 +4,7 @@ import membersData from '../../data/membersData';
 import Members from '../members/Members';
 
 const MembersView = () => {
-  return (
-    <>
-      <Members title="All Members" items={List(membersData)} />
-    </>
-  );
+  return <Members title="All Members" items={List(membersData)} />;
 };
 
 export default MembersView;

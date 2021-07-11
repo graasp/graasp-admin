@@ -4,11 +4,7 @@ import { List } from 'immutable';
 import MembersTable from './MembersTable';
 
 const Members = ({ items, title, id }) => {
-  return (
-    <>
-      <MembersTable id={id} members={items} tableTitle={title} />
-    </>
-  );
+  return <MembersTable id={id} members={items} tableTitle={title} />;
 };
 
 Members.propTypes = {
