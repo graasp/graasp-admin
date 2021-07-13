@@ -5,10 +5,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import truncate from 'lodash.truncate';
-import { MenuItem } from '@graasp/ui';
-import { Menu } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 import { USERNAME_MAX_LENGTH } from '../../config/constants';
 import { HEADER_USER_ID } from '../../config/selectors';
+import { hooks } from '../../config/queryClient';
+import Loader from './Loader';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -24,10 +25,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const { useCurrentMember } = hooks;
+
 function SettingsHeader() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const { data: currentMember, isLoading } = useCurrentMember();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -37,13 +41,14 @@ function SettingsHeader() {
   };
 
   const renderMenu = () => {
-    return (
-      <>
-        <MenuItem>Settings</MenuItem>
-        <MenuItem>Sign Out</MenuItem>
-      </>
-    );
+    return <MenuItem>Sign Out</MenuItem>;
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  const username = currentMember?.get('name');
 
   return (
     <>
@@ -53,11 +58,11 @@ function SettingsHeader() {
         id={HEADER_USER_ID}
       >
         <Tooltip title="Admin">
-          <Avatar className={classes.avatar} alt="Admin" />
+          <Avatar className={classes.avatar} alt={username} />
         </Tooltip>
 
         <Typography variant="subtitle1" className={classes.username}>
-          {truncate('Admin', { length: USERNAME_MAX_LENGTH })}
+          {truncate(username, { length: USERNAME_MAX_LENGTH })}
         </Typography>
       </Box>
       <Menu

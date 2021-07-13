@@ -3,11 +3,20 @@ import {
   ALL_ADMINS_ROUTE,
   ALL_MEMBERS_ROUTE,
   buildGetMember,
+  buildGetMemberItems,
   CURRENT_MEMBER_ROUTE,
 } from './routes';
 
 export const getMember = async ({ id }, { API_HOST }) => {
   const res = await fetch(`${API_HOST}/${buildGetMember(id)}`, {
+    ...DEFAULT_GET,
+  }).then(failOnError);
+  return res.json();
+};
+
+export const getItemsOfMember = async ({ id }, { API_HOST }) => {
+  console.log(`${API_HOST}/${buildGetMemberItems(id)}`);
+  const res = await fetch(`${API_HOST}/${buildGetMemberItems(id)}`, {
     ...DEFAULT_GET,
   }).then(failOnError);
   return res.json();
@@ -36,6 +45,7 @@ export const getAdmins = async ({ API_HOST }) => {
 
   return res.json();
 };
+
 //
 // export const editMember = async (
 //   { id, member, API_HOST }

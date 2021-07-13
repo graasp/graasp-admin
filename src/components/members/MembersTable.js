@@ -296,7 +296,6 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="3"
                         onClick={() => {
                           // do not navigate when clicking on actions
                           const shouldNavigate = idx !== headCells.length - 1;

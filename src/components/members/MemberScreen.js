@@ -1,6 +1,7 @@
 import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import { Typography, Box } from '@material-ui/core';
 import { formatDate } from '../../utils/date';
 

@@ -4,15 +4,17 @@ import MemberScreen from './MemberScreen';
 import { buildMemberPath } from '../../config/paths';
 
 import { hooks } from '../../config/queryClient';
+import ItemsTable from '../items/ItemsTable';
+import Loader from '../common/Loader';
 
-const { useMember } = hooks;
+const { useMember, useMemberItems } = hooks;
 const SingleMember = () => {
   const match = useRouteMatch(buildMemberPath());
 
   const memberId = match?.params?.memberId;
   const { data: member, isLoading } = useMember(memberId);
+  const { data: items, isLoadingMemberItems } = useMemberItems(memberId);
 
-  console.log(memberId, member, isLoading);
   // const itemsWithCreators = insertCreatorWithItems(itemData);
   //
   // const memberships = getMembershipsByMemberId(member?.id);
@@ -23,14 +25,17 @@ const SingleMember = () => {
   //   itemsPaths.includes(path),
   // );
 
+  if (isLoading || isLoadingMemberItems) {
+    return <Loader />;
+  }
   return (
     <>
       {!isLoading && <MemberScreen member={member} />}
-      {/* <ItemsTable */}
-      {/*  id={`Member_${memberId}_Item_Table`} */}
-      {/*  empty={false} */}
-      {/*  items={List(items)} */}
-      {/* /> */}
+      <ItemsTable
+        id={`Member_${memberId}_Item_Table`}
+        empty={false}
+        items={items}
+      />
     </>
   );
 };

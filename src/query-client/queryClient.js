@@ -25,7 +25,6 @@ export default (config) => {
       'http://localhost:3111',
   };
 
-  console.log(baseConfig);
   // define config for query client
   const queryConfig = {
     ...baseConfig,
