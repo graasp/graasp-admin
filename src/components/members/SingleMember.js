@@ -15,16 +15,6 @@ const SingleMember = () => {
   const { data: member, isLoading } = useMember(memberId);
   const { data: items, isLoadingMemberItems } = useMemberItems(memberId);
 
-  // const itemsWithCreators = insertCreatorWithItems(itemData);
-  //
-  // const memberships = getMembershipsByMemberId(member?.id);
-  //
-  // const itemsPaths = memberships.map(({ itemPath }) => itemPath);
-  //
-  // const items = itemsWithCreators.filter(({ path }) =>
-  //   itemsPaths.includes(path),
-  // );
-
   if (isLoading || isLoadingMemberItems) {
     return <Loader />;
   }
