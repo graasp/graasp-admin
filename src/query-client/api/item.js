@@ -4,7 +4,6 @@ import {
   buildGetChildrenRoute,
   buildGetItem,
   buildGetItemMembers,
-  buildGetMemberItems,
   buildGetParentsRoute,
 } from './routes';
 
