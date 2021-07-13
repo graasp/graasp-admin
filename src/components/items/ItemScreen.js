@@ -10,11 +10,11 @@ import {
   Typography,
 } from '@material-ui/core';
 import ReactJson from 'react-json-view';
-import { List } from 'immutable';
 import { buildItemPath, buildMemberPath, ITEMS_PATH } from '../../config/paths';
 import ItemIcon from './ItemIcon';
 import {
   buildChildrenItemsTableId,
+  buildMembersTableId,
   buildNavigationLink,
 } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
@@ -22,8 +22,9 @@ import TabPanel from '../common/TabPanel';
 import { hooks } from '../../config/queryClient';
 import ItemsTable from './ItemsTable';
 import Loader from '../common/Loader';
+import MembersTable from '../members/MembersTable';
 
-const { useItem, useChildren } = hooks;
+const { useItem, useChildren, useItemMembers, useParents } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -43,14 +44,15 @@ const ItemScreen = () => {
   const itemId = match?.params?.itemId;
   const { data: item, isLoading } = useItem(itemId);
 
-  console.log(itemId);
   const { data: children, isLoading: childrenLoading } = useChildren(itemId);
 
-  if (isLoading || childrenLoading) {
+  const { data: members, isLoading: membersLoading } = useItemMembers(itemId);
+
+  const { data: parents, isLoading: parentsLoading } = useParents(itemId);
+
+  if (isLoading || childrenLoading || membersLoading || parentsLoading) {
     return <Loader />;
   }
-  console.log(item);
-  console.log(children);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -137,11 +139,11 @@ const ItemScreen = () => {
                   <Link color="inherit" to={ITEMS_PATH}>
                     All Items
                   </Link>
-                  {/* {parents.map(({ name, id }) => ( */}
-                  {/*  <Link color="inherit" to={buildItemPath(id)}> */}
-                  {/*    {name} */}
-                  {/*  </Link> */}
-                  {/* ))} */}
+                  {parents.map(({ name, id }) => (
+                    <Link color="inherit" to={buildItemPath(id)}>
+                      {name}
+                    </Link>
+                  ))}
                 </Breadcrumbs>
               </Box>
             </Box>
@@ -185,13 +187,13 @@ const ItemScreen = () => {
                 />
               )}
             </TabPanel>
-            {/* <TabPanel value={value} index={1}> */}
-            {/*  /!* <MembersTable *!/ */}
-            {/*  /!*  empty={false} *!/ */}
-            {/*  /!*  members={List(members)} *!/ */}
-            {/*  /!*  id={buildMembersTableId(itemId)} *!/ */}
-            {/*  /!* /> *!/ */}
-            {/* </TabPanel> */}
+            <TabPanel value={value} index={1}>
+              <MembersTable
+                empty={false}
+                members={members}
+                id={buildMembersTableId(itemId)}
+              />
+            </TabPanel>
             <TabPanel value={value} index={2}>
               <Typography>Extra:</Typography>
               <ReactJson src={item.get('extra')} />

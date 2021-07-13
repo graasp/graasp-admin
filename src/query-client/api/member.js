@@ -15,7 +15,6 @@ export const getMember = async ({ id }, { API_HOST }) => {
 };
 
 export const getItemsOfMember = async ({ id }, { API_HOST }) => {
-  console.log(`${API_HOST}/${buildGetMemberItems(id)}`);
   const res = await fetch(`${API_HOST}/${buildGetMemberItems(id)}`, {
     ...DEFAULT_GET,
   }).then(failOnError);

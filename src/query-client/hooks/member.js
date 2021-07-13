@@ -4,6 +4,7 @@ import * as Api from '../api';
 import {
   ALL_ADMINS_KEY,
   ALL_MEMBERS_KEY,
+  buildItemKey,
   buildMemberItemsKey,
   buildMemberKey,
   CURRENT_MEMBER_KEY,
@@ -76,7 +77,7 @@ export default (queryClient, queryConfig) => {
         // eslint-disable-next-line no-unused-expressions
         items?.forEach(async (item) => {
           const { id } = item;
-          queryClient.setQueryData(buildMemberItemsKey(id), Map(item));
+          queryClient.setQueryData(buildItemKey(id), Map(item));
         });
       },
       ...defaultOptions,

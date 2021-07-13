@@ -20,7 +20,9 @@ export const buildDeleteMemberRole = (id) => `${MEMBERS_ROUTE}/${id}/role`;
 // items routes
 export const ALL_ITEMS_ROUTE = `${ITEMS_ROUTE}/all`;
 export const buildGetItem = (id) => `${ITEMS_ROUTE}/${id}`;
+export const buildGetItemMembers = (id) => `${ITEMS_ROUTE}/${id}/members`;
 export const buildGetChildrenRoute = (id) => `${ITEMS_ROUTE}/children/${id}`;
+export const buildGetParentsRoute = (id) => `${ITEMS_ROUTE}/parents/${id}`;
 
 // role routes
 export const ALL_ROLES_ROUTE = `${ROLES_ROUTE}/all`;
