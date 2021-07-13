@@ -1,7 +1,11 @@
 import { useQuery } from 'react-query';
 import { List, Map } from 'immutable';
 import * as Api from '../api';
-import { ALL_ITEMS_KEY, buildItemKey } from '../config/keys';
+import {
+  ALL_ITEMS_KEY,
+  buildItemChildrenKey,
+  buildItemKey,
+} from '../config/keys';
 
 export default (queryClient, queryConfig) => {
   const { retry, cacheTime, staleTime } = queryConfig;
@@ -11,7 +15,7 @@ export default (queryClient, queryConfig) => {
     staleTime,
   };
 
-  const useItems = (id) =>
+  const useItem = (id) =>
     useQuery({
       queryKey: buildItemKey(id),
       queryFn: () => Api.getItem({ id }, queryConfig).then((data) => Map(data)),
@@ -34,5 +38,20 @@ export default (queryClient, queryConfig) => {
       ...defaultOptions,
     });
 
-  return { useItems, useAllItems };
+  const useChildren = (itemId, options = {}) =>
+    useQuery({
+      queryKey: buildItemChildrenKey(itemId),
+      queryFn: () =>
+        Api.getChildren({ id: itemId }, queryConfig).then((data) => List(data)),
+      onSuccess: async (items) => {
+        items.forEach(async (item) => {
+          const { id } = item;
+          queryClient.setQueryData(buildItemKey(id), Map(item));
+        });
+      },
+      ...defaultOptions,
+      enabled: Boolean(itemId) && options?.enabled,
+    });
+
+  return { useItem, useAllItems, useChildren };
 };

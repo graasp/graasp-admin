@@ -1,5 +1,4 @@
 import React from 'react';
-import { List } from 'immutable';
 import Items from '../items/Items';
 import { hooks } from '../../config/queryClient';
 

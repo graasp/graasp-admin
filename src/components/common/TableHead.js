@@ -45,9 +45,6 @@ const CustomTableHead = (props) => {
 };
 
 CustomTableHead.propTypes = {
-  classes: PropTypes.shape({
-    visuallyHidden: PropTypes.string.isRequired,
-  }).isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(Object.values(ORDERING)).isRequired,
   orderBy: PropTypes.string.isRequired,

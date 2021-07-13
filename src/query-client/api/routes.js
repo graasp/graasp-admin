@@ -11,6 +11,7 @@ export const CURRENT_MEMBER_ROUTE = `${MEMBERS_ROUTE}/current`;
 export const buildGetMember = (id) => `${MEMBERS_ROUTE}/${id}`;
 export const buildGetMemberRoles = (id) =>
   `${MEMBERS_ROUTE}/${id}/${ROLES_ROUTE}`;
+export const buildGetMemberItems = (id) => `${MEMBERS_ROUTE}/${id}/items`;
 export const buildGetMemberPermissions = (id) =>
   `${MEMBERS_ROUTE}/${id}/${PERMISSIONS_ROUTE}`;
 export const buildPostMemberRole = (id) => `${MEMBERS_ROUTE}/${id}/role`;
@@ -19,7 +20,7 @@ export const buildDeleteMemberRole = (id) => `${MEMBERS_ROUTE}/${id}/role`;
 // items routes
 export const ALL_ITEMS_ROUTE = `${ITEMS_ROUTE}/all`;
 export const buildGetItem = (id) => `${ITEMS_ROUTE}/${id}`;
-export const buildGetChildrenRoute = (id) => `${ITEMS_ROUTE}/${id}/children`;
+export const buildGetChildrenRoute = (id) => `${ITEMS_ROUTE}/children/${id}`;
 
 // role routes
 export const ALL_ROLES_ROUTE = `${ROLES_ROUTE}/all`;
