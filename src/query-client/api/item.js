@@ -1,5 +1,12 @@
 import { failOnError, DEFAULT_GET } from './utils';
-import { ALL_ITEMS_ROUTE, buildGetChildrenRoute, buildGetItem } from './routes';
+import {
+  ALL_ITEMS_ROUTE,
+  buildGetChildrenRoute,
+  buildGetItem,
+  buildGetItemMembers,
+  buildGetMemberItems,
+  buildGetParentsRoute,
+} from './routes';
 
 export const getItem = async ({ id }, { API_HOST }) => {
   const res = await fetch(`${API_HOST}/${buildGetItem(id)}`, {
@@ -22,6 +29,20 @@ export const getChildren = async ({ id }, { API_HOST }) => {
     ...DEFAULT_GET,
   }).then(failOnError);
   const items = await res.json();
-  console.log(items);
   return items;
+};
+
+export const getParents = async ({ id }, { API_HOST }) => {
+  const res = await fetch(`${API_HOST}/${buildGetParentsRoute(id)}`, {
+    ...DEFAULT_GET,
+  }).then(failOnError);
+  const items = await res.json();
+  return items;
+};
+
+export const getMembersOfItem = async ({ id }, { API_HOST }) => {
+  const res = await fetch(`${API_HOST}/${buildGetItemMembers(id)}`, {
+    ...DEFAULT_GET,
+  }).then(failOnError);
+  return res.json();
 };

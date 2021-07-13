@@ -5,6 +5,10 @@ import {
   ALL_ITEMS_KEY,
   buildItemChildrenKey,
   buildItemKey,
+  buildItemMembersKey,
+  buildItemParentsKey,
+  buildMemberItemsKey,
+  buildMemberKey,
 } from '../config/keys';
 
 export default (queryClient, queryConfig) => {
@@ -53,5 +57,37 @@ export default (queryClient, queryConfig) => {
       enabled: Boolean(itemId) && options?.enabled,
     });
 
-  return { useItem, useAllItems, useChildren };
+  const useParents = (itemId, options = {}) =>
+    useQuery({
+      queryKey: buildItemParentsKey(itemId),
+      queryFn: () =>
+        Api.getParents({ id: itemId }, queryConfig).then((data) => List(data)),
+      onSuccess: async (items) => {
+        items.forEach(async (item) => {
+          const { id } = item;
+          queryClient.setQueryData(buildItemKey(id), Map(item));
+        });
+      },
+      ...defaultOptions,
+      enabled: Boolean(itemId) && options?.enabled,
+    });
+
+  const useItemMembers = (itemId) =>
+    useQuery({
+      queryKey: buildItemMembersKey(itemId),
+      queryFn: () =>
+        Api.getMembersOfItem({ id: itemId }, queryConfig).then((data) =>
+          List(data),
+        ),
+      onSuccess: async (members) => {
+        // save items in their own key
+        // eslint-disable-next-line no-unused-expressions
+        members?.forEach(async (member) => {
+          const { id } = member;
+          queryClient.setQueryData(buildMemberKey(id), Map(member));
+        });
+      },
+      ...defaultOptions,
+    });
+  return { useItem, useAllItems, useChildren, useItemMembers, useParents };
 };
