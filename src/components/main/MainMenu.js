@@ -6,6 +6,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import PeopleIcon from '@material-ui/icons/People';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import PersonIcon from '@material-ui/icons/Person';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router';
 import List from '@material-ui/core/List';
@@ -50,7 +51,7 @@ const MainMenu = () => {
         selected={pathname === ADMIN_PROFILE}
       >
         <ListItemIcon>
-          <FolderIcon />
+          <PersonIcon />
         </ListItemIcon>
         <ListItemText primary={t('Profile')} />
       </ListItem>

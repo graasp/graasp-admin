@@ -11,6 +11,7 @@ const ProfileView = () => {
   if (isLoading) {
     return <Loader />;
   }
+
   return <MemberScreen member={currentMember} />;
 };
 

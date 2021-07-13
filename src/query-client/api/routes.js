@@ -31,12 +31,16 @@ export const POST_ROLE_ROUTE = `${ROLES_ROUTE}/`;
 export const buildGetRoute = (id) => `${ROLES_ROUTE}/${id}`;
 export const buildDeleteRoute = (id) => `${ROLES_ROUTE}/${id}`;
 export const buildPatchRoute = (id) => `${ROLES_ROUTE}/${id}`;
+export const buildGetRolePermission = (id) =>
+  `${ROLES_ROUTE}/${id}/permissions`;
 export const buildPostRolePermission = (id) =>
   `${ROLES_ROUTE}/${id}/permission`;
 export const buildDeleteRolePermission = (id) =>
   `${ROLES_ROUTE}/${id}/permission`;
 
 // permission routes
+export const ALL_PERMISSIONS_ROUTE = `${PERMISSIONS_ROUTE}/all`;
+export const OWN_PERMISSIONS_ROUTE = `${PERMISSIONS_ROUTE}/own`;
 
 export const API_ROUTES = {
   ALL_ADMINS_ROUTE,

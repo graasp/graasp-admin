@@ -23,6 +23,11 @@ export default (queryClient, queryConfig) => {
       queryKey: buildItemKey(id),
       queryFn: () => Api.getItem({ id }, queryConfig).then((data) => Map(data)),
       enabled: Boolean(id),
+      onSuccess: async (item) => {
+        // save items in their own key
+        // eslint-disable-next-line no-unused-expressions
+        queryClient.setQueryData(buildItemKey(id), Map(item));
+      },
       ...defaultOptions,
     });
 

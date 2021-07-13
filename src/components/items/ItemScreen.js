@@ -78,36 +78,19 @@ const ItemScreen = () => {
                 />
               </Box>
               <Box display="flex" p={2} flexDirection="column">
-                <Typography
-                  align="left"
-                  id={buildNavigationLink(item.get('id'))}
-                >
-                  {`Id: ${item.get('id')}`}
-                </Typography>
-                <Typography
-                  align="left"
-                  id={buildNavigationLink(item.get('id'))}
-                >
+                <Typography align="left">{`Id: ${item.get('id')}`}</Typography>
+                <Typography align="left">
                   {`Type: ${item.get('type')}`}
                 </Typography>
-                <Typography
-                  align="left"
-                  id={buildNavigationLink(item.get('id'))}
-                >
+                <Typography align="left">
                   {`Name: ${item.get('name')}`}
                 </Typography>
-                <Typography
-                  align="left"
-                  id={buildNavigationLink(item.get('id'))}
-                >
+                <Typography align="left">
                   {`Description: ${item.get('description')}`}
                 </Typography>
               </Box>
               <Box display="flex" p={2} flexDirection="column">
-                <Typography
-                  align="left"
-                  id={buildNavigationLink(item.get('id'))}
-                >
+                <Typography align="left">
                   {`Owner `}
                   <Link
                     color="inherit"
@@ -116,10 +99,7 @@ const ItemScreen = () => {
                     {item.get('ownerName')}
                   </Link>
                 </Typography>
-                <Typography
-                  align="left"
-                  id={buildNavigationLink(item.get('id'))}
-                >
+                <Typography align="left">
                   {`Created At: ${formatDate(item.get('createdAt'))}`}
                 </Typography>
                 <Typography
