@@ -3,6 +3,7 @@ import { useRouteMatch } from 'react-router';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Typography, Box } from '@material-ui/core';
 import { List } from 'immutable';
+import { makeStyles } from '@material-ui/core/styles';
 import { buildMemberPath } from '../../config/paths';
 import membersData from '../../data/membersData';
 import { formatDate } from '../../utils/date';
@@ -10,6 +11,14 @@ import { getMembershipsByMemberId } from '../../utils/member';
 import { insertCreatorWithItems } from '../../utils/item';
 import itemData from '../../data/itemData';
 import ItemsTable from '../items/ItemsTable';
+import { buildItemsTableTitle } from '../../config/selectors';
+
+const useStyles = makeStyles(() => ({
+  icon: {
+    fontSize: 150,
+    width: '100%',
+  },
+}));
 
 const MemberScreen = () => {
   const match = useRouteMatch(buildMemberPath());
@@ -25,8 +34,10 @@ const MemberScreen = () => {
     itemsPaths.includes(path),
   );
 
+  const classes = useStyles();
+
   return (
-    <div style={{ width: '100%' }}>
+    <div>
       <Box
         display="flex"
         justifyContent="center"
@@ -41,7 +52,7 @@ const MemberScreen = () => {
           m={1}
           bgcolor="background.paper"
         >
-          <AccountCircleIcon style={{ fontSize: 150, width: '100%' }} />
+          <AccountCircleIcon className={classes.icon} />
           <Typography>{`Id: ${member?.id}`}</Typography>
           <Typography>{`Name: ${member?.name}`}</Typography>
           <Typography>{`Email: ${member?.email}`}</Typography>
@@ -52,7 +63,7 @@ const MemberScreen = () => {
         </Box>
       </Box>
       <ItemsTable
-        id={`Member_${memberId}_Item_Table`}
+        id={buildItemsTableTitle(memberId)}
         empty={false}
         items={List(items)}
       />

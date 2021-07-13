@@ -58,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
   itemName: {
     paddingLeft: theme.spacing(1),
   },
+  autoComplete: {
+    width: 300,
+    float: 'right',
+  },
 }));
 
 const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
@@ -82,7 +86,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
   const [searchValue, setSearchValue] = React.useState('');
 
   useEffect(() => {
-    if (searchValue === '') {
+    if (!searchValue) {
       setFilteredRows(rows);
     } else {
       setFilteredRows(
@@ -204,13 +208,11 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
     }
   };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        {tableTitle !== '' ? (
-          <div className={classes.toolbarDiv}>
+        <div className={classes.toolbarDiv}>
+          {tableTitle && (
             <Typography
               className={classes.title}
               variant="h6"
@@ -219,39 +221,16 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
             >
               {tableTitle}
             </Typography>
-
-            <Autocomplete
-              value={searchValue}
-              freeSolo
-              onInputChange={(event, newValue) => {
-                setSearchValue(newValue);
-              }}
-              id="controllable-states-demo"
-              inputValue={searchValue}
-              options={options}
-              style={{ width: 300, float: 'right' }}
-              renderInput={(params) => (
-                <TextField
-                  /* eslint-disable-next-line react/jsx-props-no-spreading */
-                  {...params}
-                  margin="dense"
-                  label="Search"
-                  variant="outlined"
-                />
-              )}
-            />
-          </div>
-        ) : (
+          )}
           <Autocomplete
             value={searchValue}
+            className={classes.autoComplete}
             freeSolo
             onInputChange={(event, newValue) => {
               setSearchValue(newValue);
             }}
-            id="controllable-states-demo"
             inputValue={searchValue}
             options={options}
-            style={{ width: 300, float: 'right' }}
             renderInput={(params) => (
               <TextField
                 /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -262,8 +241,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
               />
             )}
           />
-        )}
-
+        </div>
         <TableContainer>
           <Table
             id={tableId}
@@ -283,7 +261,6 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
             />
             <TableBody>
               {mappedRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
@@ -291,10 +268,8 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
                     id={buildItemsTableRowId(row.id)}
                     hover
                     role="checkbox"
-                    aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={row.id}
-                    selected={isItemSelected}
                     classes={{
                       hover: classes.hover,
                       selected: classes.selected,
@@ -307,7 +282,6 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="2"
                         onClick={() => {
                           // do not navigate when clicking on actions
                           const shouldNavigate = idx !== headCells.length - 1;
