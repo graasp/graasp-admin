@@ -7,7 +7,6 @@ import {
   buildItemKey,
   buildItemMembersKey,
   buildItemParentsKey,
-  buildMemberItemsKey,
   buildMemberKey,
 } from '../config/keys';
 
