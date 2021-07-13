@@ -93,6 +93,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
     }
   }, [rows, searchValue]);
 
+  console.log(rows);
   const headCells = [
     {
       id: 'name',
@@ -107,7 +108,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
       align: 'right',
     },
     {
-      id: 'owner',
+      id: 'memberName',
       numeric: false,
       label: t('Owner'),
       align: 'right',
@@ -140,7 +141,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
 
   // transform rows' information into displayable information
   const mappedRows = rowsToDisplay.map((item) => {
-    const { id, updatedAt, name, createdAt, type, extra, owner } = item;
+    const { id, updatedAt, name, createdAt, type, extra, memberName } = item;
     const nameAndIcon = (
       <span className={classes.iconAndName}>
         <ItemIcon type={type} extra={extra} name={name} />
@@ -152,7 +153,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
       id,
       name: nameAndIcon,
       type,
-      owner,
+      memberName,
       updatedAt,
       createdAt,
       extra,
