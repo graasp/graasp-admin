@@ -1,16 +1,15 @@
 import React from 'react';
-import { List } from 'immutable';
-import membersData from '../../data/membersData';
 import Members from '../members/Members';
 import { hooks } from '../../config/queryClient';
 
-const { useCurrentMember } = hooks;
+const { useAllMembers } = hooks;
 
 const MembersView = () => {
-  const { data: currentMember } = useCurrentMember();
+  const { data: allMember, isLoading } = useAllMembers();
 
-  console.log(currentMember);
-  return <Members title="All Members" items={List(membersData)} />;
+  return (
+    <>{!isLoading && <Members title="All Members" members={allMember} />}</>
+  );
 };
 
 export default MembersView;
