@@ -15,6 +15,7 @@
     "http-status-code": "2.1.0",
     "http-status-codes": "2.1.4",
     "immutable": "4.0.0-rc.12",
+    "lodash": "4.17.21",
     "lodash.truncate": "4.4.2",
     "moment": "2.29.1",
     "momentjs": "2.0.0",

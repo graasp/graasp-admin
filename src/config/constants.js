@@ -1,5 +1,7 @@
+import FolderIcon from '@material-ui/icons/Folder';
 import env from '../env.json';
 import {
+  ITEM_DATA_TYPES,
   ITEM_LAYOUT_MODES,
   PERMISSION_LEVELS,
   UPLOAD_FILES_METHODS,
@@ -120,3 +122,85 @@ export const EMPTY_ROW_HEIGHT = 53;
 export const AUTO_COMPLETE_WIDTH = 300;
 
 export const MAX_WIDTH_LIST = 360;
+export const TABLE_TYPES = {
+  MEMBER: 'member',
+  ITEM: 'item',
+  PERMISSION: 'permission',
+  ADMIN: 'admin',
+};
+
+export const memberHeadCell = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Name',
+    align: 'left',
+  },
+  {
+    id: 'email',
+    numeric: false,
+    label: 'Email',
+    align: 'right',
+  },
+  {
+    id: 'type',
+    numeric: false,
+    label: 'Type',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+  {
+    id: 'updatedAt',
+    numeric: false,
+    label: 'Updated At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];
+
+export const adminsHeadCell = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Name',
+    align: 'left',
+  },
+  {
+    id: 'roles',
+    numeric: false,
+    label: 'Roles',
+    align: 'left',
+  },
+  {
+    id: 'email',
+    numeric: false,
+    label: 'Email',
+    align: 'right',
+  },
+  {
+    id: 'type',
+    numeric: false,
+    label: 'Type',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+  {
+    id: 'updatedAt',
+    numeric: false,
+    label: 'Updated At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];

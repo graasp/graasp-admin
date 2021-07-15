@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import { failOnError, DEFAULT_GET } from './utils';
 import {
   ALL_ADMINS_ROUTE,
@@ -6,6 +7,7 @@ import {
   buildGetMemberItems,
   CURRENT_MEMBER_ROUTE,
 } from './routes';
+import { getMembersRoles } from './role';
 
 export const getMember = async ({ id }, { API_HOST }) => {
   const res = await fetch(`${API_HOST}/${buildGetMember(id)}`, {
@@ -37,12 +39,22 @@ export const getAllMembers = async ({ API_HOST }) => {
   return res.json();
 };
 
-export const getAdmins = async ({ API_HOST }) => {
+export const getAdmins = async (config) => {
+  const { API_HOST } = config;
   const res = await fetch(`${API_HOST}/${ALL_ADMINS_ROUTE}`, {
     ...DEFAULT_GET,
   }).then(failOnError);
 
-  return res.json();
+  const admins = await res.json();
+  const ids = List(admins.map((admin) => admin.id));
+  const roles = await getMembersRoles({ ids }, config);
+  const adminsWithRoles = admins.map((admin, index) => {
+    return {
+      ...admin,
+      roles: roles[index].map((role) => role.description),
+    };
+  });
+  return adminsWithRoles;
 };
 
 //

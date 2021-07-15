@@ -1,26 +1,20 @@
 import React from 'react';
-import { Loader } from '@graasp/ui';
+import PropTypes from 'prop-types';
+import { List } from 'immutable';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { hooks } from '../../config/queryClient';
+import { ITEM_DATA_TYPES } from '../../enums';
+import CustomTable from '../common/CustomTable';
 import { buildMemberPath } from '../../config/paths';
 import { memberHeadCell, TABLE_TYPES } from '../../config/constants';
-import CustomTable from '../common/CustomTable';
 
-const { useAllMembers } = hooks;
-
-const MembersView = () => {
-  const { data: allMembers, isLoading } = useAllMembers();
-
-  if (isLoading) {
-    return <Loader />;
-  }
+const MemberTableTry = ({ tableName, members }) => {
   return (
     <CustomTable
       link={buildMemberPath}
       tableType={TABLE_TYPES.MEMBER}
       headCells={memberHeadCell}
-      tableTitle="All Members"
-      rows={allMembers}
+      tableTitle={tableName}
+      rows={members}
       checkBox
       empty
       icon={<AccountCircleIcon />}
@@ -31,4 +25,13 @@ const MembersView = () => {
   );
 };
 
-export default MembersView;
+MemberTableTry.propTypes = {
+  members: PropTypes.instanceOf(List),
+  tableName: PropTypes.string.isRequired,
+};
+
+MemberTableTry.defaultProps = {
+  members: List(),
+};
+
+export default MemberTableTry;

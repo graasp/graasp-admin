@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import _ from 'lodash';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import { useHistory } from 'react-router';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { Checkbox, Chip, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { buildMemberPath } from '../../config/paths';
+import { useHistory } from 'react-router';
 import { ORDERING, ITEM_DATA_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
-
+import TableHead from './TableHead';
 import {
-  buildMembersTableRowId,
-  buildMembersTableTitle,
-  MEMBERS_TABLE_EMPTY_ROW_ID,
+  buildTableCheckBox,
+  buildTableId,
+  buildTableRowId,
+  buildTableTitle,
+  ITEMS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
-import TableHead from '../common/TableHead';
 import {
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
@@ -37,37 +37,64 @@ const useStyles = makeStyles((theme) => ({
   toolbarDiv: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: theme.spacing(1),
-  },
-  toolbar: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
+    alignPermissions: 'center',
+    margin: theme.spacing(2),
   },
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
   },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
+  },
   selected: {
-    backgroundColor: `${lighten(theme.palette.primary.main, 0.85)} !important`,
+    backgroundColor: `${lighten(
+      theme.palette.primary.selected,
+      0.85,
+    )} !important`,
   },
   hover: {
     cursor: 'pointer',
   },
   iconAndName: {
     display: 'flex',
-    alignMembers: 'center',
+    alignPermissions: 'center',
   },
   itemName: {
     paddingLeft: theme.spacing(1),
   },
-  autoComplete: {
-    width: 300,
-    float: 'right',
+  arrayCell: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
   },
 }));
 
-const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
+const CustomTable = ({
+  rows,
+  headCells,
+  tableTitle,
+  tableType,
+  empty,
+  search,
+  link,
+  icon,
+  iconCell,
+  title,
+  checkBox,
+  arrayCell,
+}) => {
   const classes = useStyles();
   const { push } = useHistory();
   const [order, setOrder] = React.useState(ORDERING.DESC);
@@ -88,7 +115,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
     .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
   useEffect(() => {
-    if (!searchValue) {
+    if (searchValue === '') {
       setFilteredRows(rows);
     } else {
       setFilteredRows(
@@ -98,41 +125,6 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
       );
     }
   }, [rows, searchValue]);
-
-  const headCells = [
-    {
-      id: 'name',
-      numeric: false,
-      label: 'Name',
-      align: 'left',
-    },
-    {
-      id: 'email',
-      numeric: false,
-      label: 'Email',
-      align: 'right',
-    },
-    {
-      id: 'type',
-      numeric: false,
-      label: 'Type',
-      align: 'right',
-    },
-    {
-      id: 'createdAt',
-      numeric: false,
-      label: 'Created At',
-      align: 'right',
-      type: ITEM_DATA_TYPES.DATE,
-    },
-    {
-      id: 'updatedAt',
-      numeric: false,
-      label: 'Updated At',
-      align: 'right',
-      type: ITEM_DATA_TYPES.DATE,
-    },
-  ];
 
   // display empty rows to maintain the table height
   const emptyRows =
@@ -145,23 +137,31 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
   );
 
   // transform filteredRows' information into displayable information
-  const mappedRows = rowsToDisplay.map((item) => {
-    const { id, updatedAt, name, createdAt, type, email } = item;
-    const userNameAndIcon = (
-      <span className={classes.iconAndName}>
-        <AccountCircleIcon />
-        <span className={classes.itemName}>{name}</span>
-      </span>
-    );
+  const mappedRows = rowsToDisplay.map((row) => {
+    const allowed = headCells.map((cell) => cell.id);
+    allowed.push('id');
+    const display = _.pick(row, allowed);
 
-    return {
-      id,
-      name: userNameAndIcon,
-      type,
-      updatedAt,
-      createdAt,
-      email,
-    };
+    if (iconCell) {
+      display[iconCell] = (
+        <span className={classes.iconAndName}>
+          {icon}
+          <span className={classes.itemName}>{display[iconCell]}</span>
+        </span>
+      );
+    }
+
+    if (arrayCell) {
+      display[arrayCell] = (
+        <div className={classes.arrayCell}>
+          {display[arrayCell].map((d) => (
+            <Chip size="small" label={d} />
+          ))}
+        </div>
+      );
+    }
+
+    return display;
   });
 
   const handleRequestSort = (event, property) => {
@@ -190,7 +190,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
   };
 
   const handleOnClickRow = ({ id }) => {
-    push(buildMemberPath(id));
+    push(link(id));
   };
 
   // format entry data given type
@@ -203,44 +203,66 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
     }
   };
 
+  const removeItemsFromSelected = (items) => {
+    const newSelected = selected.filter((id) => !items.includes(id));
+    setSelected(newSelected);
+  };
+
+  const addItemsInSelected = (items) => {
+    const newSelected = selected.concat(items);
+    setSelected(newSelected);
+  };
+
+  const handleClick = (event, id) => {
+    const checked = selected.indexOf(id) !== -1;
+    if (checked) {
+      removeItemsFromSelected([id]);
+    } else {
+      addItemsInSelected([id]);
+    }
+  };
+
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
         <div className={classes.toolbarDiv}>
-          {Boolean(tableTitle) && (
+          {title && (
             <Typography
-              className={classes.title}
               variant="h6"
-              id={buildMembersTableTitle(tableTitle)}
+              id={buildTableTitle(tableType, tableTitle)}
               component="div"
             >
               {tableTitle}
             </Typography>
           )}
-          <Autocomplete
-            value={searchValue}
-            freeSolo
-            className={classes.autoComplete}
-            onInputChange={(event, newValue) => {
-              setSearchValue(newValue);
-            }}
-            inputValue={searchValue}
-            options={options}
-            renderInput={(params) => (
-              <TextField
-                /* eslint-disable-next-line react/jsx-props-no-spreading */
-                {...params}
-                margin="dense"
-                label="Search"
-                variant="outlined"
-              />
-            )}
-          />
+          {search && (
+            <Autocomplete
+              value={searchValue}
+              freeSolo
+              onInputChange={(event, newValue) => {
+                setSearchValue(newValue);
+              }}
+              id="controllable-states-demo"
+              inputValue={searchValue}
+              options={options}
+              style={{ width: 300, float: 'right' }}
+              renderInput={(params) => (
+                <TextField
+                  /* eslint-disable-next-line react/jsx-props-no-spreading */
+                  {...params}
+                  margin="dense"
+                  label="Search"
+                  variant="outlined"
+                />
+              )}
+            />
+          )}
         </div>
-
         <TableContainer>
           <Table
-            id={tableId}
+            id={buildTableId(tableType, tableTitle)}
             aria-labelledby="tableTitle"
             size="medium"
             aria-label="enhanced table"
@@ -252,24 +274,40 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={filteredRows.size}
+              rowCount={rows.size}
               headCells={headCells}
+              checkBox={checkBox}
             />
             <TableBody>
               {mappedRows.map((row, index) => {
+                const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
-                    id={buildMembersTableRowId(row.id)}
+                    id={buildTableRowId(tableType, tableTitle, row.id)}
                     hover
+                    role="checkbox"
+                    aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={row.id}
+                    selected={isItemSelected}
                     classes={{
                       hover: classes.hover,
                       selected: classes.selected,
                     }}
                   >
+                    {checkBox && (
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          className={buildTableCheckBox(tableType)}
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={(event) => handleClick(event, row.id)}
+                          color="primary"
+                        />
+                      </TableCell>
+                    )}
                     {headCells.map(({ id: field, align, type }, idx) => (
                       <TableCell
                         key={field}
@@ -291,9 +329,9 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
                   </TableRow>
                 );
               })}
-              {emptyRows > 0 && empty && (
+              {emptyRows > 0 && !empty && (
                 <TableRow
-                  id={MEMBERS_TABLE_EMPTY_ROW_ID}
+                  id={ITEMS_TABLE_EMPTY_ROW_ID}
                   style={{ height: EMPTY_ROW_HEIGHT * emptyRows }}
                 >
                   <TableCell colSpan={6} />
@@ -305,7 +343,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
         <TablePagination
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
-          count={filteredRows.size}
+          count={rows.size}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -316,18 +354,30 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
   );
 };
 
-MembersTable.propTypes = {
-  members: PropTypes.instanceOf(List),
-  tableTitle: PropTypes.string,
-  id: PropTypes.string,
+CustomTable.propTypes = {
+  rows: PropTypes.instanceOf(List),
+  title: PropTypes.bool,
+  tableTitle: PropTypes.string.isRequired,
+  tableType: PropTypes.string.isRequired,
   empty: PropTypes.bool,
+  search: PropTypes.bool,
+  checkBox: PropTypes.bool,
+  iconCell: PropTypes.string,
+  icon: PropTypes.node,
+  headCells: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
+  link: PropTypes.func.isRequired,
+  arrayCell: PropTypes.string,
 };
 
-MembersTable.defaultProps = {
-  id: '',
-  members: List(),
-  tableTitle: '',
-  empty: true,
+CustomTable.defaultProps = {
+  rows: List(),
+  empty: false,
+  search: false,
+  iconCell: '',
+  icon: null,
+  title: false,
+  checkBox: false,
+  arrayCell: '',
 };
 
-export default MembersTable;
+export default CustomTable;
