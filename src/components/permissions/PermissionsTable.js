@@ -156,7 +156,6 @@ const PermissionsTable = ({
         {Boolean(tableTitle) && (
           <div className={classes.toolbarDiv}>
             <Typography
-              className={classes.title}
               variant="h6"
               id={buildPermissionsTableTitle(tableTitle)}
               component="div"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loader } from '@graasp/ui';
-import Items from '../items/Items';
 import { hooks } from '../../config/queryClient';
+import ItemsTable from '../items/ItemsTable';
 
 const { useAllItems } = hooks;
 
@@ -11,7 +11,7 @@ const ItemsView = () => {
   if (isLoading) {
     return <Loader />;
   }
-  return <Items title="All Items" items={allItems} />;
+  return <ItemsTable title="All Items" items={allItems} />;
 };
 
 export default ItemsView;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router';
 import { Loader } from '@graasp/ui';
-import MemberScreen from './MemberScreen';
+import MemberDetails from './MemberDetails';
 import { buildMemberPath } from '../../config/paths';
 
 import { hooks } from '../../config/queryClient';
@@ -21,7 +21,7 @@ const SingleMember = () => {
   }
   return (
     <>
-      <MemberScreen member={member} />
+      <MemberDetails member={member} />
       <ItemsTable
         id={buildMembersTableId(memberId)}
         empty={false}

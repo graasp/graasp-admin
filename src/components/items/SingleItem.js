@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemScreen = () => {
+const SingleItem = () => {
   const [value, setValue] = React.useState(0);
 
   const classes = useStyles();
@@ -173,4 +173,4 @@ const ItemScreen = () => {
     </div>
   );
 };
-export default ItemScreen;
+export default SingleItem;
