@@ -20,7 +20,7 @@ const SingleMember = () => {
   }
   return (
     <>
-      {!isLoading && <MemberScreen member={member} />}
+      <MemberScreen member={member} />
       <ItemsTable
         id={`Member_${memberId}_Item_Table`}
         empty={false}
