@@ -1,15 +1,15 @@
 import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import PropTypes from 'prop-types';
-import { List as ListM, Map } from 'immutable';
 import { Typography, Box, List, ListSubheader } from '@material-ui/core';
-import ReactJson from 'react-json-view';
+import PropTypes from 'prop-types';
+import { List as ListM } from 'immutable';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import ReactJson from 'react-json-view';
 import { formatDate } from '../../utils/date';
 import { hooks } from '../../config/queryClient';
 import Loader from '../common/Loader';
-import ExpandableListItem from '../common/ExpandableListItem';
 import PermissionsTable from '../permissions/PermissionsTable';
+import ExpandableListItem from '../common/ExpandableListItem';
 
 const { useMembersRole, useRolesPermissions } = hooks;
 
@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+  },
+  icon: {
+    fontSize: 150,
+    width: '100%',
   },
 }));
 
@@ -38,7 +42,7 @@ const MemberScreen = ({ member }) => {
   }
 
   return (
-    <div style={{ width: '100%' }}>
+    <div>
       <Box
         display="flex"
         justifyContent="center"
@@ -53,7 +57,7 @@ const MemberScreen = ({ member }) => {
           m={1}
           bgcolor="background.paper"
         >
-          <AccountCircleIcon style={{ fontSize: 150, width: '100%' }} />
+          <AccountCircleIcon className={classes.icon} />
           <Typography>{`Id: ${member.get('id')}`}</Typography>
           <Typography>{`Name: ${member.get('name')}`}</Typography>
           <Typography>{`Email: ${member.get('email')}`}</Typography>

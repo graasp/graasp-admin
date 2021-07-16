@@ -116,3 +116,5 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
 export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
 export const EMPTY_ROW_HEIGHT = 53;
+
+export const AUTO_COMPLETE_WIDTH = 300;
