@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -11,8 +11,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Toolbar } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { Autocomplete } from '@material-ui/lab';
 import { buildMemberPath } from '../../config/paths';
 import { ORDERING, ITEM_DATA_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
@@ -33,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
+  toolbarDiv: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: theme.spacing(1),
+  },
   toolbar: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
@@ -40,17 +47,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
   },
   selected: {
     backgroundColor: `${lighten(theme.palette.primary.main, 0.85)} !important`,
@@ -65,12 +61,17 @@ const useStyles = makeStyles((theme) => ({
   itemName: {
     paddingLeft: theme.spacing(1),
   },
+  autoComplete: {
+    width: 300,
+    float: 'right',
+  },
 }));
 
 const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
   const classes = useStyles();
   const { push } = useHistory();
   const [order, setOrder] = React.useState(ORDERING.DESC);
+  const [filteredRows, setFilteredRows] = useState(rows);
   const [orderBy, setOrderBy] = React.useState('updatedAt');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
@@ -78,16 +79,26 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
     ROWS_PER_PAGE_OPTIONS[0],
   );
 
+  const options = filteredRows
+    .toArray()
+    .map((item) => {
+      return item.name;
+    })
+    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+  const [searchValue, setSearchValue] = React.useState('');
+
   useEffect(() => {
-    // remove deleted rows from selection
-    const newSelected = selected.filter(
-      (id) => rows.findIndex(({ id: thisId }) => thisId === id) >= 0,
-    );
-    if (newSelected.length !== selected.length) {
-      setSelected(newSelected);
+    if (!searchValue) {
+      setFilteredRows(rows);
+    } else {
+      setFilteredRows(
+        rows.filter((row) =>
+          row.name.toLowerCase().startsWith(searchValue.toLowerCase()),
+        ),
+      );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rows]);
+  }, [rows, searchValue]);
 
   const headCells = [
     {
@@ -126,15 +137,15 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
 
   // display empty rows to maintain the table height
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.size - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, filteredRows.size - page * rowsPerPage);
 
   // order and select rows to display given the current page and the number of entries displayed
   const rowsToDisplay = getRowsForPage(
-    stableSort(rows, getComparator(order, orderBy)),
+    stableSort(filteredRows, getComparator(order, orderBy)),
     { page, rowsPerPage },
   );
 
-  // transform rows' information into displayable information
+  // transform filteredRows' information into displayable information
   const mappedRows = rowsToDisplay.map((item) => {
     const { id, updatedAt, name, createdAt, type, email } = item;
     const userNameAndIcon = (
@@ -196,13 +207,38 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        {Boolean(tableTitle) && (
-          <Toolbar className={classes.toolbar}>
-            <Typography variant="h6" id={buildMembersTableTitle(tableTitle)}>
+        <div className={classes.toolbarDiv}>
+          {Boolean(tableTitle) && (
+            <Typography
+              className={classes.title}
+              variant="h6"
+              id={buildMembersTableTitle(tableTitle)}
+              component="div"
+            >
               {tableTitle}
             </Typography>
-          </Toolbar>
-        )}
+          )}
+          <Autocomplete
+            value={searchValue}
+            freeSolo
+            className={classes.autoComplete}
+            onInputChange={(event, newValue) => {
+              setSearchValue(newValue);
+            }}
+            inputValue={searchValue}
+            options={options}
+            renderInput={(params) => (
+              <TextField
+                /* eslint-disable-next-line react/jsx-props-no-spreading */
+                {...params}
+                margin="dense"
+                label="Search"
+                variant="outlined"
+              />
+            )}
+          />
+        </div>
+
         <TableContainer>
           <Table
             id={tableId}
@@ -217,7 +253,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.size}
+              rowCount={filteredRows.size}
               headCells={headCells}
             />
             <TableBody>
@@ -242,7 +278,6 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="3"
                         onClick={() => {
                           // do not navigate when clicking on actions
                           const shouldNavigate = idx !== headCells.length - 1;
@@ -271,7 +306,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
         <TablePagination
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
-          count={rows.size}
+          count={filteredRows.size}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -12,7 +12,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Toolbar } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import { buildItemPath } from '../../config/paths';
 import { ORDERING, ITEM_DATA_TYPES, ITEM_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
@@ -25,6 +26,7 @@ import {
   ITEMS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
 import {
+  AUTO_COMPLETE_WIDTH,
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../config/constants';
@@ -33,6 +35,12 @@ import { getShortcutTarget } from '../../utils/itemExtra';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+  },
+  toolbarDiv: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: theme.spacing(1),
   },
   paper: {
     width: '100%',
@@ -51,12 +59,17 @@ const useStyles = makeStyles((theme) => ({
   itemName: {
     paddingLeft: theme.spacing(1),
   },
+  autoComplete: {
+    width: AUTO_COMPLETE_WIDTH,
+    float: 'right',
+  },
 }));
 
 const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { push } = useHistory();
+  const [filteredRows, setFilteredRows] = useState(rows);
   const [order, setOrder] = React.useState(ORDERING.DESC);
   const [orderBy, setOrderBy] = React.useState('updatedAt');
   const [selected, setSelected] = React.useState([]);
@@ -64,6 +77,26 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(
     ROWS_PER_PAGE_OPTIONS[0],
   );
+  const options = filteredRows
+    .toArray()
+    .map((item) => {
+      return item.name;
+    })
+    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+  const [searchValue, setSearchValue] = React.useState('');
+
+  useEffect(() => {
+    if (!searchValue) {
+      setFilteredRows(rows);
+    } else {
+      setFilteredRows(
+        rows.filter((row) =>
+          row.name.toLowerCase().startsWith(searchValue.toLowerCase()),
+        ),
+      );
+    }
+  }, [rows, searchValue]);
 
   const headCells = [
     {
@@ -176,18 +209,40 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
     }
   };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        {Boolean(tableTitle) && (
-          <Toolbar className={classes.toolbar}>
-            <Typography variant="h6" id={buildItemsTableTitle(tableTitle)}>
+        <div className={classes.toolbarDiv}>
+          {tableTitle && (
+            <Typography
+              className={classes.title}
+              variant="h6"
+              id={buildItemsTableTitle(tableTitle)}
+              component="div"
+            >
               {tableTitle}
             </Typography>
-          </Toolbar>
-        )}
+          )}
+          <Autocomplete
+            value={searchValue}
+            className={classes.autoComplete}
+            freeSolo
+            onInputChange={(event, newValue) => {
+              setSearchValue(newValue);
+            }}
+            inputValue={searchValue}
+            options={options}
+            renderInput={(params) => (
+              <TextField
+                /* eslint-disable-next-line react/jsx-props-no-spreading */
+                {...params}
+                margin="dense"
+                label="Search"
+                variant="outlined"
+              />
+            )}
+          />
+        </div>
         <TableContainer>
           <Table
             id={tableId}
@@ -202,12 +257,11 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.size}
+              rowCount={filteredRows.size}
               headCells={headCells}
             />
             <TableBody>
               {mappedRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
@@ -215,10 +269,8 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
                     id={buildItemsTableRowId(row.id)}
                     hover
                     role="checkbox"
-                    aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={row.id}
-                    selected={isItemSelected}
                     classes={{
                       hover: classes.hover,
                       selected: classes.selected,
@@ -231,7 +283,6 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="2"
                         onClick={() => {
                           // do not navigate when clicking on actions
                           const shouldNavigate = idx !== headCells.length - 1;
@@ -260,7 +311,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
         <TablePagination
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
-          count={rows.size}
+          count={filteredRows.size}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

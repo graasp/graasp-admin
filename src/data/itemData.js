@@ -30,7 +30,7 @@ const itemData = [
     path: '1ec1d78c_4f77_4b9c_a75f_3e1bc13a17cd',
     extra: {
       document: {
-        content: '<p>rgergrwggwg</p>',
+        content: '<p>Extra Property</p>',
       },
     },
     creator: '72a64a54-11b5-4678-81d7-0bb194924e41',
