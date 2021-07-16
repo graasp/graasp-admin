@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { ITEM_DATA_TYPES } from '../../enums';
 import CustomTable from '../common/CustomTable';
 import { buildMemberPath } from '../../config/paths';
 import { memberHeadCell, TABLE_TYPES } from '../../config/constants';

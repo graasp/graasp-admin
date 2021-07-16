@@ -1,4 +1,3 @@
-import FolderIcon from '@material-ui/icons/Folder';
 import env from '../env.json';
 import {
   ITEM_DATA_TYPES,
@@ -175,7 +174,7 @@ export const adminsHeadCell = [
     id: 'roles',
     numeric: false,
     label: 'Roles',
-    align: 'left',
+    align: 'center',
   },
   {
     id: 'email',
