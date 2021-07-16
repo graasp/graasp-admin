@@ -26,6 +26,7 @@ import {
   ITEMS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
 import {
+  AUTO_COMPLETE_WIDTH,
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../config/constants';
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1),
   },
   autoComplete: {
-    width: 300,
+    width: AUTO_COMPLETE_WIDTH,
     float: 'right',
   },
 }));

@@ -52,7 +52,7 @@ const MemberScreen = () => {
           m={1}
           bgcolor="background.paper"
         >
-          <AccountCircleIcon className={classes.icon} />
+          <AccountCircleIcon className={classes.icon} size />
           <Typography>{`Id: ${member?.id}`}</Typography>
           <Typography>{`Name: ${member?.name}`}</Typography>
           <Typography>{`Email: ${member?.email}`}</Typography>
