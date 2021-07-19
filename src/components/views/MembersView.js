@@ -1,17 +1,17 @@
 import React from 'react';
+import { Loader } from '@graasp/ui';
 import Members from '../members/Members';
 import { hooks } from '../../config/queryClient';
-import Loader from '../common/Loader';
 
 const { useAllMembers } = hooks;
 
 const MembersView = () => {
-  const { data: allMember, isLoading } = useAllMembers();
+  const { data: allMembers, isLoading } = useAllMembers();
 
   if (isLoading) {
     return <Loader />;
   }
-  return <Members title="All Members" members={allMember} />;
+  return <Members title="All Members" members={allMembers} />;
 };
 
 export default MembersView;

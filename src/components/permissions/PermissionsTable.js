@@ -153,7 +153,7 @@ const PermissionsTable = ({
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        {tableTitle !== '' && (
+        {Boolean(tableTitle) && (
           <div className={classes.toolbarDiv}>
             <Typography
               className={classes.title}

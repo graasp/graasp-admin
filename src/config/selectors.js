@@ -43,6 +43,8 @@ export const buildItemsTableTitle = (title) => `itemsTable-title-${title}`;
 export const buildPermissionsTableTitle = (title) =>
   `permissionsTable-title-${title}`;
 
+export const buildScrollableTabId = (id) => `scrollable-prevent-tab-${id}`;
+
 export const buildItemsTableRowId = (id) => `itemsTableRow-${id}`;
 export const buildPermissionsTableRowId = (id) => `permissionsTableRow-${id}`;
 export const buildMembersTableRowId = (id) => `membersTableRow-${id}`;

@@ -1,22 +1,27 @@
 import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Typography, Box, List, ListSubheader } from '@material-ui/core';
+import {
+  Typography,
+  Box,
+  List as ListComponent,
+  ListSubheader,
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { List as ListM } from 'immutable';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ReactJson from 'react-json-view';
+import { Loader } from '@graasp/ui';
 import { formatDate } from '../../utils/date';
 import { hooks } from '../../config/queryClient';
-import Loader from '../common/Loader';
 import PermissionsTable from '../permissions/PermissionsTable';
 import ExpandableListItem from '../common/ExpandableListItem';
+import { MAX_WIDTH } from '../../config/constants';
 
 const { useMembersRole, useRolesPermissions } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+    maxWidth: MAX_WIDTH,
     backgroundColor: theme.palette.background.paper,
   },
   icon: {
@@ -40,6 +45,12 @@ const MemberScreen = ({ member }) => {
   if (isLoadingRoles || isLoadingRP) {
     return <Loader />;
   }
+
+  const listTitle = (
+    <ListSubheader component="div" id="nested-list-subheader">
+      Roles
+    </ListSubheader>
+  );
 
   return (
     <div>
@@ -86,15 +97,10 @@ const MemberScreen = ({ member }) => {
           m={1}
           bgcolor="background.paper"
         >
-          <List
+          <ListComponent
             component="nav"
             aria-labelledby="nested-list-subheader"
-            subheader={
-              // eslint-disable-next-line react/jsx-wrap-multilines
-              <ListSubheader component="div" id="nested-list-subheader">
-                Roles
-              </ListSubheader>
-            }
+            subheader={listTitle}
             className={classes.root}
           >
             {currentRoles.map((role, index) => {
@@ -109,11 +115,11 @@ const MemberScreen = ({ member }) => {
                 />
               );
             })}
-          </List>
+          </ListComponent>
           <PermissionsTable
             empty={false}
             tableTitle={"Admin's Permissions"}
-            permissions={ListM(rolesPermissions.toArray().flat())}
+            permissions={rolesPermissions.flatten()}
           />
         </Box>
       )}

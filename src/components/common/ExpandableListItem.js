@@ -43,8 +43,7 @@ const ExpandableListItem = ({ itemName, content }) => {
 
 ExpandableListItem.propTypes = {
   itemName: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  content: PropTypes.array.isRequired,
+  content: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ExpandableListItem;

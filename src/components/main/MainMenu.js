@@ -10,7 +10,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router';
 import List from '@material-ui/core/List';
-import { ADMIN_PROFILE, HOME_PATH, ITEMS_PATH } from '../../config/paths';
+import { ADMIN_PROFILE_PATH, HOME_PATH, ITEMS_PATH } from '../../config/paths';
 
 const MainMenu = () => {
   const { t } = useTranslation();
@@ -47,8 +47,8 @@ const MainMenu = () => {
       </ListItem>
       <ListItem
         button
-        onClick={() => goTo(ADMIN_PROFILE)}
-        selected={pathname === ADMIN_PROFILE}
+        onClick={() => goTo(ADMIN_PROFILE_PATH)}
+        selected={pathname === ADMIN_PROFILE_PATH}
       >
         <ListItemIcon>
           <PersonIcon />

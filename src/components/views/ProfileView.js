@@ -1,7 +1,7 @@
 import React from 'react';
+import { Loader } from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
 import MemberScreen from '../members/MemberScreen';
-import Loader from '../common/Loader';
 
 const { useCurrentMember } = hooks;
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router';
+import { Loader } from '@graasp/ui';
 import MemberScreen from './MemberScreen';
 import { buildMemberPath } from '../../config/paths';
 
 import { hooks } from '../../config/queryClient';
 import ItemsTable from '../items/ItemsTable';
-import Loader from '../common/Loader';
+import { buildMembersTableId } from '../../config/selectors';
 
 const { useMember, useMemberItems } = hooks;
 const SingleMember = () => {
@@ -22,7 +23,7 @@ const SingleMember = () => {
     <>
       <MemberScreen member={member} />
       <ItemsTable
-        id={`Member_${memberId}_Item_Table`}
+        id={buildMembersTableId(memberId)}
         empty={false}
         items={items}
       />

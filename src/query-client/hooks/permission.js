@@ -37,10 +37,12 @@ export default (queryClient, queryConfig) => {
     useQuery({
       queryKey: buildRolesPermissionsKey(roleIds),
       queryFn: () =>
-        Api.getRolesPermissions({ ids: roleIds }, queryConfig).then((data) =>
-          List(data),
-        ),
-
+        Api.getRolesPermissions({ ids: roleIds }, queryConfig).then((data) => {
+          const dataImmutable = data.map((permissions) => {
+            return List(permissions);
+          });
+          return List(dataImmutable);
+        }),
       onSuccess: async (permissions) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
