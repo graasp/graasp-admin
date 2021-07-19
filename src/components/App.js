@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
-  ADMIN_PROFILE,
+  ADMIN_PROFILE_PATH,
   buildItemPath,
   buildMemberPath,
   HOME_PATH,
@@ -23,7 +23,7 @@ function App() {
           <Route path={HOME_PATH} exact component={MembersView} />
           <Route path={MEMBERS_PATH} exact component={MembersView} />
           <Route path={ITEMS_PATH} exact component={ItemsView} />
-          <Route path={ADMIN_PROFILE} exact component={ProfileView} />
+          <Route path={ADMIN_PROFILE_PATH} exact component={ProfileView} />
           <Route path={buildItemPath()} component={ItemScreen} />
           <Route path={buildMemberPath()} component={SingleMember} />
         </Switch>

@@ -4,8 +4,7 @@ import * as Api from '../api';
 import {
   ALL_ADMINS_KEY,
   ALL_MEMBERS_KEY,
-  buildItemKey,
-  buildMemberItemsKey,
+  buildItemMembersKey,
   buildMemberKey,
   CURRENT_MEMBER_KEY,
 } from '../config/keys';
@@ -65,19 +64,19 @@ export default (queryClient, queryConfig) => {
       ...defaultOptions,
     });
 
-  const useMemberItems = (memberId) =>
+  const useItemMembers = (itemId) =>
     useQuery({
-      queryKey: buildMemberItemsKey(memberId),
+      queryKey: buildItemMembersKey(itemId),
       queryFn: () =>
-        Api.getItemsOfMember({ id: memberId }, queryConfig).then((data) =>
+        Api.getMembersOfItem({ id: itemId }, queryConfig).then((data) =>
           List(data),
         ),
-      onSuccess: async (items) => {
+      onSuccess: async (members) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        items?.forEach(async (item) => {
-          const { id } = item;
-          queryClient.setQueryData(buildItemKey(id), Map(item));
+        members?.forEach(async (member) => {
+          const { id } = member;
+          queryClient.setQueryData(buildMemberKey(id), Map(member));
         });
       },
       ...defaultOptions,
@@ -88,6 +87,6 @@ export default (queryClient, queryConfig) => {
     useMember,
     useAllMembers,
     useAllAdmins,
-    useMemberItems,
+    useItemMembers,
   };
 };

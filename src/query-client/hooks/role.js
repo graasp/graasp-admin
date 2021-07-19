@@ -22,10 +22,13 @@ export default (queryClient, queryConfig) => {
       onSuccess: async (roles) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        roles?.forEach(async (role) => {
-          const { id } = role;
-          queryClient.setQueryData(buildRoleKey(id), Map(role));
-        });
+        if (roles) {
+          return roles?.forEach(async (role) => {
+            const { id } = role;
+            queryClient.setQueryData(buildRoleKey(id), Map(role));
+          });
+        }
+        return [];
       },
       ...defaultOptions,
     });
@@ -40,10 +43,13 @@ export default (queryClient, queryConfig) => {
       onSuccess: async (roles) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        roles?.forEach(async (role) => {
-          const { id } = role;
-          queryClient.setQueryData(buildRoleKey(id), Map(role));
-        });
+        if (roles) {
+          return roles?.forEach(async (role) => {
+            const { id } = role;
+            queryClient.setQueryData(buildRoleKey(id), Map(role));
+          });
+        }
+        return [];
       },
       ...defaultOptions,
     });

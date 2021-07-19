@@ -1,5 +1,5 @@
 import { getReasonPhrase, StatusCodes } from 'http-status-codes';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider, useMutation } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import {
   CACHE_TIME_MILLISECONDS,
@@ -22,10 +22,25 @@ export default (config) => {
     API_HOST:
       config?.API_HOST ||
       process.env.REACT_APP_API_HOST ||
-      'http://localhost:3111',
+      'http://localhost:3000',
+    keepPreviousData: config?.keepPreviousData || false,
   };
 
-  // define config for query client
+  // create queryclient with given config
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: config?.refetchOnWindowFocus || false,
+      },
+    },
+  });
+
+  // set up mutations given config
+  // mutations are attached to queryClient
+  // configureMutations(queryClient, queryConfig);
+
+  // set up hooks given config
+
   const queryConfig = {
     ...baseConfig,
     // derive WS_HOST from API_HOST if needed
@@ -36,14 +51,6 @@ export default (config) => {
     retry,
   };
 
-  // create queryClient with given config
-  const queryClient = new QueryClient();
-
-  // set up mutations given config
-  // mutations are attached to queryClient
-  // configureMutations(queryClient, queryConfig);
-
-  // set up hooks given config
   const hooks = configureHooks(queryClient, queryConfig);
 
   // returns the queryClient and relative instances
@@ -51,7 +58,7 @@ export default (config) => {
     queryClient,
     QueryClientProvider,
     hooks,
-    // useMutation,
+    useMutation,
     ReactQueryDevtools,
   };
 };

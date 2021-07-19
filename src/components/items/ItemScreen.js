@@ -10,18 +10,19 @@ import {
   Typography,
 } from '@material-ui/core';
 import ReactJson from 'react-json-view';
+import { Loader } from '@graasp/ui';
 import { buildItemPath, buildMemberPath, ITEMS_PATH } from '../../config/paths';
 import ItemIcon from './ItemIcon';
 import {
   buildChildrenItemsTableId,
   buildMembersTableId,
   buildNavigationLink,
+  buildScrollableTabId,
 } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
 import TabPanel from '../common/TabPanel';
 import { hooks } from '../../config/queryClient';
 import ItemsTable from './ItemsTable';
-import Loader from '../common/Loader';
 import MembersTable from '../members/MembersTable';
 
 const { useItem, useChildren, useItemMembers, useParents } = hooks;
@@ -44,13 +45,13 @@ const ItemScreen = () => {
   const itemId = match?.params?.itemId;
   const { data: item, isLoading } = useItem(itemId);
 
-  const { data: children, isLoading: childrenLoading } = useChildren(itemId);
+  const { data: children, isLoading: isChildrenLoading } = useChildren(itemId);
 
-  const { data: members, isLoading: membersLoading } = useItemMembers(itemId);
+  const { data: members, isLoading: isMembersLoading } = useItemMembers(itemId);
 
-  const { data: parents, isLoading: parentsLoading } = useParents(itemId);
+  const { data: parents, isLoading: isParentsLoading } = useParents(itemId);
 
-  if (isLoading || childrenLoading || membersLoading || parentsLoading) {
+  if (isLoading || isChildrenLoading || isMembersLoading || isParentsLoading) {
     return <Loader />;
   }
 
@@ -58,118 +59,117 @@ const ItemScreen = () => {
     setValue(newValue);
   };
 
+  const type = item.get('type');
+  const id = item.get('id');
+  const name = item.get('name');
+  const extra = item.get('extra');
+  const description = item.get('description');
+  const ownerName = item.get('ownerName');
+  const ownerId = item.get('creator');
+  const createdAt = item.get('createdAt');
+  const updatedAt = item.get('updatedAt');
+
   return (
     <div>
-      <>
-        <Box
-          justifyContent="left"
-          display="flex"
-          p={1}
-          bgcolor="background.paper"
-        >
-          <Box display="flex" flexDirection="row">
-            <Box p={2}>
-              <ItemIcon
-                size="100"
-                type={item.get('type')}
-                extra={item.get('extra')}
-                name={item.get('name')}
-              />
-            </Box>
-            <Box display="flex" p={2} flexDirection="column">
-              <Typography align="left">{`Id: ${item.get('id')}`}</Typography>
-              <Typography align="left">
-                {`Type: ${item.get('type')}`}
-              </Typography>
-              <Typography align="left">
-                {`Name: ${item.get('name')}`}
-              </Typography>
-              <Typography align="left">
-                {`Description: ${item.get('description')}`}
-              </Typography>
-            </Box>
-            <Box display="flex" p={2} flexDirection="column">
-              <Typography align="left">
-                {`Owner `}
-                <Link color="inherit" to={buildMemberPath(item.get('creator'))}>
-                  {item.get('ownerName')}
-                </Link>
-              </Typography>
-              <Typography align="left">
-                {`Created At: ${formatDate(item.get('createdAt'))}`}
-              </Typography>
-              <Typography align="left" id={buildNavigationLink(item.get('id'))}>
-                {`Last time updated: ${formatDate(item.get('updatedAt'))}`}
-              </Typography>
+      <Box
+        justifyContent="left"
+        display="flex"
+        p={1}
+        bgcolor="background.paper"
+      >
+        <Box display="flex" flexDirection="row">
+          <Box p={2}>
+            <ItemIcon size="100" type={type} extra={extra} name={name} />
+          </Box>
+          <Box display="flex" p={2} flexDirection="column">
+            <Typography align="left">{`Id: ${id}`}</Typography>
+            <Typography align="left">{`Type: ${type}`}</Typography>
+            <Typography align="left">{`Name: ${name}`}</Typography>
+            <Typography align="left">
+              {`Description: ${description}`}
+            </Typography>
+          </Box>
+          <Box display="flex" p={2} flexDirection="column">
+            <Typography align="left">
+              {`Owner `}
+              <Link color="inherit" to={buildMemberPath(ownerId)}>
+                {ownerName}
+              </Link>
+            </Typography>
+            <Typography align="left">
+              {`Created At: ${formatDate(createdAt)}`}
+            </Typography>
+            <Typography align="left" id={buildNavigationLink(id)}>
+              {`Last time updated: ${formatDate(updatedAt)}`}
+            </Typography>
 
-              <Typography align="left" id={buildNavigationLink(item.get('id'))}>
-                {`Parents: `}
-              </Typography>
-              <Breadcrumbs maxItems={2} aria-label="breadcrumb">
-                <Link color="inherit" to={ITEMS_PATH}>
-                  All Items
+            <Typography align="left" id={buildNavigationLink(id)}>
+              {`Parents: `}
+            </Typography>
+            <Breadcrumbs maxItems={2} aria-label="breadcrumb">
+              <Link color="inherit" to={ITEMS_PATH}>
+                All Items
+              </Link>
+              {parents.map(({ name: itemName, id: parentId }) => (
+                <Link color="inherit" to={buildItemPath(parentId)}>
+                  {itemName}
                 </Link>
-                {parents.map(({ name, id }) => (
-                  <Link color="inherit" to={buildItemPath(id)}>
-                    {name}
-                  </Link>
-                ))}
-              </Breadcrumbs>
-            </Box>
+              ))}
+            </Breadcrumbs>
           </Box>
         </Box>
-        <div className={classes.root}>
-          <AppBar position="static" color="default">
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              variant="fullWidth"
-              scrollButtons="off"
-              textColor="primary"
-              aria-label="scrollable-prevent-tabs"
-              indicatorColor="primary"
-            >
-              <Tab
-                label="Children"
-                id={`scrollable-prevent-tab-${0}`}
-                aria-controls={`scrollable-prevent-tabpanel-${0}`}
-              />
-              <Tab
-                label="Members"
-                id={`scrollable-prevent-tab-${1}`}
-                aria-controls={`scrollable-prevent-tabpanel-${1}`}
-              />
-              <Tab
-                label="Settings"
-                id={`scrollable-prevent-tab-${2}`}
-                aria-controls={`scrollable-prevent-tabpanel-${2}`}
-              />
-            </Tabs>
-          </AppBar>
-          <TabPanel value={value} index={0}>
-            {children.isEmpty() ? (
-              <Typography>No Children found</Typography>
-            ) : (
-              <ItemsTable
-                empty={false}
-                items={children}
-                id={buildChildrenItemsTableId(itemId)}
-              />
-            )}
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <MembersTable
-              empty={false}
-              members={members}
-              id={buildMembersTableId(itemId)}
+      </Box>
+      <div className={classes.root}>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant="fullWidth"
+            scrollButtons="off"
+            textColor="primary"
+            aria-label="scrollable-prevent-tabs"
+            indicatorColor="primary"
+          >
+            <Tab
+              label="Children"
+              id={buildScrollableTabId(0)}
+              aria-controls={`scrollable-prevent-tabpanel-${0}`}
             />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <Typography>Extra:</Typography>
-            <ReactJson src={item.get('extra')} />
-          </TabPanel>
-        </div>
-      </>
+            <Tab
+              label="Members"
+              id={buildScrollableTabId(1)}
+              aria-controls={`scrollable-prevent-tabpanel-${1}`}
+            />
+            <Tab
+              label="Settings"
+              id={buildScrollableTabId(2)}
+              aria-controls={`scrollable-prevent-tabpanel-${2}`}
+            />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          {children.isEmpty() ? (
+            <Typography>No Children found</Typography>
+          ) : (
+            <ItemsTable
+              empty={false}
+              items={children}
+              id={buildChildrenItemsTableId(itemId)}
+            />
+          )}
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <MembersTable
+            empty={false}
+            members={members}
+            id={buildMembersTableId(itemId)}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Typography>Extra:</Typography>
+          <ReactJson src={extra} />
+        </TabPanel>
+      </div>
     </div>
   );
 };

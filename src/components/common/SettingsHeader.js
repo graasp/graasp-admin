@@ -6,10 +6,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import truncate from 'lodash.truncate';
 import { Menu, MenuItem } from '@material-ui/core';
+import { Loader } from '@graasp/ui';
 import { USERNAME_MAX_LENGTH } from '../../config/constants';
 import { HEADER_USER_ID } from '../../config/selectors';
 import { hooks } from '../../config/queryClient';
-import Loader from './Loader';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {

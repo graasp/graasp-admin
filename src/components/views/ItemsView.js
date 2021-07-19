@@ -1,7 +1,7 @@
 import React from 'react';
+import { Loader } from '@graasp/ui';
 import Items from '../items/Items';
 import { hooks } from '../../config/queryClient';
-import Loader from '../common/Loader';
 
 const { useAllItems } = hooks;
 

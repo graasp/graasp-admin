@@ -5,9 +5,8 @@ import {
   ALL_ITEMS_KEY,
   buildItemChildrenKey,
   buildItemKey,
-  buildItemMembersKey,
   buildItemParentsKey,
-  buildMemberKey,
+  buildMemberItemsKey,
 } from '../config/keys';
 
 export default (queryClient, queryConfig) => {
@@ -23,7 +22,7 @@ export default (queryClient, queryConfig) => {
       queryKey: buildItemKey(id),
       queryFn: () => Api.getItem({ id }, queryConfig).then((data) => Map(data)),
       enabled: Boolean(id),
-      onSuccess: async (item) => {
+      onSuccess: (item) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
         queryClient.setQueryData(buildItemKey(id), Map(item));
@@ -35,10 +34,10 @@ export default (queryClient, queryConfig) => {
     useQuery({
       queryKey: ALL_ITEMS_KEY,
       queryFn: () => Api.getAllItems(queryConfig).then((data) => List(data)),
-      onSuccess: async (items) => {
+      onSuccess: (items) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        items?.forEach(async (item) => {
+        items?.forEach((item) => {
           const { id } = item;
           queryClient.setQueryData(buildItemKey(id), Map(item));
         });
@@ -51,8 +50,8 @@ export default (queryClient, queryConfig) => {
       queryKey: buildItemChildrenKey(itemId),
       queryFn: () =>
         Api.getChildren({ id: itemId }, queryConfig).then((data) => List(data)),
-      onSuccess: async (items) => {
-        items.forEach(async (item) => {
+      onSuccess: (items) => {
+        items.forEach((item) => {
           const { id } = item;
           queryClient.setQueryData(buildItemKey(id), Map(item));
         });
@@ -66,8 +65,8 @@ export default (queryClient, queryConfig) => {
       queryKey: buildItemParentsKey(itemId),
       queryFn: () =>
         Api.getParents({ id: itemId }, queryConfig).then((data) => List(data)),
-      onSuccess: async (items) => {
-        items.forEach(async (item) => {
+      onSuccess: (items) => {
+        items.forEach((item) => {
           const { id } = item;
           queryClient.setQueryData(buildItemKey(id), Map(item));
         });
@@ -76,22 +75,22 @@ export default (queryClient, queryConfig) => {
       enabled: Boolean(itemId) && options?.enabled,
     });
 
-  const useItemMembers = (itemId) =>
+  const useMemberItems = (memberId) =>
     useQuery({
-      queryKey: buildItemMembersKey(itemId),
+      queryKey: buildMemberItemsKey(memberId),
       queryFn: () =>
-        Api.getMembersOfItem({ id: itemId }, queryConfig).then((data) =>
+        Api.getItemsOfMember({ id: memberId }, queryConfig).then((data) =>
           List(data),
         ),
-      onSuccess: async (members) => {
+      onSuccess: (items) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        members?.forEach(async (member) => {
-          const { id } = member;
-          queryClient.setQueryData(buildMemberKey(id), Map(member));
+        items?.forEach((item) => {
+          const { id } = item;
+          queryClient.setQueryData(buildItemKey(id), Map(item));
         });
       },
       ...defaultOptions,
     });
-  return { useItem, useAllItems, useChildren, useItemMembers, useParents };
+  return { useItem, useAllItems, useChildren, useMemberItems, useParents };
 };
