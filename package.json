@@ -11,6 +11,9 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "clsx": "1.1.1",
+    "crypto": "1.0.1",
+    "http-status-code": "2.1.0",
+    "http-status-codes": "2.1.4",
     "immutable": "4.0.0-rc.12",
     "lodash.truncate": "4.4.2",
     "moment": "2.29.1",
@@ -20,6 +23,7 @@
     "react-dom": "^16.13.1",
     "react-i18next": "11.11.0",
     "react-json-view": "1.21.3",
+    "react-query": "3.18.1",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.3"

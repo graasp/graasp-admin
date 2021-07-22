@@ -6,10 +6,11 @@ import FolderIcon from '@material-ui/icons/Folder';
 import PeopleIcon from '@material-ui/icons/People';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import PersonIcon from '@material-ui/icons/Person';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router';
 import List from '@material-ui/core/List';
-import { HOME_PATH, ITEMS_PATH } from '../../config/paths';
+import { ADMIN_PROFILE_PATH, HOME_PATH, ITEMS_PATH } from '../../config/paths';
 
 const MainMenu = () => {
   const { t } = useTranslation();
@@ -43,6 +44,16 @@ const MainMenu = () => {
           <FolderIcon />
         </ListItemIcon>
         <ListItemText primary={t('Items')} />
+      </ListItem>
+      <ListItem
+        button
+        onClick={() => goTo(ADMIN_PROFILE_PATH)}
+        selected={pathname === ADMIN_PROFILE_PATH}
+      >
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText primary={t('Profile')} />
       </ListItem>
       <ListItem button>
         <ListItemIcon>

@@ -9,28 +9,23 @@ import {
   Tabs,
   Typography,
 } from '@material-ui/core';
-import { List } from 'immutable';
 import ReactJson from 'react-json-view';
+import { Loader } from '@graasp/ui';
 import { buildItemPath, buildMemberPath, ITEMS_PATH } from '../../config/paths';
-import itemData from '../../data/itemData';
 import ItemIcon from './ItemIcon';
 import {
   buildChildrenItemsTableId,
   buildMembersTableId,
   buildNavigationLink,
+  buildScrollableTabId,
 } from '../../config/selectors';
-import {
-  getChildren,
-  getItemFromIds,
-  getMembershipsByItemPath,
-  getParentsIdsFromPath,
-  insertCreatorWithItems,
-} from '../../utils/item';
-import ItemsTable from './ItemsTable';
 import { formatDate } from '../../utils/date';
-import { getMembersByMemberships } from '../../utils/member';
-import MembersTable from '../members/MembersTable';
 import TabPanel from '../common/TabPanel';
+import { hooks } from '../../config/queryClient';
+import ItemsTable from './ItemsTable';
+import MembersTable from '../members/MembersTable';
+
+const { useItem, useChildren, useItemMembers, useParents } = hooks;
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -48,23 +43,31 @@ const ItemScreen = () => {
   const classes = useStyles();
   const match = useRouteMatch(buildItemPath());
   const itemId = match?.params?.itemId;
-  const itemsWithCreators = insertCreatorWithItems(itemData);
-  const item = itemsWithCreators.find(({ id }) => itemId === id);
+  const { data: item, isLoading } = useItem(itemId);
 
-  const parentsIds = getParentsIdsFromPath(item?.path);
-  const parents = getItemFromIds(parentsIds);
-  const children = getChildren(itemsWithCreators, itemId);
+  const { data: children, isLoading: isChildrenLoading } = useChildren(itemId);
 
-  const members = parents
-    .map((parent) => {
-      const memberships = getMembershipsByItemPath(parent.path);
-      return getMembersByMemberships(memberships);
-    })
-    .flat();
+  const { data: members, isLoading: isMembersLoading } = useItemMembers(itemId);
+
+  const { data: parents, isLoading: isParentsLoading } = useParents(itemId);
+
+  if (isLoading || isChildrenLoading || isMembersLoading || isParentsLoading) {
+    return <Loader />;
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const type = item.get('type');
+  const id = item.get('id');
+  const name = item.get('name');
+  const extra = item.get('extra');
+  const description = item.get('description');
+  const ownerName = item.get('ownerName');
+  const ownerId = item.get('creator');
+  const createdAt = item.get('createdAt');
+  const updatedAt = item.get('updatedAt');
 
   return (
     <div>
@@ -76,51 +79,40 @@ const ItemScreen = () => {
       >
         <Box display="flex" flexDirection="row">
           <Box p={2}>
-            <ItemIcon
-              size="100"
-              type={item?.type}
-              extra={item?.extra}
-              name={item?.name}
-            />
+            <ItemIcon size="100" type={type} extra={extra} name={name} />
           </Box>
           <Box display="flex" p={2} flexDirection="column">
-            <Typography align="left" id={buildNavigationLink(item?.id)}>
-              {`Id: ${item?.id}`}
-            </Typography>
-            <Typography align="left" id={buildNavigationLink(item?.id)}>
-              {`Type: ${item?.type}`}
-            </Typography>
-            <Typography align="left" id={buildNavigationLink(item?.id)}>
-              {`Name: ${item?.name}`}
-            </Typography>
-            <Typography align="left" id={buildNavigationLink(item?.id)}>
-              {`Description: ${item?.description}`}
+            <Typography align="left">{`Id: ${id}`}</Typography>
+            <Typography align="left">{`Type: ${type}`}</Typography>
+            <Typography align="left">{`Name: ${name}`}</Typography>
+            <Typography align="left">
+              {`Description: ${description}`}
             </Typography>
           </Box>
           <Box display="flex" p={2} flexDirection="column">
-            <Typography align="left" id={buildNavigationLink(item?.id)}>
+            <Typography align="left">
               {`Owner `}
-              <Link color="inherit" to={buildMemberPath(item?.creator)}>
-                {item?.owner}
+              <Link color="inherit" to={buildMemberPath(ownerId)}>
+                {ownerName}
               </Link>
             </Typography>
-            <Typography align="left" id={buildNavigationLink(item?.id)}>
-              {`Created At: ${formatDate(item?.createdAt)}`}
+            <Typography align="left">
+              {`Created At: ${formatDate(createdAt)}`}
             </Typography>
-            <Typography align="left" id={buildNavigationLink(item?.id)}>
-              {`Last time updated: ${formatDate(item?.updatedAt)}`}
+            <Typography align="left" id={buildNavigationLink(id)}>
+              {`Last time updated: ${formatDate(updatedAt)}`}
             </Typography>
 
-            <Typography align="left" id={buildNavigationLink(item?.id)}>
+            <Typography align="left" id={buildNavigationLink(id)}>
               {`Parents: `}
             </Typography>
             <Breadcrumbs maxItems={2} aria-label="breadcrumb">
               <Link color="inherit" to={ITEMS_PATH}>
                 All Items
               </Link>
-              {parents.map(({ name, id }) => (
-                <Link color="inherit" to={buildItemPath(id)}>
-                  {name}
+              {parents.map(({ name: itemName, id: parentId }) => (
+                <Link color="inherit" to={buildItemPath(parentId)}>
+                  {itemName}
                 </Link>
               ))}
             </Breadcrumbs>
@@ -140,28 +132,28 @@ const ItemScreen = () => {
           >
             <Tab
               label="Children"
-              id={`scrollable-prevent-tab-${0}`}
+              id={buildScrollableTabId(0)}
               aria-controls={`scrollable-prevent-tabpanel-${0}`}
             />
             <Tab
               label="Members"
-              id={`scrollable-prevent-tab-${1}`}
+              id={buildScrollableTabId(1)}
               aria-controls={`scrollable-prevent-tabpanel-${1}`}
             />
             <Tab
               label="Settings"
-              id={`scrollable-prevent-tab-${2}`}
+              id={buildScrollableTabId(2)}
               aria-controls={`scrollable-prevent-tabpanel-${2}`}
             />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          {children.length === 0 ? (
+          {children.isEmpty() ? (
             <Typography>No Children found</Typography>
           ) : (
             <ItemsTable
               empty={false}
-              items={List(children)}
+              items={children}
               id={buildChildrenItemsTableId(itemId)}
             />
           )}
@@ -169,13 +161,13 @@ const ItemScreen = () => {
         <TabPanel value={value} index={1}>
           <MembersTable
             empty={false}
-            members={List(members)}
+            members={members}
             id={buildMembersTableId(itemId)}
           />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Typography>Extra:</Typography>
-          <ReactJson src={item?.extra} />
+          <ReactJson src={extra} />
         </TabPanel>
       </div>
     </div>

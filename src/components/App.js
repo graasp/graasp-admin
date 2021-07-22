@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
+  ADMIN_PROFILE_PATH,
   buildItemPath,
   buildMemberPath,
   HOME_PATH,
@@ -11,7 +12,8 @@ import Main from './main/Main';
 import MembersView from './views/MembersView';
 import ItemsView from './views/ItemsView';
 import ItemScreen from './items/ItemScreen';
-import MemberScreen from './members/MemberScreen';
+import ProfileView from './views/ProfileView';
+import SingleMember from './members/SingleMember';
 
 function App() {
   return (
@@ -21,8 +23,9 @@ function App() {
           <Route path={HOME_PATH} exact component={MembersView} />
           <Route path={MEMBERS_PATH} exact component={MembersView} />
           <Route path={ITEMS_PATH} exact component={ItemsView} />
+          <Route path={ADMIN_PROFILE_PATH} exact component={ProfileView} />
           <Route path={buildItemPath()} component={ItemScreen} />
-          <Route path={buildMemberPath()} component={MemberScreen} />
+          <Route path={buildMemberPath()} component={SingleMember} />
         </Switch>
       </Main>
     </Router>

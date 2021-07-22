@@ -1,10 +1,17 @@
 import React from 'react';
-import { List } from 'immutable';
-import membersData from '../../data/membersData';
+import { Loader } from '@graasp/ui';
 import Members from '../members/Members';
+import { hooks } from '../../config/queryClient';
+
+const { useAllMembers } = hooks;
 
 const MembersView = () => {
-  return <Members title="All Members" items={List(membersData)} />;
+  const { data: allMembers, isLoading } = useAllMembers();
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  return <Members title="All Members" members={allMembers} />;
 };
 
 export default MembersView;
