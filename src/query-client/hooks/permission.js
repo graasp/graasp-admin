@@ -21,10 +21,10 @@ export default (queryClient, queryConfig) => {
         Api.getRolePermissions({ id: roleId }, queryConfig).then((data) =>
           List(data),
         ),
-      onSuccess: async (permissions) => {
+      onSuccess: (permissions) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        permissions?.forEach(async (permission) => {
+        permissions?.forEach((permission) => {
           const { id } = permission;
           queryClient.setQueryData(buildPermissionKey(id), Map(permission));
         });
@@ -43,18 +43,18 @@ export default (queryClient, queryConfig) => {
           });
           return List(dataImmutable);
         }),
-      onSuccess: async (permissions) => {
+      onSuccess: (permissions) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        permissions?.forEach(async (permission) => {
-          permission.forEach(async (p) => {
+        permissions?.forEach((permission) => {
+          permission.forEach((p) => {
             const { id } = p;
             queryClient.setQueryData(buildPermissionKey(id), List(permission));
           });
         });
       },
       ...defaultOptions,
-      enabled: Boolean(roleIds),
+      enabled: Boolean(roleIds) && roleIds.length,
     });
 
   return {

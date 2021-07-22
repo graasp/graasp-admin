@@ -38,10 +38,10 @@ export default (queryClient, queryConfig) => {
     useQuery({
       queryKey: ALL_MEMBERS_KEY,
       queryFn: () => Api.getAllMembers(queryConfig).then((data) => List(data)),
-      onSuccess: async (members) => {
+      onSuccess: (members) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        members?.forEach(async (member) => {
+        members?.forEach((member) => {
           const { id } = member;
           queryClient.setQueryData(buildMemberKey(id), Map(member));
         });
@@ -53,10 +53,10 @@ export default (queryClient, queryConfig) => {
     useQuery({
       queryKey: ALL_ADMINS_KEY,
       queryFn: () => Api.getAdmins(queryConfig).then((data) => List(data)),
-      onSuccess: async (members) => {
+      onSuccess: (members) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        members?.forEach(async (member) => {
+        members?.forEach((member) => {
           const { id } = member;
           queryClient.setQueryData(buildMemberKey(id), Map(member));
         });
@@ -71,10 +71,10 @@ export default (queryClient, queryConfig) => {
         Api.getMembersOfItem({ id: itemId }, queryConfig).then((data) =>
           List(data),
         ),
-      onSuccess: async (members) => {
+      onSuccess: (members) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
-        members?.forEach(async (member) => {
+        members?.forEach((member) => {
           const { id } = member;
           queryClient.setQueryData(buildMemberKey(id), Map(member));
         });
