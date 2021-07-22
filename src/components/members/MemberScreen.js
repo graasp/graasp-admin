@@ -42,7 +42,6 @@ const MemberScreen = ({ member }) => {
     isLoading: isLoadingRP,
   } = useRolesPermissions(currentRoles?.map((role) => role.id));
 
-  // console.log(rolesPermissions.flatten())
   if (isLoadingRoles || isLoadingRP) {
     return <Loader />;
   }
