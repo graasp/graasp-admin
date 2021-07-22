@@ -14,14 +14,14 @@ import { formatDate } from '../../utils/date';
 import { hooks } from '../../config/queryClient';
 import PermissionsTable from '../permissions/PermissionsTable';
 import ExpandableListItem from '../common/ExpandableListItem';
-import { MAX_WIDTH } from '../../config/constants';
+import { MAX_WIDTH_LIST } from '../../config/constants';
 
 const { useMembersRole, useRolesPermissions } = hooks;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  list: {
     width: '100%',
-    maxWidth: MAX_WIDTH,
+    maxWidth: MAX_WIDTH_LIST,
     backgroundColor: theme.palette.background.paper,
   },
   icon: {
@@ -42,6 +42,7 @@ const MemberScreen = ({ member }) => {
     isLoading: isLoadingRP,
   } = useRolesPermissions(currentRoles?.map((role) => role.id));
 
+  // console.log(rolesPermissions.flatten())
   if (isLoadingRoles || isLoadingRP) {
     return <Loader />;
   }
@@ -101,7 +102,7 @@ const MemberScreen = ({ member }) => {
             component="nav"
             aria-labelledby="nested-list-subheader"
             subheader={listTitle}
-            className={classes.root}
+            className={classes.list}
           >
             {currentRoles.map((role, index) => {
               const permissionsDescription = rolesPermissions

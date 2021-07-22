@@ -119,4 +119,4 @@ export const EMPTY_ROW_HEIGHT = 53;
 
 export const AUTO_COMPLETE_WIDTH = 300;
 
-export const MAX_WIDTH = 360;
+export const MAX_WIDTH_LIST = 360;

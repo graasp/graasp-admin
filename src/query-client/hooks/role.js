@@ -19,16 +19,15 @@ export default (queryClient, queryConfig) => {
     useQuery({
       queryKey: OWN_ROLES_KEY,
       queryFn: () => Api.getOwnRoles(queryConfig).then((data) => List(data)),
-      onSuccess: async (roles) => {
+      onSuccess: (roles) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
         if (roles) {
-          return roles?.forEach(async (role) => {
+          roles.forEach((role) => {
             const { id } = role;
             queryClient.setQueryData(buildRoleKey(id), Map(role));
           });
         }
-        return [];
       },
       ...defaultOptions,
     });
@@ -40,16 +39,15 @@ export default (queryClient, queryConfig) => {
         Api.getMemberRoles({ id: memberId }, queryConfig).then((data) =>
           List(data),
         ),
-      onSuccess: async (roles) => {
+      onSuccess: (roles) => {
         // save items in their own key
         // eslint-disable-next-line no-unused-expressions
         if (roles) {
-          return roles?.forEach(async (role) => {
+          roles.forEach((role) => {
             const { id } = role;
             queryClient.setQueryData(buildRoleKey(id), Map(role));
           });
         }
-        return [];
       },
       ...defaultOptions,
     });
