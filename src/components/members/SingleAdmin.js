@@ -16,9 +16,18 @@ import { hooks } from '../../config/queryClient';
 import MemberDetails from './MemberDetails';
 import Loader from '../common/Loader';
 import ExpandableListItem from '../common/ExpandableListItem';
-import PermissionsTable from '../permissions/PermissionsTable';
-import ItemsTable from '../items/ItemsTable';
-import { buildAdminPath } from '../../config/paths';
+import {
+  buildAdminPath,
+  buildItemPath,
+  buildPermissionPath,
+} from '../../config/paths';
+import {
+  itemHeadCells,
+  permissionHeadCells,
+  TABLE_TYPES,
+} from '../../config/constants';
+import CustomTable from '../common/CustomTable';
+import ItemIcon from '../items/ItemIcon';
 
 const {
   useMember,
@@ -84,10 +93,19 @@ const SingleAdmin = ({ admin }) => {
             <Typography className={classes.heading}>Items</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ItemsTable
-              id={`Member_${currentMember?.get('id')}_Item_Table`}
-              empty={false}
-              items={items}
+            <CustomTable
+              link={buildItemPath}
+              tableType={TABLE_TYPES.ITEM}
+              headCells={itemHeadCells}
+              tableTitle="Admin's Items"
+              rows={items}
+              checkBox
+              empty
+              icon={<ItemIcon />}
+              iconCell="name"
+              iconInfo={['name', 'extra', 'type']}
+              search
+              title
             />
           </AccordionDetails>
         </Accordion>
@@ -130,10 +148,16 @@ const SingleAdmin = ({ admin }) => {
                   );
                 })}
               </List>
-              <PermissionsTable
-                empty={false}
-                tableTitle={"Admin's Permissions"}
-                permissions={ListM(rolesPermissions.toArray().flat())}
+              <CustomTable
+                link={buildPermissionPath}
+                tableType={TABLE_TYPES.PERMISSION}
+                headCells={permissionHeadCells}
+                tableTitle="Admin's Permissions"
+                rows={ListM(rolesPermissions.toArray().flat())}
+                checkBox
+                empty
+                search
+                title
               />
             </Box>
           </AccordionDetails>

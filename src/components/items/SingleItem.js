@@ -11,19 +11,22 @@ import {
 } from '@material-ui/core';
 import ReactJson from 'react-json-view';
 import { Loader } from '@graasp/ui';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { buildItemPath, buildMemberPath, ITEMS_PATH } from '../../config/paths';
 import ItemIcon from './ItemIcon';
 import {
-  buildChildrenItemsTableId,
-  buildMembersTableId,
   buildNavigationLink,
   buildScrollableTabId,
 } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
 import TabPanel from '../common/TabPanel';
 import { hooks } from '../../config/queryClient';
-import ItemsTable from './ItemsTable';
-import MembersTable from '../members/MembersTable';
+import {
+  itemHeadCells,
+  memberHeadCell,
+  TABLE_TYPES,
+} from '../../config/constants';
+import CustomTable from '../common/CustomTable';
 
 const { useItem, useChildren, useItemMembers, useParents } = hooks;
 
@@ -151,18 +154,35 @@ const SingleItem = () => {
           {children.isEmpty() ? (
             <Typography>No Children found</Typography>
           ) : (
-            <ItemsTable
-              empty={false}
-              items={children}
-              id={buildChildrenItemsTableId(itemId)}
+            <CustomTable
+              link={buildItemPath}
+              tableType={TABLE_TYPES.ITEM}
+              headCells={itemHeadCells}
+              tableTitle="All Items"
+              rows={children}
+              checkBox
+              empty
+              icon={<ItemIcon />}
+              iconCell="name"
+              iconInfo={['name', 'extra', 'type']}
+              search
+              title
             />
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <MembersTable
-            empty={false}
-            members={members}
-            id={buildMembersTableId(itemId)}
+          <CustomTable
+            link={buildMemberPath}
+            tableType={TABLE_TYPES.MEMBER}
+            headCells={memberHeadCell}
+            tableTitle="All Members"
+            rows={members}
+            checkBox
+            empty
+            icon={<AccountCircleIcon />}
+            iconCell="name"
+            search
+            title
           />
         </TabPanel>
         <TabPanel value={value} index={2}>

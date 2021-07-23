@@ -203,3 +203,63 @@ export const adminsHeadCell = [
     type: ITEM_DATA_TYPES.DATE,
   },
 ];
+
+export const itemHeadCells = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Name',
+    align: 'left',
+  },
+  {
+    id: 'type',
+    numeric: false,
+    label: 'Type',
+    align: 'right',
+  },
+  {
+    id: 'ownerName',
+    numeric: false,
+    label: 'Owner',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+  {
+    id: 'updatedAt',
+    numeric: false,
+    label: 'Updated At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];
+
+export const permissionHeadCells = [
+  {
+    id: 'description',
+    numeric: false,
+    label: 'Description',
+    align: 'left',
+  },
+  {
+    id: 'endpoint',
+    numeric: false,
+    label: 'Endpoint',
+    align: 'left',
+  },
+  {
+    id: 'method',
+    numeric: false,
+    label: 'Method',
+    align: 'left',
+  },
+];
+
+export const AUTO_COMPLETE_WIDTH = 300;
+
+export const MAX_WIDTH_LIST = 360;

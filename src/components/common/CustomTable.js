@@ -85,6 +85,7 @@ const CustomTable = ({
   rows,
   headCells,
   tableTitle,
+  iconInfo,
   tableType,
   empty,
   search,
@@ -143,12 +144,22 @@ const CustomTable = ({
     const display = _.pick(row, allowed);
 
     if (iconCell) {
-      display[iconCell] = (
-        <span className={classes.iconAndName}>
-          {icon}
-          <span className={classes.itemName}>{display[iconCell]}</span>
-        </span>
-      );
+      if (iconInfo) {
+        const iconComponentProps = _.pick(row, iconInfo);
+        display[iconCell] = (
+          <span className={classes.iconAndName}>
+            {React.cloneElement(icon, iconComponentProps)}
+            <span className={classes.itemName}>{display[iconCell]}</span>
+          </span>
+        );
+      } else {
+        display[iconCell] = (
+          <span className={classes.iconAndName}>
+            {icon}
+            <span className={classes.itemName}>{display[iconCell]}</span>
+          </span>
+        );
+      }
     }
 
     if (arrayCell) {
@@ -363,6 +374,7 @@ CustomTable.propTypes = {
   search: PropTypes.bool,
   checkBox: PropTypes.bool,
   iconCell: PropTypes.string,
+  iconInfo: PropTypes.arrayOf(PropTypes.string),
   icon: PropTypes.node,
   headCells: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
   link: PropTypes.func.isRequired,
@@ -378,6 +390,7 @@ CustomTable.defaultProps = {
   title: false,
   checkBox: false,
   arrayCell: '',
+  iconInfo: [],
 };
 
 export default CustomTable;
