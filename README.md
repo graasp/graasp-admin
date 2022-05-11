@@ -1,1 +1,1 @@
-# graasp-compose
+# graasp-admin
