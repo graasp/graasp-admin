@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@graasp/ui": "git://github.com/graasp/graasp-ui.git",
+    "@graasp/ui": "github:graasp/graasp-ui.git",
     "@material-ui/core": "4.11.0",
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.56",
@@ -58,8 +58,10 @@
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
     "env-cmd": "10.1.0",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-config-prettier": "6.11.0",
+    "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-jsx-a11y": "6.3.1",
     "eslint-plugin-react": "7.20.6",
@@ -68,5 +70,6 @@
     "pretty-quick": "3.0.2",
     "standard-version": "9.0.0",
     "typescript": "4.0.2"
-  }
+  },
+  "packageManager": "yarn@3.2.0"
 }
