@@ -51,13 +51,13 @@ const CustomTableHead = (props) => {
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
+              {orderBy === headCell.id && (
                 <span className={classes.visuallyHidden}>
                   {order === ORDERING.DESC
                     ? t('sorted descending')
                     : t('sorted ascending')}
                 </span>
-              ) : null}
+              )}
             </TableSortLabel>
           </TableCell>
         ))}

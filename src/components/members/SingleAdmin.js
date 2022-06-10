@@ -5,11 +5,11 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  List,
+  List as ListComponent,
   Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { List as ListM, Map as MapM } from 'immutable';
+import { List, Map } from 'immutable';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { useRouteMatch } from 'react-router';
 import { hooks } from '../../config/queryClient';
@@ -63,7 +63,7 @@ const SingleAdmin = ({ admin }) => {
 
   const { data: member, isLoading } = useMember(adminId);
 
-  const currentMember = !admin ? member : admin;
+  const currentMember = admin || member;
 
   const { data: currentRoles, isLoading: isLoadingRoles } = useMembersRole(
     currentMember?.get('id'),
@@ -124,7 +124,7 @@ const SingleAdmin = ({ admin }) => {
               bgcolor="background.paper"
               className={classes.box}
             >
-              <List
+              <ListComponent
                 component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
@@ -147,13 +147,13 @@ const SingleAdmin = ({ admin }) => {
                     />
                   );
                 })}
-              </List>
+              </ListComponent>
               <CustomTable
                 link={buildPermissionPath}
                 tableType={TABLE_TYPES.PERMISSION}
                 headCells={permissionHeadCells}
                 tableTitle="Admin's Permissions"
-                rows={ListM(rolesPermissions.toArray().flat())}
+                rows={List(rolesPermissions.toArray().flat())}
                 checkBox
                 empty
                 search
@@ -168,7 +168,7 @@ const SingleAdmin = ({ admin }) => {
 };
 
 SingleAdmin.propTypes = {
-  admin: PropTypes.instanceOf(MapM),
+  admin: PropTypes.instanceOf(Map),
 };
 
 SingleAdmin.defaultProps = {

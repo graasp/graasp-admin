@@ -79,6 +79,10 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(0.5),
     },
   },
+  autoComplete: {
+    width: 300,
+    float: 'right',
+  },
 }));
 
 const CustomTable = ({
@@ -116,7 +120,7 @@ const CustomTable = ({
     .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
   useEffect(() => {
-    if (searchValue === '') {
+    if (!searchValue) {
       setFilteredRows(rows);
     } else {
       setFilteredRows(
@@ -140,26 +144,18 @@ const CustomTable = ({
   // transform filteredRows' information into displayable information
   const mappedRows = rowsToDisplay.map((row) => {
     const allowed = headCells.map((cell) => cell.id);
+    // TODO: this should be removed
     allowed.push('id');
     const display = _.pick(row, allowed);
 
     if (iconCell) {
-      if (iconInfo) {
-        const iconComponentProps = _.pick(row, iconInfo);
-        display[iconCell] = (
-          <span className={classes.iconAndName}>
-            {React.cloneElement(icon, iconComponentProps)}
-            <span className={classes.itemName}>{display[iconCell]}</span>
-          </span>
-        );
-      } else {
-        display[iconCell] = (
-          <span className={classes.iconAndName}>
-            {icon}
-            <span className={classes.itemName}>{display[iconCell]}</span>
-          </span>
-        );
-      }
+      const iconValue = iconInfo ? _.pick(row, iconInfo) : icon;
+      display[iconCell] = (
+        <span className={classes.iconAndName}>
+          {iconValue}
+          <span className={classes.itemName}>{display[iconCell]}</span>
+        </span>
+      );
     }
 
     if (arrayCell) {
@@ -224,16 +220,16 @@ const CustomTable = ({
     setSelected(newSelected);
   };
 
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+
   const handleClick = (event, id) => {
-    const checked = selected.indexOf(id) !== -1;
+    const checked = isSelected(id);
     if (checked) {
       removeItemsFromSelected([id]);
     } else {
       addItemsInSelected([id]);
     }
   };
-
-  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   return (
     <div className={classes.root}>
@@ -255,10 +251,9 @@ const CustomTable = ({
               onInputChange={(event, newValue) => {
                 setSearchValue(newValue);
               }}
-              id="controllable-states-demo"
               inputValue={searchValue}
               options={options}
-              style={{ width: 300, float: 'right' }}
+              className={classes.autoComplete}
               renderInput={(params) => (
                 <TextField
                   /* eslint-disable-next-line react/jsx-props-no-spreading */

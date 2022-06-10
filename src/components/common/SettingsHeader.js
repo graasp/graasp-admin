@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
-import truncate from 'lodash.truncate';
+import truncate from 'lodash';
 import { Menu, MenuItem } from '@material-ui/core';
 import { Loader } from '@graasp/ui';
 import { USERNAME_MAX_LENGTH } from '../../config/constants';

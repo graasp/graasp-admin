@@ -36,9 +36,6 @@ export const getRolesPermissions = async ({ ids }, config) => {
   return [];
 };
 
-export const getMembersRoles = async ({ ids }, config) => {
-  if (ids.size) {
-    return Promise.all(ids.map((id) => getMemberRoles({ id }, config)));
-  }
-  return [];
+export const getMembersRoles = ({ ids }, config) => {
+  return ids.map((id) => getMemberRoles({ id }, config));
 };
