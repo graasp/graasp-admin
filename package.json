@@ -10,6 +10,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "ag-grid-community": "27.3.0",
+    "ag-grid-react": "27.3.0",
     "clsx": "1.1.1",
     "crypto": "1.0.1",
     "http-status-code": "2.1.0",
