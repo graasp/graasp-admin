@@ -8447,7 +8447,6 @@ __metadata:
     husky: 4.3.0
     immutable: 4.0.0-rc.12
     lodash: 4.17.21
-    lodash.truncate: 4.4.2
     moment: 2.29.1
     momentjs: 2.0.0
     prettier: 2.1.2
@@ -11049,13 +11048,6 @@ __metadata:
   dependencies:
     lodash._reinterpolate: ^3.0.0
   checksum: 863e025478b092997e11a04e9d9e735875eeff1ffcd6c61742aa8272e3c2cddc89ce795eb9726c4e74cef5991f722897ff37df7738a125895f23fc7d12a7bb59
-  languageName: node
-  linkType: hard
-
-"lodash.truncate@npm:4.4.2":
-  version: 4.4.2
-  resolution: "lodash.truncate@npm:4.4.2"
-  checksum: b463d8a382cfb5f0e71c504dcb6f807a7bd379ff1ea216669aa42c52fc28c54e404bfbd96791aa09e6df0de2c1d7b8f1b7f4b1a61f324d38fe98bc535aeee4f5
   languageName: node
   linkType: hard
 
