@@ -1,5 +1,6 @@
 import env from '../env.json';
 import {
+  ITEM_DATA_TYPES,
   ITEM_LAYOUT_MODES,
   PERMISSION_LEVELS,
   UPLOAD_FILES_METHODS,
@@ -116,6 +117,145 @@ export const SETTINGS_ITEM_LOGIN_SIGN_IN_MODE_DEFAULT =
 export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
 export const EMPTY_ROW_HEIGHT = 53;
+
+export const TABLE_TYPES = {
+  MEMBER: 'member',
+  ITEM: 'item',
+  PERMISSION: 'permission',
+  ADMIN: 'admin',
+};
+
+export const memberHeadCell = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Name',
+    align: 'left',
+  },
+  {
+    id: 'email',
+    numeric: false,
+    label: 'Email',
+    align: 'right',
+  },
+  {
+    id: 'type',
+    numeric: false,
+    label: 'Type',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+  {
+    id: 'updatedAt',
+    numeric: false,
+    label: 'Updated At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];
+
+export const adminsHeadCell = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Name',
+    align: 'left',
+  },
+  {
+    id: 'roles',
+    numeric: false,
+    label: 'Roles',
+    align: 'center',
+  },
+  {
+    id: 'email',
+    numeric: false,
+    label: 'Email',
+    align: 'right',
+  },
+  {
+    id: 'type',
+    numeric: false,
+    label: 'Type',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+  {
+    id: 'updatedAt',
+    numeric: false,
+    label: 'Updated At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];
+
+export const itemHeadCells = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Name',
+    align: 'left',
+  },
+  {
+    id: 'type',
+    numeric: false,
+    label: 'Type',
+    align: 'right',
+  },
+  {
+    id: 'ownerName',
+    numeric: false,
+    label: 'Owner',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+  {
+    id: 'updatedAt',
+    numeric: false,
+    label: 'Updated At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];
+
+export const permissionHeadCells = [
+  {
+    id: 'description',
+    numeric: false,
+    label: 'Description',
+    align: 'left',
+  },
+  {
+    id: 'endpoint',
+    numeric: false,
+    label: 'Endpoint',
+    align: 'left',
+  },
+  {
+    id: 'method',
+    numeric: false,
+    label: 'Method',
+    align: 'left',
+  },
+];
 
 export const AUTO_COMPLETE_WIDTH = 300;
 

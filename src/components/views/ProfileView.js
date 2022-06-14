@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loader } from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
-import MemberScreen from '../members/MemberScreen';
+import SingleAdmin from '../members/SingleAdmin';
 
 const { useCurrentMember } = hooks;
 
@@ -12,7 +12,7 @@ const ProfileView = () => {
     return <Loader />;
   }
 
-  return <MemberScreen member={currentMember} />;
+  return <SingleAdmin admin={currentMember} />;
 };
 
 export default ProfileView;

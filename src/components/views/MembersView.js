@@ -1,7 +1,10 @@
 import React from 'react';
 import { Loader } from '@graasp/ui';
-import Members from '../members/Members';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { hooks } from '../../config/queryClient';
+import { buildMemberPath } from '../../config/paths';
+import { memberHeadCell, TABLE_TYPES } from '../../config/constants';
+import CustomTable from '../common/CustomTable';
 
 const { useAllMembers } = hooks;
 
@@ -11,7 +14,21 @@ const MembersView = () => {
   if (isLoading) {
     return <Loader />;
   }
-  return <Members title="All Members" members={allMembers} />;
+  return (
+    <CustomTable
+      link={buildMemberPath}
+      tableType={TABLE_TYPES.MEMBER}
+      headCells={memberHeadCell}
+      tableTitle="All Members"
+      rows={allMembers}
+      checkBox
+      empty
+      icon={<AccountCircleIcon />}
+      iconCell="name"
+      search
+      title
+    />
+  );
 };
 
 export default MembersView;

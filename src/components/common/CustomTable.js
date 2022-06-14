@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
+import _ from 'lodash';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import { useHistory } from 'react-router';
-import { useTranslation } from 'react-i18next';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -12,25 +11,24 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { TextField } from '@material-ui/core';
+import { Checkbox, Chip, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { buildItemPath } from '../../config/paths';
-import { ORDERING, ITEM_DATA_TYPES, ITEM_TYPES } from '../../enums';
+import { useHistory } from 'react-router';
+import { ORDERING, ITEM_DATA_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
-import ItemIcon from './ItemIcon';
-import TableHead from '../common/TableHead';
+import TableHead from './TableHead';
 import {
-  buildItemsTableRowId,
-  buildItemsTableTitle,
+  buildTableCheckBox,
+  buildTableId,
+  buildTableRowId,
+  buildTableTitle,
   ITEMS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
 import {
-  AUTO_COMPLETE_WIDTH,
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../config/constants';
-import { getShortcutTarget } from '../../utils/itemExtra';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,52 +37,87 @@ const useStyles = makeStyles((theme) => ({
   toolbarDiv: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: theme.spacing(1),
+    alignPermissions: 'center',
+    margin: theme.spacing(2),
   },
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
   },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
+  },
   selected: {
-    backgroundColor: `${lighten(theme.palette.primary.main, 0.85)} !important`,
+    backgroundColor: `${lighten(
+      theme.palette.primary.selected,
+      0.85,
+    )} !important`,
   },
   hover: {
     cursor: 'pointer',
   },
   iconAndName: {
     display: 'flex',
-    alignItems: 'center',
+    alignPermissions: 'center',
   },
   itemName: {
     paddingLeft: theme.spacing(1),
   },
+  arrayCell: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
   autoComplete: {
-    width: AUTO_COMPLETE_WIDTH,
+    width: 300,
     float: 'right',
   },
 }));
 
-const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
+const CustomTable = ({
+  rows,
+  headCells,
+  tableTitle,
+  iconInfo,
+  tableType,
+  empty,
+  search,
+  link,
+  icon,
+  iconCell,
+  title,
+  checkBox,
+  arrayCell,
+}) => {
   const classes = useStyles();
-  const { t } = useTranslation();
   const { push } = useHistory();
-  const [filteredRows, setFilteredRows] = useState(rows);
   const [order, setOrder] = React.useState(ORDERING.DESC);
+  const [filteredRows, setFilteredRows] = useState(rows);
   const [orderBy, setOrderBy] = React.useState('updatedAt');
   const [selected, setSelected] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(
     ROWS_PER_PAGE_OPTIONS[0],
   );
+
   const options = filteredRows
     .toArray()
     .map((item) => {
       return item.name;
     })
     .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
-
-  const [searchValue, setSearchValue] = React.useState('');
 
   useEffect(() => {
     if (!searchValue) {
@@ -98,70 +131,44 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
     }
   }, [rows, searchValue]);
 
-  const headCells = [
-    {
-      id: 'name',
-      numeric: false,
-      label: t('Name'),
-      align: 'left',
-    },
-    {
-      id: 'type',
-      numeric: false,
-      label: t('Type'),
-      align: 'right',
-    },
-    {
-      id: 'ownerName',
-      numeric: false,
-      label: t('Owner'),
-      align: 'right',
-    },
-    {
-      id: 'createdAt',
-      numeric: false,
-      label: t('Created At'),
-      align: 'right',
-      type: ITEM_DATA_TYPES.DATE,
-    },
-    {
-      id: 'updatedAt',
-      numeric: false,
-      label: t('Updated At'),
-      align: 'right',
-      type: ITEM_DATA_TYPES.DATE,
-    },
-  ];
-
   // display empty rows to maintain the table height
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.size - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, filteredRows.size - page * rowsPerPage);
 
   // order and select rows to display given the current page and the number of entries displayed
   const rowsToDisplay = getRowsForPage(
-    stableSort(rows, getComparator(order, orderBy)),
+    stableSort(filteredRows, getComparator(order, orderBy)),
     { page, rowsPerPage },
   );
 
-  // transform rows' information into displayable information
-  const mappedRows = rowsToDisplay.map((item) => {
-    const { id, updatedAt, name, createdAt, type, extra, ownerName } = item;
-    const nameAndIcon = (
-      <span className={classes.iconAndName}>
-        <ItemIcon type={type} extra={extra} name={name} />
-        <span className={classes.itemName}>{name}</span>
-      </span>
-    );
+  // transform filteredRows' information into displayable information
+  const mappedRows = rowsToDisplay.map((row) => {
+    const allowed = headCells.map((cell) => cell.id);
+    // TODO: this should be removed
+    allowed.push('id');
+    const display = _.pick(row, allowed);
 
-    return {
-      id,
-      name: nameAndIcon,
-      type,
-      ownerName,
-      updatedAt,
-      createdAt,
-      extra,
-    };
+    if (iconCell) {
+      const iconValue = iconInfo ? _.pick(row, iconInfo) : icon;
+      display[iconCell] = (
+        <span className={classes.iconAndName}>
+          {iconValue}
+          <span className={classes.itemName}>{display[iconCell]}</span>
+        </span>
+      );
+    }
+
+    if (arrayCell) {
+      display[arrayCell] = (
+        <div className={classes.arrayCell}>
+          {display[arrayCell].map((d) => (
+            <Chip size="small" label={d} />
+          ))}
+        </div>
+      );
+    }
+
+    return display;
   });
 
   const handleRequestSort = (event, property) => {
@@ -189,14 +196,8 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
     setPage(0);
   };
 
-  const handleOnClickRow = ({ id, type, extra }) => {
-    let targetId = id;
-
-    // redirect to target if shortcut
-    if (type === ITEM_TYPES.SHORTCUT) {
-      targetId = getShortcutTarget(extra);
-    }
-    push(buildItemPath(targetId));
+  const handleOnClickRow = ({ id }) => {
+    push(link(id));
   };
 
   // format entry data given type
@@ -209,43 +210,65 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
     }
   };
 
+  const removeItemsFromSelected = (items) => {
+    const newSelected = selected.filter((id) => !items.includes(id));
+    setSelected(newSelected);
+  };
+
+  const addItemsInSelected = (items) => {
+    const newSelected = selected.concat(items);
+    setSelected(newSelected);
+  };
+
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+
+  const handleClick = (event, id) => {
+    const checked = isSelected(id);
+    if (checked) {
+      removeItemsFromSelected([id]);
+    } else {
+      addItemsInSelected([id]);
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
         <div className={classes.toolbarDiv}>
-          {tableTitle && (
+          {title && (
             <Typography
-              className={classes.title}
               variant="h6"
-              id={buildItemsTableTitle(tableTitle)}
+              id={buildTableTitle(tableType, tableTitle)}
               component="div"
             >
               {tableTitle}
             </Typography>
           )}
-          <Autocomplete
-            value={searchValue}
-            className={classes.autoComplete}
-            freeSolo
-            onInputChange={(event, newValue) => {
-              setSearchValue(newValue);
-            }}
-            inputValue={searchValue}
-            options={options}
-            renderInput={(params) => (
-              <TextField
-                /* eslint-disable-next-line react/jsx-props-no-spreading */
-                {...params}
-                margin="dense"
-                label="Search"
-                variant="outlined"
-              />
-            )}
-          />
+          {search && (
+            <Autocomplete
+              value={searchValue}
+              freeSolo
+              onInputChange={(event, newValue) => {
+                setSearchValue(newValue);
+              }}
+              inputValue={searchValue}
+              options={options}
+              className={classes.autoComplete}
+              renderInput={(params) => (
+                <TextField
+                  /* eslint-disable-next-line react/jsx-props-no-spreading */
+                  {...params}
+                  margin="dense"
+                  label="Search"
+                  variant="outlined"
+                />
+              )}
+            />
+          )}
         </div>
         <TableContainer>
           <Table
-            id={tableId}
+            id={buildTableId(tableType, tableTitle)}
             aria-labelledby="tableTitle"
             size="medium"
             aria-label="enhanced table"
@@ -257,25 +280,40 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={filteredRows.size}
+              rowCount={rows.size}
               headCells={headCells}
+              checkBox={checkBox}
             />
             <TableBody>
               {mappedRows.map((row, index) => {
+                const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
-                    id={buildItemsTableRowId(row.id)}
+                    id={buildTableRowId(tableType, tableTitle, row.id)}
                     hover
                     role="checkbox"
+                    aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={row.id}
+                    selected={isItemSelected}
                     classes={{
                       hover: classes.hover,
                       selected: classes.selected,
                     }}
                   >
+                    {checkBox && (
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          className={buildTableCheckBox(tableType)}
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={(event) => handleClick(event, row.id)}
+                          color="primary"
+                        />
+                      </TableCell>
+                    )}
                     {headCells.map(({ id: field, align, type }, idx) => (
                       <TableCell
                         key={field}
@@ -297,7 +335,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
                   </TableRow>
                 );
               })}
-              {emptyRows > 0 && empty && (
+              {emptyRows > 0 && !empty && (
                 <TableRow
                   id={ITEMS_TABLE_EMPTY_ROW_ID}
                   style={{ height: EMPTY_ROW_HEIGHT * emptyRows }}
@@ -311,7 +349,7 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
         <TablePagination
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
-          count={filteredRows.size}
+          count={rows.size}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -322,18 +360,32 @@ const ItemsTable = ({ items: rows, tableTitle, id: tableId, empty }) => {
   );
 };
 
-ItemsTable.propTypes = {
-  items: PropTypes.instanceOf(List),
-  tableTitle: PropTypes.string,
-  id: PropTypes.string,
+CustomTable.propTypes = {
+  rows: PropTypes.instanceOf(List),
+  title: PropTypes.bool,
+  tableTitle: PropTypes.string.isRequired,
+  tableType: PropTypes.string.isRequired,
   empty: PropTypes.bool,
+  search: PropTypes.bool,
+  checkBox: PropTypes.bool,
+  iconCell: PropTypes.string,
+  iconInfo: PropTypes.arrayOf(PropTypes.string),
+  icon: PropTypes.node,
+  headCells: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
+  link: PropTypes.func.isRequired,
+  arrayCell: PropTypes.string,
 };
 
-ItemsTable.defaultProps = {
-  id: '',
-  items: List(),
-  empty: true,
-  tableTitle: '',
+CustomTable.defaultProps = {
+  rows: List(),
+  empty: false,
+  search: false,
+  iconCell: '',
+  icon: null,
+  title: false,
+  checkBox: false,
+  arrayCell: '',
+  iconInfo: [],
 };
 
-export default ItemsTable;
+export default CustomTable;

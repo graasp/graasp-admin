@@ -4,13 +4,19 @@ import ListItem from '@material-ui/core/ListItem';
 import PollIcon from '@material-ui/icons/Poll';
 import FolderIcon from '@material-ui/icons/Folder';
 import PeopleIcon from '@material-ui/icons/People';
+import PersonIcon from '@material-ui/icons/Person';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import PersonIcon from '@material-ui/icons/Person';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router';
 import List from '@material-ui/core/List';
-import { ADMIN_PROFILE_PATH, HOME_PATH, ITEMS_PATH } from '../../config/paths';
+import {
+  ADMIN_PROFILE_PATH,
+  ADMINS_PATH,
+  HOME_PATH,
+  ITEMS_PATH,
+} from '../../config/paths';
 
 const MainMenu = () => {
   const { t } = useTranslation();
@@ -34,6 +40,17 @@ const MainMenu = () => {
         </ListItemIcon>
 
         <ListItemText primary={t('Members')} />
+      </ListItem>
+      <ListItem
+        button
+        onClick={() => goTo(ADMINS_PATH)}
+        selected={pathname === ADMINS_PATH}
+      >
+        <ListItemIcon>
+          <SupervisedUserCircleIcon />
+        </ListItemIcon>
+
+        <ListItemText primary={t('Admins')} />
       </ListItem>
       <ListItem
         button

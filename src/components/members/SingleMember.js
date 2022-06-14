@@ -1,12 +1,13 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router';
 import { Loader } from '@graasp/ui';
-import MemberScreen from './MemberScreen';
-import { buildMemberPath } from '../../config/paths';
+import MemberDetails from './MemberDetails';
+import { buildItemPath, buildMemberPath } from '../../config/paths';
 
 import { hooks } from '../../config/queryClient';
-import ItemsTable from '../items/ItemsTable';
-import { buildMembersTableId } from '../../config/selectors';
+import { itemHeadCells, TABLE_TYPES } from '../../config/constants';
+import ItemIcon from '../items/ItemIcon';
+import CustomTable from '../common/CustomTable';
 
 const { useMember, useMemberItems } = hooks;
 const SingleMember = () => {
@@ -21,11 +22,20 @@ const SingleMember = () => {
   }
   return (
     <>
-      <MemberScreen member={member} />
-      <ItemsTable
-        id={buildMembersTableId(memberId)}
-        empty={false}
-        items={items}
+      <MemberDetails member={member} />
+      <CustomTable
+        link={buildItemPath}
+        tableType={TABLE_TYPES.ITEM}
+        headCells={itemHeadCells}
+        tableTitle="All Items"
+        rows={items}
+        checkBox
+        empty
+        icon={<ItemIcon />}
+        iconCell="name"
+        iconInfo={['name', 'extra', 'type']}
+        search
+        title
       />
     </>
   );
