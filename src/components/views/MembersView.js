@@ -6,10 +6,10 @@ import { buildMemberPath } from '../../config/paths';
 import { memberHeadCell, TABLE_TYPES } from '../../config/constants';
 import CustomTable from '../common/CustomTable';
 
-const { useAllMembers } = hooks;
+const { useMembers } = hooks;
 
 const MembersView = () => {
-  const { data: allMembers, isLoading } = useAllMembers();
+  const { data: allMembers, isLoading } = useMembers();
 
   if (isLoading) {
     return <Loader />;

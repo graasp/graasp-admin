@@ -13,6 +13,7 @@ const {
   SHOW_NOTIFICATIONS: ENV_SHOW_NOTIFICATIONS,
   AUTHENTICATION_HOST: ENV_AUTHENTICATION_HOST,
   NODE_ENV: ENV_NODE_ENV,
+  DOMAIN: ENV_DOMAIN,
 } = env;
 
 export const APP_NAME = 'Graasp Admin Panel';
@@ -260,3 +261,9 @@ export const permissionHeadCells = [
 export const AUTO_COMPLETE_WIDTH = 300;
 
 export const MAX_WIDTH_LIST = 360;
+
+export const DOMAIN = ENV_DOMAIN || process.env.REACT_APP_DOMAIN;
+
+export const CATEGORY_CHIP_HEIGHT = 50;
+export const CATEGORY_BUTTON_HEIGHT = 50;
+export const CATEGORY_SELECT_WIDTH = 200;
