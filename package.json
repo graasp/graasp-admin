@@ -8,6 +8,7 @@
     "@graasp/ui": "github:graasp/graasp-ui.git",
     "@graasp/utils": "github:graasp/graasp-utils.git",
     "@material-ui/core": "4.12.3",
+    "@material-ui/data-grid": "4.0.0-alpha.37",
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.56",
     "@testing-library/jest-dom": "^4.2.4",

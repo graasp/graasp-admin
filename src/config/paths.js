@@ -11,3 +11,8 @@ export const buildItemPath = (id = ':itemId') => `${ITEMS_PATH}/${id}`;
 export const buildMemberPath = (id = ':memberId') => `${MEMBERS_PATH}/${id}`;
 export const buildAdminPath = (id = ':adminId') => `${ADMINS_PATH}/${id}`;
 export const buildPermissionPath = (id = ':adminId') => `${ADMINS_PATH}/${id}`;
+export const buildValidationPath = (
+  validationId = ':validationId',
+  itemId = ':itemId',
+  reviewId = ':reviewId',
+) => `${VALIDATIONS_PATH}/${validationId}/${itemId}/${reviewId}`;

@@ -74,9 +74,17 @@ const CategoriesView = () => {
   }
 
   // eslint-disable-next-line no-multi-assign
-  const handleDelete = (id) => () => {
-    // TODO: delete corresponding id entry in table
-    console.log(id);
+  const handleDelete = (id, table) => () => {
+    switch (table) {
+      case 'category_type':
+        // TODO: use mutation deleteCategoryType(id)
+        break;
+      case 'category':
+        // TODO: use mutation deleteCategory(id)
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSelect = (event) => {
@@ -92,12 +100,12 @@ const CategoriesView = () => {
   };
 
   const addCategoryType = () => {
-    // Add new category type to DB
+    // TODO: use mutation addCategoryType(name)
     console.log(newCategoryType);
   };
 
   const addCategory = () => {
-    // Add new category to DB
+    // TODO: use mutation addCategory(name, typeId)
     console.log(newCategory);
   };
 
@@ -110,7 +118,7 @@ const CategoriesView = () => {
         {allCategoryTypes?.map((type) => (
           <Chip
             label={type?.name}
-            onDelete={handleDelete(type.id)}
+            onDelete={handleDelete(type.id, 'category_type')}
             className={classes.chip}
             color="primary"
           />
@@ -143,7 +151,7 @@ const CategoriesView = () => {
           {categoriesByTypes?.get(type?.id)?.map((category) => (
             <Chip
               label={category?.name}
-              onDelete={handleDelete(category.id)}
+              onDelete={handleDelete(category.id, 'category')}
               className={classes.chip}
             />
           ))}

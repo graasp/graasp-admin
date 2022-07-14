@@ -7,6 +7,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import PersonIcon from '@material-ui/icons/Person';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import CategoryIcon from '@material-ui/icons/Category';
+import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,7 @@ import {
   HOME_PATH,
   ITEMS_PATH,
   CATEGORIES_PATH,
+  VALIDATIONS_PATH,
 } from '../../config/paths';
 
 const MainMenu = () => {
@@ -73,6 +75,16 @@ const MainMenu = () => {
           <CategoryIcon />
         </ListItemIcon>
         <ListItemText primary={t('Categories')} />
+      </ListItem>
+      <ListItem
+        button
+        onClick={() => goTo(VALIDATIONS_PATH)}
+        selected={pathname === VALIDATIONS_PATH}
+      >
+        <ListItemIcon>
+          <LibraryAddCheckIcon />
+        </ListItemIcon>
+        <ListItemText primary={t('Validations')} />
       </ListItem>
       <ListItem
         button
