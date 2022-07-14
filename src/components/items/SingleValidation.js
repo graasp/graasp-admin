@@ -58,11 +58,14 @@ const SingleValidation = () => {
     ivStatuses?.map((entry) => [entry?.id, entry?.name]),
   );
 
+  // TODO: get a map of process id to process name
+
   if (ivGroupsLoading) {
     return <Loader />;
   }
 
   // convert statusId to status name
+  // TODO also add an entry of process name using process id map
   const itemValidationGroups = ivGroups?.map((ivGroup) => {
     const newEntry = {
       status: ivStatusesMap.get(ivGroup?.statusId),
