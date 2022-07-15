@@ -19,6 +19,7 @@ import {
   CATEGORY_CHIP_HEIGHT,
   CATEGORY_SELECT_WIDTH,
 } from '../../config/constants';
+import ConfirmationDialog from '../common/ConfirmationDialog';
 
 const { useCategoryTypes, useCategories } = hooks;
 
@@ -68,23 +69,38 @@ const CategoriesView = () => {
   const [newCategoryType, setNewCategoryType] = useState(null);
   const [newCategory, setNewCategory] = useState(null);
   const [selectedCategoryType, setSelectedCategoryType] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [table, setTable] = useState(false);
+  const [id, setId] = useState(false);
 
   if (isLoading) {
     return <Loader />;
   }
 
   // eslint-disable-next-line no-multi-assign
-  const handleDelete = (id, table) => () => {
+  const handleDelete = () => {
     switch (table) {
       case 'category_type':
         // TODO: use mutation deleteCategoryType(id)
+        console.log(id, table);
         break;
       case 'category':
         // TODO: use mutation deleteCategory(id)
+        console.log(id, table);
         break;
       default:
         break;
     }
+    // close dialog
+    setOpen(false);
+  };
+
+  const handleDeleteButtonClick = (entryId, tableName) => () => {
+    // set id and table name of the entry to be deleted
+    setTable(tableName);
+    setId(entryId);
+    // open confirmation dialog
+    setOpen(true);
   };
 
   const handleSelect = (event) => {
@@ -118,7 +134,7 @@ const CategoriesView = () => {
         {allCategoryTypes?.map((type) => (
           <Chip
             label={type?.name}
-            onDelete={handleDelete(type.id, 'category_type')}
+            onDelete={handleDeleteButtonClick(type.id, 'category_type')}
             className={classes.chip}
             color="primary"
           />
@@ -151,7 +167,7 @@ const CategoriesView = () => {
           {categoriesByTypes?.get(type?.id)?.map((category) => (
             <Chip
               label={category?.name}
-              onDelete={handleDelete(category.id, 'category')}
+              onDelete={handleDeleteButtonClick(category.id, 'category')}
               className={classes.chip}
             />
           ))}
@@ -188,6 +204,13 @@ const CategoriesView = () => {
           Save
         </Button>
       </div>
+      <ConfirmationDialog
+        title="Confirmation of Deletion"
+        content="Are you sure to delete this entry?"
+        open={open}
+        setOpen={setOpen}
+        handleSubmit={handleDelete}
+      />
     </div>
   );
 };
