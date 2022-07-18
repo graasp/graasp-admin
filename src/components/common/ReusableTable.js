@@ -74,6 +74,7 @@ const ReusableTable = ({
   empty,
   icon,
   elementType,
+  headCells,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -107,41 +108,6 @@ const ReusableTable = ({
       );
     }
   }, [rows, searchValue]);
-
-  const headCells = [
-    {
-      id: 'name',
-      numeric: false,
-      label: 'Name',
-      align: 'left',
-    },
-    {
-      id: 'email',
-      numeric: false,
-      label: 'Email',
-      align: 'right',
-    },
-    {
-      id: 'createdAt',
-      numeric: false,
-      label: 'Created At',
-      align: 'right',
-      type: ITEM_DATA_TYPES.DATE,
-    },
-    {
-      id: 'updatedAt',
-      numeric: false,
-      label: 'Updated At',
-      align: 'right',
-      type: ITEM_DATA_TYPES.DATE,
-    },
-    // {
-    //   id: 'actions',
-    //   numeric: false,
-    //   label: 'Actions',
-    //   align: 'right',
-    // },
-  ];
 
   // display empty rows to maintain the table height
   const emptyRows =
@@ -349,6 +315,7 @@ ReusableTable.propTypes = {
   empty: PropTypes.bool,
   icon: PropTypes.string,
   elementType: PropTypes.string,
+  headCells: PropTypes.instanceOf(Array),
 };
 
 ReusableTable.defaultProps = {
@@ -358,6 +325,7 @@ ReusableTable.defaultProps = {
   empty: true,
   icon: '',
   elementType: '',
+  headCells: List(),
 };
 
 export default ReusableTable;

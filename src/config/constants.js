@@ -277,7 +277,63 @@ export const environmentHeadCells = [
     align: 'right',
   },
 ];
+export const organizationsHeadCells = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Name',
+    align: 'left',
+  },
+  {
+    id: 'email',
+    numeric: false,
+    label: 'Email',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+  {
+    id: 'updatedAt',
+    numeric: false,
+    label: 'Updated At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];
 
+export const projectsHeadCells = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'Name',
+    align: 'left',
+  },
+  {
+    id: 'email',
+    numeric: false,
+    label: 'Email',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+  {
+    id: 'updatedAt',
+    numeric: false,
+    label: 'Updated At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];
 export const AUTO_COMPLETE_WIDTH = 300;
 
 export const MAX_WIDTH_LIST = 360;
