@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, ListItem, ListItemText } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import {
+  Collapse,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
+import { ArrowRight, ExpandLess, ExpandMore } from '@material-ui/icons';
 import List from '@material-ui/core/List';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { useHistory, useLocation } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -11,10 +17,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ExpandableListItem = ({ itemName, content }) => {
+const ExpandableListItem = ({ itemName, icon, content, paths }) => {
   const classes = useStyles();
+  const { push } = useHistory();
+  const { pathname } = useLocation();
 
   const [open, setOpen] = React.useState(false);
+  const goTo = (path) => {
+    push(path);
+  };
 
   const handleClick = () => {
     setOpen(!open);
@@ -23,15 +34,26 @@ const ExpandableListItem = ({ itemName, content }) => {
   return (
     <>
       <ListItem button onClick={handleClick}>
+        <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={itemName} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {content.map((e) => {
+        <List disablePadding dense>
+          {content.map((e, index) => {
+            const path = paths[index];
             return (
-              <ListItem button className={classes.nested}>
-                <ListItemText primary={e} />
+              <ListItem
+                button
+                key={e}
+                className={classes.nested}
+                onClick={() => goTo(path)}
+                selected={pathname.match(path)}
+              >
+                <ListItemIcon>
+                  <ArrowRight />
+                </ListItemIcon>
+                <ListItemText primary={e} dense />
               </ListItem>
             );
           })}
@@ -43,7 +65,9 @@ const ExpandableListItem = ({ itemName, content }) => {
 
 ExpandableListItem.propTypes = {
   itemName: PropTypes.string.isRequired,
+  icon: PropTypes.element.isRequired,
   content: PropTypes.arrayOf(PropTypes.string).isRequired,
+  paths: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ExpandableListItem;
