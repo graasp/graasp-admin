@@ -257,6 +257,27 @@ export const permissionHeadCells = [
   },
 ];
 
+export const environmentHeadCells = [
+  {
+    id: 'repository',
+    numeric: false,
+    label: 'Repository',
+    align: 'left',
+  },
+  {
+    id: 'version',
+    numeric: false,
+    label: 'Version',
+    align: 'right',
+  },
+  {
+    id: 'actions',
+    numeric: false,
+    label: 'Actions',
+    align: 'right',
+  },
+];
+
 export const AUTO_COMPLETE_WIDTH = 300;
 
 export const MAX_WIDTH_LIST = 360;
