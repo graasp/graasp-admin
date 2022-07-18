@@ -1,55 +1,41 @@
 import React from 'react';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
-import { hooks } from '../../config/queryClient';
-import Loader from '../common/Loader';
-import { buildAdminPath } from '../../config/paths';
-import { adminsHeadCell, TABLE_TYPES } from '../../config/constants';
-import CustomTable from '../common/CustomTable';
+// import { hooks } from '../../config/queryClient';
+// import Loader from '../common/Loader';
 import Admins from '../admins/Admins';
 
-const { useAllAdmins } = hooks;
+// const { useAllAdmins } = hooks;
 
 const AdminsView = () => {
-  const { data: allMember, isLoading } = useAllAdmins();
+  // const { data: allMember, isLoading } = useAllAdmins();
   const { t } = useTranslation();
 
-  const admins = [
+  const mockAdmins = [
     {
       id: '1234',
-      name: 'HUB4S',
-      type: 'org',
+      name: 'admin1',
+      roles: 'admin',
       updatedAt: '2022-01-01',
       createdAt: '2022-01-01',
       email: 'HUN4S@graasp.org',
+      type: 'individual',
     },
     {
-      id: '1235',
-      name: 'GRAASP',
-      type: 'org',
+      id: '12345',
+      name: 'admin2',
+      roles: 'admin',
       updatedAt: '2022-01-01',
       createdAt: '2022-01-01',
-      email: 'graasp@graasp.org',
+      email: 'HUN4S@graasp.org',
+      type: 'individual',
     },
   ];
-  if (isLoading) {
-    return <Loader />;
-  }
-  // return (
-  // <CustomTable
-  //   link={buildAdminPath}
-  //   tableType={TABLE_TYPES.MEMBER}
-  //   headCells={adminsHeadCell}
-  //   tableTitle="All Admins"
-  //   rows={allMember}
-  //   checkBox
-  //   empty
-  //   icon={<AccountCircleIcon />}
-  //   iconCell="name"
-  //   arrayCell="roles"
-  // />
-  // );
-  return <Admins title={t('All Admins')} admins={admins} elementType="admin" />;
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
+  return (
+    <Admins title={t('All Admins')} admins={mockAdmins} elementType="admin" />
+  );
 };
 
 export default AdminsView;

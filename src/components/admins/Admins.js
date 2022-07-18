@@ -4,12 +4,10 @@ import { List } from 'immutable';
 // import { makeStyles, Toolbar, Typography } from '@material-ui/core';
 import { SupervisedUserCircle } from '@material-ui/icons';
 import ReusableTable from '../common/ReusableTable';
-// import NewElementButton from '../main/NewElementButton';
-
-// const useStyles = makeStyles(() => ({}));
+import { adminsHeadCell } from '../../config/constants';
 
 const Admins = ({ admins, title, id, elementType }) => {
-  // const classes = useStyles();
+  const headCells = adminsHeadCell;
 
   return (
     <>
@@ -19,6 +17,7 @@ const Admins = ({ admins, title, id, elementType }) => {
         tableTitle={title}
         icon={<SupervisedUserCircle />}
         elementType={elementType}
+        headCells={headCells}
       />
     </>
   );

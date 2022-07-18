@@ -152,7 +152,7 @@ const CustomTable = ({
     const display = _.pick(row, allowed);
 
     if (iconCell) {
-      const iconValue = iconInfo ? _.pick(row, iconInfo) : icon;
+      // const iconValue = iconInfo ? _.pick(row, iconInfo) : icon;
       display[iconCell] = (
         <span className={classes.iconAndName}>
           {icon}

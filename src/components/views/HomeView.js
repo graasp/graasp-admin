@@ -1,6 +1,5 @@
 import { Grid, makeStyles, Paper } from '@material-ui/core';
 import React from 'react';
-import PeopleIcon from '@material-ui/icons/People';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import FolderIcon from '@material-ui/icons/Folder';
 import {

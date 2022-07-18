@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
-// import { makeStyles, Toolbar, Typography } from '@material-ui/core';
 import { PeopleOutline } from '@material-ui/icons';
 import ReusableTable from '../common/ReusableTable';
-// import NewElementButton from '../main/NewElementButton';
-
-// const useStyles = makeStyles(() => ({}));
+import { organizationsHeadCells } from '../../config/constants';
 
 const Organizations = ({ organizations, title, id, elementType }) => {
-  // const classes = useStyles();
+  const headCells = organizationsHeadCells;
 
   return (
     <>
@@ -19,6 +16,7 @@ const Organizations = ({ organizations, title, id, elementType }) => {
         tableTitle={title}
         icon={<PeopleOutline />}
         elementType={elementType}
+        headCells={headCells}
       />
     </>
   );
