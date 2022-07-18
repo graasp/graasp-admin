@@ -42,6 +42,12 @@ export const buildDeleteRolePermission = (id) =>
 export const ALL_PERMISSIONS_ROUTE = `${PERMISSIONS_ROUTE}/all`;
 export const OWN_PERMISSIONS_ROUTE = `${PERMISSIONS_ROUTE}/own`;
 
+// environments routes
+export const buildGetApiResourcesRoute = (environment) =>
+  `https://api.github.com/repos/graasp/graasp-deploy/contents/deployed/current-${environment}-versions.json`;
+export const buildRepositoryPath = (repository) =>
+  `https://www.github.com/${repository}`;
+
 export const API_ROUTES = {
   ALL_ADMINS_ROUTE,
   ALL_ITEMS_ROUTE,
