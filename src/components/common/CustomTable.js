@@ -4,6 +4,8 @@ import { List } from 'immutable';
 import _ from 'lodash';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import { useHistory } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -13,7 +15,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Checkbox, Chip, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { useHistory } from 'react-router';
 import { ORDERING, ITEM_DATA_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
@@ -24,6 +25,7 @@ import {
   buildTableRowId,
   buildTableTitle,
   ITEMS_TABLE_EMPTY_ROW_ID,
+  MEMBERS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
 import {
   EMPTY_ROW_HEIGHT,
@@ -101,6 +103,7 @@ const CustomTable = ({
   arrayCell,
 }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const { push } = useHistory();
   const [order, setOrder] = React.useState(ORDERING.DESC);
   const [filteredRows, setFilteredRows] = useState(rows);
@@ -113,7 +116,7 @@ const CustomTable = ({
   );
 
   const options = filteredRows
-    .toArray()
+    // .toArray()
     .map((item) => {
       return item.name;
     })
@@ -152,7 +155,7 @@ const CustomTable = ({
       const iconValue = iconInfo ? _.pick(row, iconInfo) : icon;
       display[iconCell] = (
         <span className={classes.iconAndName}>
-          {iconValue}
+          {icon}
           <span className={classes.itemName}>{display[iconCell]}</span>
         </span>
       );
@@ -280,7 +283,7 @@ const CustomTable = ({
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.size}
+              rowCount={filteredRows.size}
               headCells={headCells}
               checkBox={checkBox}
             />
@@ -340,7 +343,13 @@ const CustomTable = ({
                   id={ITEMS_TABLE_EMPTY_ROW_ID}
                   style={{ height: EMPTY_ROW_HEIGHT * emptyRows }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell
+                    id={MEMBERS_TABLE_EMPTY_ROW_ID}
+                    colSpan={6}
+                    align="center"
+                  >
+                    {t('No members have been found.')}
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
@@ -349,7 +358,7 @@ const CustomTable = ({
         <TablePagination
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
-          count={rows.size}
+          count={filteredRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -361,7 +370,7 @@ const CustomTable = ({
 };
 
 CustomTable.propTypes = {
-  rows: PropTypes.instanceOf(List),
+  rows: PropTypes.instanceOf(Array),
   title: PropTypes.bool,
   tableTitle: PropTypes.string.isRequired,
   tableType: PropTypes.string.isRequired,
