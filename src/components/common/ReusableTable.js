@@ -30,8 +30,8 @@ import {
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../config/constants';
-import { buildOrganizationPath, buildProjectPath } from '../../config/paths';
 import DeleteElementButton from './DeleteElementButton';
+import ViewElementButton from './ViewElementButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +81,6 @@ const ReusableTable = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { push } = useHistory();
   const [order, setOrder] = React.useState(ORDERING.DESC);
   const [filteredRows, setFilteredRows] = useState(rows);
   const [orderBy, setOrderBy] = React.useState('updatedAt');
@@ -168,43 +167,11 @@ const ReusableTable = ({
     setPage(0);
   };
 
-  const handleClickOpenOrganization = (value) => {
-    push(buildOrganizationPath(value.id));
-  };
-  const handleClickOpenProject = (value) => {
-    push(buildProjectPath(value.id));
-  };
-
   const renderActions = (value) => {
     const actions = [];
-    switch (elementType) {
-      case ELEMENT_DATA_TYPES.PROJECT:
-        actions.push(
-          <>
-            <IconButton
-              color="primary"
-              onClick={() => handleClickOpenProject(value)}
-            >
-              <Visibility />
-            </IconButton>
-          </>,
-        );
-        break;
-      case ELEMENT_DATA_TYPES.ORGANIZATION:
-        actions.push(
-          <>
-            <IconButton
-              color="primary"
-              onClick={() => handleClickOpenOrganization(value)}
-            >
-              <Visibility />
-            </IconButton>
-          </>,
-        );
-        break;
-      default:
-        break;
-    }
+    actions.push(
+      <ViewElementButton elementType={elementType} data={value} key="view" />,
+    );
     actions.push(
       <DeleteElementButton
         elementType={elementType}
