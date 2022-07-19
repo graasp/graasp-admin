@@ -9,11 +9,11 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 // import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
-import { CONFIRM_DELETE_BUTTON_ID } from '../../config/selectors';
+import { CONFIRM_CREATE_BUTTON_ID } from '../../config/selectors';
 import { ELEMENT_DATA_TYPES } from '../../enums';
 
 const useStyles = makeStyles(() => ({
-  confirmDeleteButton: {
+  confirmCreateButton: {
     color: 'red',
   },
 }));
@@ -22,14 +22,9 @@ const NewElementDialog = ({ elementType, open, handleClose }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  // const { mutateAsync: deleteAppData } = useMutation(
-  //   MUTATION_KEYS.DELETE_APP_DATA,
-  // );
-
-  const onDelete = () => {
+  const handleOnCreate = () => {
     switch (elementType) {
       case ELEMENT_DATA_TYPES.ADMIN:
-        // deleteAppData({ id: appDataId });
         break;
       default:
         break;
@@ -57,9 +52,9 @@ const NewElementDialog = ({ elementType, open, handleClose }) => {
           {t('Cancel')}
         </Button>
         <Button
-          id={CONFIRM_DELETE_BUTTON_ID}
-          className={classes.confirmDeleteButton}
-          onClick={() => onDelete()}
+          id={CONFIRM_CREATE_BUTTON_ID}
+          className={classes.confirmCreateButton}
+          onClick={() => handleOnCreate()}
           color="white"
           autoFocus
           variant="contained"
@@ -72,7 +67,6 @@ const NewElementDialog = ({ elementType, open, handleClose }) => {
 };
 
 NewElementDialog.propTypes = {
-  elementId: PropTypes.string.isRequired,
   elementType: PropTypes.string.isRequired,
   open: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,

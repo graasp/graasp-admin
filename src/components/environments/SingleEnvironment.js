@@ -71,7 +71,6 @@ const SingleEnvironment = () => {
   const { data, status } = useGetDataFromApi(environmentName);
 
   const handleClickOpen = () => {
-    console.log(open);
     setOpen(true);
   };
   const handleClose = () => {

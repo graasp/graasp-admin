@@ -30,7 +30,6 @@ const DeleteElementDialog = ({ elementId, elementType, open, handleClose }) => {
     switch (elementType) {
       case ELEMENT_DATA_TYPES.ADMIN:
         // deleteAppData({ id: appDataId });
-        console.log(elementId);
         break;
       default:
         break;
@@ -46,7 +45,7 @@ const DeleteElementDialog = ({ elementId, elementType, open, handleClose }) => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        {t(`Confirm deleting ${elementType}.`)}
+        {t(`Confirm deleting ${elementType} - ${elementId}`)}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">

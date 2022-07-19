@@ -17,7 +17,6 @@ const NewProfileView = () => {
   //   return <Loader />;
   // }
 
-  // return <MemberScreen />;
   // Creating a map object
   const currentMember = new Map();
 
@@ -30,7 +29,6 @@ const NewProfileView = () => {
   currentMember.set('extra', { lang: 'en' });
 
   return <ProfileScreen member={currentMember} />;
-  // return <ProfileScreen member={member} />;
 };
 
 export default NewProfileView;

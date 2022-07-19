@@ -57,8 +57,8 @@ const CollectionsRow = ({ data: row }) => {
   //   const { t } = useTranslation();
   const classes = useStyles();
   const { creator } = row;
-  const { data: author, isLoading } = useMember(creator);
-  console.log(isLoading);
+  const { data: author } = useMember(creator);
+
   const authorName = author?.get('name');
 
   //   const renderUsername = () => {

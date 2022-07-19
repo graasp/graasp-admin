@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton, lighten, makeStyles } from '@material-ui/core';
+import { lighten, makeStyles } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { buildMembersTableRowId } from '../../config/selectors';
 import { ITEM_DATA_TYPES } from '../../enums';
 import { formatDate } from '../../utils/date';
-import { Visibility } from '@material-ui/icons';
 // import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OrganizationRow = ({ data: row, index }) => {
   //   const { t } = useTranslation();
+  // eslint-disable-next-line no-console
   console.log(row);
   const classes = useStyles();
 
@@ -104,19 +104,6 @@ const OrganizationRow = ({ data: row, index }) => {
         return value;
     }
   };
-  const renderActions = () => {
-    const actions = [];
-    // show if app data is from authenticated member
-    // or if has at least write permission
-
-    actions.push(
-      <IconButton color="primary">
-        <Visibility />
-      </IconButton>,
-    );
-
-    return actions;
-  };
 
   return (
     <TableRow
@@ -129,7 +116,7 @@ const OrganizationRow = ({ data: row, index }) => {
         selected: classes.selected,
       }}
     >
-      {headCells.map(({ id: field, align, type }, idx) => (
+      {headCells.map(({ id: field, align, type }) => (
         <TableCell
           key={field}
           align={align}

@@ -89,7 +89,7 @@ const ProfileScreen = ({ member }) => {
 
   function handleResetPassword() {
     const randomstring = Math.random().toString(36).slice(-8);
-    console.log(randomstring);
+    return randomstring;
   }
 
   return (

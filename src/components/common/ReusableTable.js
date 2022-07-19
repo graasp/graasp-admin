@@ -265,7 +265,7 @@ const ReusableTable = ({
                       selected: classes.selected,
                     }}
                   >
-                    {headCells.map(({ id: field, align, type }, idx) => (
+                    {headCells.map(({ id: field, align, type }) => (
                       <TableCell
                         key={field}
                         align={align}

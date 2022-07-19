@@ -25,10 +25,12 @@ const DeleteCollectionDialog = ({ appDataId, open, handleClose }) => {
   //     MUTATION_KEYS.DELETE_APP_DATA,
   //   );
 
-  //   const onDelete = () => {
-  //     deleteAppData({ id: appDataId });
-  //     handleClose();
-  //   };
+  const onDelete = () => {
+    // eslint-disable-next-line no-console
+    console.log(appDataId);
+    // deleteAppData({ id: appDataId });
+    handleClose();
+  };
 
   return (
     <Dialog
@@ -52,7 +54,7 @@ const DeleteCollectionDialog = ({ appDataId, open, handleClose }) => {
         <Button
           id={CONFIRM_DELETE_BUTTON_ID}
           className={classes.confirmDeleteButton}
-          //   onClick={onDelete}
+          onClick={onDelete}
           color="secondary"
           autoFocus
         >

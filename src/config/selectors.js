@@ -22,6 +22,7 @@ export const buildCollectionsTableRowId = (id) => `collectionsTableRow-${id}`;
 export const MEMBERS_TABLE_EMPTY_ROW_ID = 'membersTableEmptyRow';
 export const ITEMS_TABLE_EMPTY_ROW_ID = 'itemsTableEmptyRow';
 export const CONFIRM_DELETE_BUTTON_ID = 'confirmDeleteButton';
+export const CONFIRM_CREATE_BUTTON_ID = 'confirmCreateButton';
 export const HEADER_APP_BAR_ID = 'headerAppBar';
 export const HEADER_USER_ID = 'headerUser';
 export const CREATE_ITEM_BUTTON_ID = 'createItemButton';

@@ -11,7 +11,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { TextField, Toolbar } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
 import { PeopleOutline } from '@material-ui/icons';
@@ -25,11 +25,12 @@ import {
   buildMembersTableTitle,
   MEMBERS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
-import TableHead from '../common/TableHead';
+
 import {
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../config/constants';
+import CustomTableHead from '../common/CustomTableHead';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -198,6 +199,7 @@ const OrganizationsTable = ({
   };
 
   const handleOnClickRow = ({ id }) => {
+    // eslint-disable-next-line no-console
     console.log(id);
     // push(buildMemberPath(id));
   };
@@ -258,7 +260,7 @@ const OrganizationsTable = ({
             size="medium"
             aria-label="enhanced table"
           >
-            <TableHead
+            <CustomTableHead
               classes={classes}
               numSelected={selected.length}
               order={order}
