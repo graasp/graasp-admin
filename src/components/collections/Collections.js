@@ -1,11 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
-import CollectionsTable from './CollectionsTable';
+import { Apps } from '@material-ui/icons';
+import ReusableTable from '../common/ReusableTable';
+import { collectionsHeadCells } from '../../config/constants';
 
-const Collections = ({ collections, title, id }) => {
+const Collections = ({ collections, title, id, elementType }) => {
+  const headCells = collectionsHeadCells;
+
   return (
-    <CollectionsTable id={id} collections={collections} tableTitle={title} />
+    <>
+      <ReusableTable
+        id={id}
+        rows={collections}
+        tableTitle={title}
+        icon={<Apps />}
+        elementType={elementType}
+        headCells={headCells}
+      />
+    </>
   );
 };
 
@@ -13,6 +26,7 @@ Collections.propTypes = {
   collections: PropTypes.instanceOf(List).isRequired,
   title: PropTypes.string.isRequired,
   id: PropTypes.string,
+  elementType: PropTypes.string.isRequired,
 };
 
 Collections.defaultProps = {
