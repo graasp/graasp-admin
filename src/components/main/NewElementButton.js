@@ -6,7 +6,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { Button } from '@graasp/ui';
 import AddIcon from '@material-ui/icons/Add';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
-import DeleteCollectionDialog from './DeleteCollectionDialog';
 import NewElementDialog from '../common/NewElementDialog';
 
 const useStyles = makeStyles((theme) => ({
