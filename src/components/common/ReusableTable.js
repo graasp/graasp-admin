@@ -24,7 +24,7 @@ import {
   buildMembersTableTitle,
   MEMBERS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
-import TableHead from './TableHead';
+import TableHead from './CustomTableHead';
 import {
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,

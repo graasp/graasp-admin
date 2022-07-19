@@ -25,9 +25,10 @@ import {
   buildMembersTableTitle,
   MEMBERS_TABLE_EMPTY_ROW_ID,
 } from '../../config/selectors';
-import TableHead from '../common/TableHead';
+import TableHead from '../common/CustomTableHead';
 import {
   EMPTY_ROW_HEIGHT,
+  memberHeadCell,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../config/constants';
 
@@ -102,40 +103,7 @@ const MembersTable = ({ members: rows, tableTitle, id: tableId, empty }) => {
     }
   }, [rows, searchValue]);
 
-  const headCells = [
-    {
-      id: 'name',
-      numeric: false,
-      label: 'Name',
-      align: 'left',
-    },
-    {
-      id: 'email',
-      numeric: false,
-      label: 'Email',
-      align: 'right',
-    },
-    {
-      id: 'type',
-      numeric: false,
-      label: 'Type',
-      align: 'right',
-    },
-    {
-      id: 'createdAt',
-      numeric: false,
-      label: 'Created At',
-      align: 'right',
-      type: ITEM_DATA_TYPES.DATE,
-    },
-    {
-      id: 'updatedAt',
-      numeric: false,
-      label: 'Updated At',
-      align: 'right',
-      type: ITEM_DATA_TYPES.DATE,
-    },
-  ];
+  const headCells = memberHeadCell;
 
   // display empty rows to maintain the table height
   const emptyRows =

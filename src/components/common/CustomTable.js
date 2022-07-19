@@ -18,7 +18,7 @@ import { Autocomplete } from '@material-ui/lab';
 import { ORDERING, ITEM_DATA_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
-import TableHead from './TableHead';
+import TableHead from './CustomTableHead';
 import {
   buildTableCheckBox,
   buildTableId,

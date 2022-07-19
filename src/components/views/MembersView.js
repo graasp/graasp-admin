@@ -1,4 +1,5 @@
 import React from 'react';
+import { mockMembers } from '../../config/constants';
 // import { Loader } from '@graasp/ui';
 // import { hooks } from '../../config/queryClient';
 // import Members from '../members/Members';
@@ -11,30 +12,13 @@ import Members from '../members/Members';
 // const { useAllMembers } = hooks;
 
 const MembersView = () => {
+  const members = mockMembers;
   // const { data: allMembers, isLoading } = useAllMembers();
 
   // if (isLoading) {
   //   return <Loader />;
   // }
 
-  const mockMembers = [
-    {
-      id: '123',
-      name: 'A',
-      type: 'individual',
-      createdAt: '2022-01-01',
-      updatedAt: '2022-04-13T14:09:23.743Z',
-      email: 'A@graasp.org',
-    },
-    {
-      id: '456',
-      name: 'B',
-      type: 'individual',
-      createdAt: '2022-01-01',
-      updatedAt: '2022-04-13T14:09:23.743Z',
-      email: 'B@graasp.org',
-    },
-  ];
   // return (
   //   <CustomTable
   //     link={buildMemberPath}
@@ -52,7 +36,7 @@ const MembersView = () => {
   //   />
   // );
 
-  return <Members title="All Members" members={mockMembers} />;
+  return <Members title="All Members" members={members} />;
 };
 
 export default MembersView;

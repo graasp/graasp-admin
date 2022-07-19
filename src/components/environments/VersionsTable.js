@@ -9,10 +9,10 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core';
-import TableHead from '../common/TableHead';
 
 import { environmentHeadCells } from '../../config/constants';
 import ViewRepositoryButton from '../common/ViewRepositoryButton';
+import CustomTableHead from '../common/CustomTableHead';
 
 const useStyles = makeStyles(() => ({}));
 const VersionsTable = ({ versions }) => {
@@ -35,7 +35,7 @@ const VersionsTable = ({ versions }) => {
           size="small"
           aria-label="enhanced table"
         >
-          <TableHead headCells={headCells} />
+          <CustomTableHead headCells={headCells} />
           <TableBody>
             {versions.map((row) => {
               return (

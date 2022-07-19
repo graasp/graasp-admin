@@ -20,7 +20,7 @@ import { ORDERING, ITEM_DATA_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
 import ItemIcon from './ItemIcon';
-import TableHead from '../common/TableHead';
+import TableHead from '../common/CustomTableHead';
 import {
   buildItemsTableRowId,
   buildItemsTableTitle,

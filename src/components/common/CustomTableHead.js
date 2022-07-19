@@ -6,11 +6,20 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { makeStyles } from '@material-ui/core';
 import { ORDERING } from '../../enums';
 
+const useStyles = makeStyles(() => ({
+  visuallyHidden: {
+    display: 'none',
+  },
+}));
+
 const CustomTableHead = (props) => {
+  const classes = useStyles();
+
   const {
-    classes,
+    // classes,
     onSelectAllClick,
     order,
     orderBy,
