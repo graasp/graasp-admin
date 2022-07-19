@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import { IconButton, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
+import { Visibility } from '@material-ui/icons';
 import { ORDERING, ITEM_DATA_TYPES, ELEMENT_DATA_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
@@ -29,10 +30,7 @@ import {
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../config/constants';
-import ViewCollectionButton from './ViewCollectionButton';
-import DeleteCollectionButton from './DeleteCollectionButton';
-import { Visibility } from '@material-ui/icons';
-import { buildAdminPath } from '../../config/paths';
+import { buildOrganizationPath, buildProjectPath } from '../../config/paths';
 import DeleteElementButton from './DeleteElementButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -170,20 +168,42 @@ const ReusableTable = ({
     setPage(0);
   };
 
-  const handleClickOpen = (value) => {
-    push(buildAdminPath(value.id));
+  const handleClickOpenOrganization = (value) => {
+    push(buildOrganizationPath(value.id));
+  };
+  const handleClickOpenProject = (value) => {
+    push(buildProjectPath(value.id));
   };
 
   const renderActions = (value) => {
     const actions = [];
-    if (elementType === ELEMENT_DATA_TYPES.ORGANIZATION) {
-      actions.push(
-        <>
-          <IconButton color="primary" onClick={() => handleClickOpen(value)}>
-            <Visibility />
-          </IconButton>
-        </>,
-      );
+    switch (elementType) {
+      case ELEMENT_DATA_TYPES.PROJECT:
+        actions.push(
+          <>
+            <IconButton
+              color="primary"
+              onClick={() => handleClickOpenProject(value)}
+            >
+              <Visibility />
+            </IconButton>
+          </>,
+        );
+        break;
+      case ELEMENT_DATA_TYPES.ORGANIZATION:
+        actions.push(
+          <>
+            <IconButton
+              color="primary"
+              onClick={() => handleClickOpenOrganization(value)}
+            >
+              <Visibility />
+            </IconButton>
+          </>,
+        );
+        break;
+      default:
+        break;
     }
     actions.push(
       <DeleteElementButton

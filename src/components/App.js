@@ -15,6 +15,8 @@ import {
   STATUS_PATH,
   buildEnvironmentPath,
   PROJECTS_PATH,
+  buildOrganizationPath,
+  buildProjectPath,
 } from '../config/paths';
 import Main from './main/Main';
 import HomeView from './views/HomeView';
@@ -31,6 +33,8 @@ import EnvironmentsView from './views/EnvironmentsView';
 import SingleEnvironment from './environments/SingleEnvironment';
 import ProjectsView from './views/ProjectsView';
 import NewProfileView from './views/NewProfileView';
+import Organization from './organizations/Organization';
+import Project from './projects/Project';
 
 function App() {
   return (
@@ -42,6 +46,8 @@ function App() {
           <Route path={buildMemberPath()} component={NewProfileView} />
           <Route path={ADMINS_PATH} exact component={AdminsView} />
           <Route path={buildAdminPath()} component={SingleAdmin} />
+          <Route path={buildOrganizationPath()} component={Organization} />
+          <Route path={buildProjectPath()} component={Project} />
           <Route
             path={ORGANIZATIONS_PATH}
             exact

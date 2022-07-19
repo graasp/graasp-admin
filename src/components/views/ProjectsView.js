@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { mockProjects } from '../../config/constants';
 // import { Loader } from '@graasp/ui';
 // import { hooks } from '../../config/queryClient';
 import Projects from '../projects/Projects';
@@ -14,24 +15,8 @@ const ProjectsView = () => {
   //   return <Loader />;
   // }
 
-  const projects = [
-    {
-      id: '1234',
-      name: 'HUB4S',
-      type: 'org',
-      updatedAt: '2022-01-01',
-      createdAt: '2022-01-01',
-      email: 'HUN4S@graasp.org',
-    },
-    {
-      id: '1235',
-      name: 'GRAASP',
-      type: 'org',
-      updatedAt: '2022-01-01',
-      createdAt: '2022-01-01',
-      email: 'graasp@graasp.org',
-    },
-  ];
+  const projects = mockProjects;
+
   return (
     <Projects
       title={t('All Projects')}

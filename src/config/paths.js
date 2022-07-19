@@ -15,6 +15,9 @@ export const TESTS_PATH = '/tests';
 export const buildItemPath = (id = ':itemId') => `${ITEMS_PATH}/${id}`;
 export const buildMemberPath = (id = ':memberId') => `${MEMBERS_PATH}/${id}`;
 export const buildAdminPath = (id = ':adminId') => `${ADMINS_PATH}/${id}`;
+export const buildOrganizationPath = (id = ':organizationId') =>
+  `${ORGANIZATIONS_PATH}/${id}`;
+export const buildProjectPath = (id = ':projectId') => `${PROJECTS_PATH}/${id}`;
 export const buildPermissionPath = (id = ':adminId') => `${ADMINS_PATH}/${id}`;
 export const buildCollectionPath = (id = ':collectionId') =>
   `${COLLECTIONS_PATH}/${id}`;

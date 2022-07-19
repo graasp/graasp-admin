@@ -515,3 +515,22 @@ export const mockOrganizations = [
     email: 'lyon@graasp.org',
   },
 ];
+
+export const mockProjects = [
+  {
+    id: '1234',
+    name: 'HUB4S',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'HUN4S@graasp.org',
+  },
+  {
+    id: '1235',
+    name: 'GRAASP',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'graasp@graasp.org',
+  },
+];
