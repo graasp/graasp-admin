@@ -7,6 +7,7 @@ import { Button } from '@graasp/ui';
 import AddIcon from '@material-ui/icons/Add';
 import { CREATE_ITEM_BUTTON_ID } from '../../config/selectors';
 import DeleteCollectionDialog from './DeleteCollectionDialog';
+import NewElementDialog from '../common/NewElementDialog';
 
 const useStyles = makeStyles((theme) => ({
   createNewButton: {
@@ -42,11 +43,12 @@ const NewElementButton = ({ fontSize, elementType }) => {
           {elementType}
         </Button>
       </Tooltip>
-      <DeleteCollectionDialog
+      <NewElementDialog
         open={open}
         setOpen={setOpen}
         handleClickOpen={handleClickOpen}
         handleClose={handleClose}
+        elementType={elementType}
       />
     </>
   );

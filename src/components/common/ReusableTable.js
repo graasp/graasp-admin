@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-// import { useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,10 +11,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { TextField } from '@material-ui/core';
+import { IconButton, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
-import { ORDERING, ITEM_DATA_TYPES } from '../../enums';
+import { ORDERING, ITEM_DATA_TYPES, ELEMENT_DATA_TYPES } from '../../enums';
 import { getComparator, stableSort, getRowsForPage } from '../../utils/table';
 import { formatDate } from '../../utils/date';
 import NewElementButton from '../main/NewElementButton';
@@ -29,6 +29,11 @@ import {
   EMPTY_ROW_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../config/constants';
+import ViewCollectionButton from './ViewCollectionButton';
+import DeleteCollectionButton from './DeleteCollectionButton';
+import { Visibility } from '@material-ui/icons';
+import { buildAdminPath } from '../../config/paths';
+import DeleteElementButton from './DeleteElementButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,7 +83,7 @@ const ReusableTable = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  // const { push } = useHistory();
+  const { push } = useHistory();
   const [order, setOrder] = React.useState(ORDERING.DESC);
   const [filteredRows, setFilteredRows] = useState(rows);
   const [orderBy, setOrderBy] = React.useState('updatedAt');
@@ -165,9 +170,29 @@ const ReusableTable = ({
     setPage(0);
   };
 
-  const handleOnClickRow = ({ id }) => {
-    console.log(id);
-    // push(buildMemberPath(id));
+  const handleClickOpen = (value) => {
+    push(buildAdminPath(value.id));
+  };
+
+  const renderActions = (value) => {
+    const actions = [];
+    if (elementType === ELEMENT_DATA_TYPES.ORGANIZATION) {
+      actions.push(
+        <>
+          <IconButton color="primary" onClick={() => handleClickOpen(value)}>
+            <Visibility />
+          </IconButton>
+        </>,
+      );
+    }
+    actions.push(
+      <DeleteElementButton
+        elementType={elementType}
+        data={value}
+        key="delete"
+      />,
+    );
+    return actions;
   };
 
   // format entry data given type
@@ -175,6 +200,8 @@ const ReusableTable = ({
     switch (type) {
       case ITEM_DATA_TYPES.DATE:
         return formatDate(value);
+      case ITEM_DATA_TYPES.ACTIONS:
+        return renderActions(value);
       default:
         return value;
     }
@@ -245,7 +272,7 @@ const ReusableTable = ({
                 return (
                   <TableRow
                     id={buildMembersTableRowId(row.id)}
-                    hover
+                    // hover
                     tabIndex={-1}
                     key={row.id}
                     classes={{
@@ -260,15 +287,17 @@ const ReusableTable = ({
                         component="th"
                         id={labelId}
                         scope="row"
-                        onClick={() => {
-                          // do not navigate when clicking on actions
-                          const shouldNavigate = idx !== headCells.length - 1;
-                          if (shouldNavigate) {
-                            handleOnClickRow(row);
-                          }
-                        }}
+                        // onClick={() => {
+                        //   // do not navigate when clicking on actions
+                        //   const shouldNavigate = idx !== headCells.length - 1;
+                        //   if (shouldNavigate) {
+                        //     handleOnClickRow(row);
+                        //   }
+                        // }}
                       >
-                        {formatRowValue({ value: row[field], type })}
+                        {field !== 'actions'
+                          ? formatRowValue({ value: row[field], type })
+                          : formatRowValue({ value: row, type })}
                       </TableCell>
                     ))}
                   </TableRow>

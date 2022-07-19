@@ -7,6 +7,7 @@ import PERMISSION_LEVELS from './permissionLevels';
 import TREE_PREVENT_SELECTION from './treePreventSelection';
 import UPLOAD_FILES_METHODS from './uploadFilesMethods';
 import ITEM_KEYS from './itemKeys';
+import ELEMENT_DATA_TYPES from './elementDataTypes';
 
 export {
   ITEM_LAYOUT_MODES,
@@ -18,4 +19,5 @@ export {
   TREE_PREVENT_SELECTION,
   UPLOAD_FILES_METHODS,
   ITEM_KEYS,
+  ELEMENT_DATA_TYPES,
 };

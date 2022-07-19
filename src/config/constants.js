@@ -199,6 +199,13 @@ export const adminsHeadCell = [
     align: 'right',
     type: ITEM_DATA_TYPES.DATE,
   },
+  {
+    id: 'actions',
+    numeric: false,
+    label: 'Actions',
+    align: 'center',
+    type: ITEM_DATA_TYPES.ACTIONS,
+  },
 ];
 
 export const itemHeadCells = [
@@ -304,6 +311,13 @@ export const organizationsHeadCells = [
     align: 'right',
     type: ITEM_DATA_TYPES.DATE,
   },
+  {
+    id: 'actions',
+    numeric: false,
+    label: 'Actions',
+    align: 'center',
+    type: ITEM_DATA_TYPES.ACTIONS,
+  },
 ];
 
 export const projectsHeadCells = [
@@ -333,6 +347,13 @@ export const projectsHeadCells = [
     align: 'right',
     type: ITEM_DATA_TYPES.DATE,
   },
+  {
+    id: 'actions',
+    numeric: false,
+    label: 'Actions',
+    align: 'center',
+    type: ITEM_DATA_TYPES.ACTIONS,
+  },
 ];
 export const AUTO_COMPLETE_WIDTH = 300;
 
@@ -354,6 +375,27 @@ export const mockMembers = [
     createdAt: '2022-04-10T14:09:23.743Z',
     updatedAt: '2022-04-14T14:09:23.743Z',
     email: 'B@graasp.org',
+  },
+];
+
+export const mockAdmins = [
+  {
+    id: '1234',
+    name: 'admin1',
+    roles: 'admin',
+    createdAt: '2022-04-01T14:09:23.743Z',
+    updatedAt: '2022-04-13T14:09:23.743Z',
+    email: 'HUN4S@graasp.org',
+    type: 'individual',
+  },
+  {
+    id: '12345',
+    name: 'admin2',
+    roles: 'admin',
+    createdAt: '2022-04-10T14:09:23.743Z',
+    updatedAt: '2022-04-14T14:09:23.743Z',
+    email: 'HUN4S@graasp.org',
+    type: 'individual',
   },
 ];
 
@@ -382,3 +424,94 @@ export const mockSingleCollection = {
     },
   },
 };
+
+export const mockOrganizations = [
+  {
+    id: '1234',
+    name: 'GVA',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'gva@graasp.org',
+  },
+  {
+    id: '1235',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '1236',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '1237',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '1233',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '12333',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '123333',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '1233333',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '12333333',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '123333333',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+  {
+    id: '1233333333',
+    name: 'LYON',
+    type: 'org',
+    updatedAt: '2022-01-01',
+    createdAt: '2022-01-01',
+    email: 'lyon@graasp.org',
+  },
+];
