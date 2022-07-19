@@ -7,7 +7,7 @@ import { buildMemberPath } from '../../config/paths';
 
 // const { useMember } = hooks;
 
-const ProfileView = () => {
+const NewProfileView = () => {
   const match = useRouteMatch(buildMemberPath());
 
   const memberId = match?.params?.memberId;
@@ -33,4 +33,4 @@ const ProfileView = () => {
   // return <ProfileScreen member={member} />;
 };
 
-export default ProfileView;
+export default NewProfileView;

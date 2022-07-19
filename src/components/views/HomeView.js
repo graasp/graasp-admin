@@ -3,6 +3,7 @@ import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import FolderIcon from '@material-ui/icons/Folder';
 import {
+  AccountTree,
   Adjust,
   Apps,
   PeopleOutline,
@@ -27,22 +28,19 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'hidden',
     overflowX: 'hidden',
   },
-  gridcontainer: {
+  gridContainer: {
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: '24px',
   },
-  griditem: {
+  gridItem: {
     flex: ' 1 0 21%' /* explanation below */,
     height: '100px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-  },
-  papercard: {
-    backgroundColor: theme.palette.background.paper,
   },
 }));
 
@@ -52,8 +50,8 @@ const HomeView = () => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        <Grid container className={classes.gridcontainer} spacing={3}>
-          <Grid item className={classes.griditem}>
+        <Grid container className={classes.gridContainer} spacing={3}>
+          <Grid item className={classes.gridItem}>
             <CardItem
               itemName="Members"
               icon={<AccountCircleIcon />}
@@ -61,7 +59,7 @@ const HomeView = () => {
               path="/members"
             />
           </Grid>
-          <Grid item className={classes.griditem}>
+          <Grid item className={classes.gridItem}>
             <CardItem
               itemName="Admins"
               icon={<SupervisedUserCircle />}
@@ -69,7 +67,7 @@ const HomeView = () => {
               path="/admins"
             />
           </Grid>
-          <Grid item className={classes.griditem}>
+          <Grid item className={classes.gridItem}>
             <CardItem
               itemName="Organizations"
               icon={<PeopleOutline />}
@@ -77,7 +75,15 @@ const HomeView = () => {
               path="/organizations"
             />
           </Grid>
-          <Grid item className={classes.griditem}>
+          <Grid item className={classes.gridItem}>
+            <CardItem
+              itemName="Projects"
+              icon={<AccountTree />}
+              content={10}
+              path="/projects"
+            />
+          </Grid>
+          <Grid item className={classes.gridItem}>
             <CardItem
               itemName="Collections"
               icon={<Apps />}
@@ -85,7 +91,7 @@ const HomeView = () => {
               path="/collections"
             />
           </Grid>
-          <Grid item className={classes.griditem}>
+          <Grid item className={classes.gridItem}>
             <CardItem
               itemName="Items"
               icon={<FolderIcon />}
@@ -93,15 +99,12 @@ const HomeView = () => {
               path="/items"
             />
           </Grid>
-          <Grid item className={classes.griditem}>
+          <Grid item className={classes.gridItem}>
             <CardItem
               itemName="Environments"
               icon={<Adjust />}
               path="/environments"
             />
-          </Grid>
-          <Grid item className={classes.griditem}>
-            <CardItem itemName="Card " />
           </Grid>
         </Grid>
       </Paper>

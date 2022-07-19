@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
-import { PeopleOutline } from '@material-ui/icons';
+import { AccountTree } from '@material-ui/icons';
 import ReusableTable from '../common/ReusableTable';
 import { projectsHeadCells } from '../../config/constants';
 
@@ -14,7 +14,7 @@ const Projects = ({ projects, title, id, elementType }) => {
         id={id}
         rows={projects}
         tableTitle={title}
-        icon={<PeopleOutline />}
+        icon={<AccountTree />}
         elementType={elementType}
         headCells={headCells}
       />
