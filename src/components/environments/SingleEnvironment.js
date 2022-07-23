@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouteMatch } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import {
@@ -9,6 +9,11 @@ import {
   Link,
   makeStyles,
   Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
   Tooltip,
   Typography,
 } from '@material-ui/core';
@@ -17,7 +22,13 @@ import { Loader } from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
 import { buildEnvironmentPath } from '../../config/paths';
 import VersionsTable from './VersionsTable';
-import DeleteCollectionDialog from '../main/DeleteCollectionDialog';
+import {
+  buildGetDeployedVersionsRoute,
+  buildGetVersionsFilesRoute,
+} from '../../query-client/api/routes';
+import { versionsFileHeadCells } from '../../config/constants';
+import CustomTableHead from '../common/CustomTableHead';
+import ViewElementButton from '../common/ViewElementButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,34 +59,35 @@ const useStyles = makeStyles((theme) => ({
     padding: '24px',
   },
   gridItem: {
-    flex: ' 1 0 21%' /* explanation below */,
-    height: '100px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  papercard: {
-    backgroundColor: theme.palette.background.paper,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 }));
 
-const { useGetDataFromApi } = hooks;
+const { useGetJsonFromApi, useGetDataFromApi } = hooks;
 
 const SingleEnvironment = () => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
   const classes = useStyles();
   const match = useRouteMatch(buildEnvironmentPath());
   const environmentName = match?.params?.environmentName;
-  const { data, status } = useGetDataFromApi(environmentName);
+  const { data: versionsData, status } = useGetJsonFromApi(
+    buildGetDeployedVersionsRoute(environmentName),
+  );
+  const { data: stagingData, status: stagingStatus } = useGetDataFromApi(
+    buildGetVersionsFilesRoute(environmentName),
+  );
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClickOpen = () => {
+  //   // setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   // setOpen(false);
+  // };
 
   return (
     <div className={classes.root}>
@@ -100,24 +112,61 @@ const SingleEnvironment = () => {
             <Tooltip placement="left" title={t('Create new element')} arrow>
               <Button
                 className={classes.createNewButton}
-                onClick={handleClickOpen}
+                // onClick={handleClickOpen}
               >
                 <CheckBox />
                 New deployment
               </Button>
             </Tooltip>
-            <DeleteCollectionDialog
-              open={open}
-              setOpen={setOpen}
-              handleClickOpen={handleClickOpen}
-              handleClose={handleClose}
-            />
           </>
         </div>
         <Grid container className={classes.gridContainer} spacing={3}>
-          {status === 'loading' && <Loader />}
-          {status === 'error' && <div>Error fetching data</div>}
-          {status === 'success' && <VersionsTable versions={data} />}
+          <Grid item className={classes.gridItem}>
+            <Typography variant="h6">Deployed versions</Typography>
+
+            {status === 'loading' && <Loader />}
+            {status === 'error' && <div>Error fetching data</div>}
+            {status === 'success' && <VersionsTable versions={versionsData} />}
+          </Grid>
+          <Grid item className={classes.gridItem}>
+            <Typography variant="h6">Available stacks</Typography>
+            {stagingStatus === 'loading' && <Loader />}
+            {stagingStatus === 'error' && <div>Error fetching data</div>}
+            {stagingStatus === 'success' && (
+              <TableContainer>
+                <Table
+                  aria-labelledby="tableTitle"
+                  size="small"
+                  aria-label="enhanced table"
+                >
+                  <CustomTableHead headCells={versionsFileHeadCells} />
+                  <TableBody>
+                    {stagingData?.map((row) => {
+                      return (
+                        <TableRow
+                          tabIndex={-1}
+                          key={row.id}
+                          classes={{
+                            hover: classes.hover,
+                            selected: classes.selected,
+                          }}
+                        >
+                          <TableCell scope="row">{row.name}</TableCell>
+                          <TableCell align="right">
+                            <ViewElementButton
+                              elementType={environmentName}
+                              data={row}
+                              key="view"
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+          </Grid>
         </Grid>
       </Paper>
     </div>

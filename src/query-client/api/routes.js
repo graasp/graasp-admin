@@ -43,8 +43,12 @@ export const ALL_PERMISSIONS_ROUTE = `${PERMISSIONS_ROUTE}/all`;
 export const OWN_PERMISSIONS_ROUTE = `${PERMISSIONS_ROUTE}/own`;
 
 // environments routes
-export const buildGetApiResourcesRoute = (environment) =>
+export const buildGetDeployedVersionsRoute = (environment) =>
   `https://api.github.com/repos/graasp/graasp-deploy/contents/deployed/current-${environment}-versions.json`;
+export const buildGetStackVersionsRoute = (environment, stackName) =>
+  `https://api.github.com/repos/graasp/graasp-deploy/contents/${environment}-versions/${stackName}`;
+export const buildGetVersionsFilesRoute = (environment) =>
+  `https://api.github.com/repos/graasp/graasp-deploy/contents/${environment}-versions`;
 export const buildRepositoryPath = (repository) =>
   `https://www.github.com/${repository}`;
 

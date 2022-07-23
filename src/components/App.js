@@ -17,6 +17,7 @@ import {
   PROJECTS_PATH,
   buildOrganizationPath,
   buildProjectPath,
+  buildVersionsFilePath,
 } from '../config/paths';
 import Main from './main/Main';
 import HomeView from './views/HomeView';
@@ -35,6 +36,7 @@ import ProjectsView from './views/ProjectsView';
 import NewProfileView from './views/NewProfileView';
 import Organization from './organizations/Organization';
 import Project from './projects/Project';
+import SingleStack from './environments/SingleStack';
 
 function App() {
   return (
@@ -59,7 +61,12 @@ function App() {
           <Route path={ITEMS_PATH} exact component={ItemsView} />
           <Route path={buildItemPath()} component={SingleItem} />
           <Route path={ENVIRONMENTS_PATH} exact component={EnvironmentsView} />
-          <Route path={buildEnvironmentPath()} component={SingleEnvironment} />
+          <Route
+            exact
+            path={buildEnvironmentPath()}
+            component={SingleEnvironment}
+          />
+          <Route path={buildVersionsFilePath()} component={SingleStack} />
           <Route path={STATUS_PATH} exact component={StatusView} />
         </Switch>
       </Main>

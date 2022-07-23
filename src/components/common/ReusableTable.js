@@ -237,7 +237,7 @@ const ReusableTable = ({
           <Table
             id={tableId}
             aria-labelledby="tableTitle"
-            size="medium"
+            size="small"
             aria-label="enhanced table"
           >
             <TableHead

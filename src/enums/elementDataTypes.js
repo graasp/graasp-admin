@@ -5,6 +5,9 @@ const ELEMENT_DATA_TYPES = {
   GROUP: 'group',
   ORGANIZATION: 'organization',
   PROJECT: 'project',
+  STACK: 'stack',
+  STAGING: 'staging',
+  PRODUCTION: 'production',
 };
 
 Object.freeze(ELEMENT_DATA_TYPES);

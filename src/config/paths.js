@@ -23,3 +23,7 @@ export const buildCollectionPath = (id = ':collectionId') =>
   `${COLLECTIONS_PATH}/${id}`;
 export const buildEnvironmentPath = (name = ':environmentName') =>
   `${ENVIRONMENTS_PATH}/${name}`;
+export const buildVersionsFilePath = (
+  name = ':environmentName',
+  stack = ':stackName',
+) => `${ENVIRONMENTS_PATH}/${name}/${stack}`;

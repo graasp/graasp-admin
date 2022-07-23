@@ -2,7 +2,6 @@ import { useQuery } from 'react-query';
 import { Map } from 'immutable';
 import * as Api from '../api';
 import { CURRENT_MEMBER_KEY } from '../config/keys';
-import { buildGetApiResourcesRoute } from '../api/routes';
 
 export default (queryClient, queryConfig) => {
   const { retry, cacheTime, staleTime } = queryConfig;
@@ -19,10 +18,14 @@ export default (queryClient, queryConfig) => {
       ...defaultOptions,
     });
 
-  const useGetDataFromApi = (environment) => {
-    return useQuery(['resource'], async () => {
-      const url = `${buildGetApiResourcesRoute(environment)}`;
-      const response = await fetch(url);
+  const useGetJsonFromApi = (url) => {
+    return useQuery(['deployedVersions'], async () => {
+      // const url = `${buildGetDeployedVersionsRoute(environment)}`;
+      const response = await fetch(url, {
+        headers: {
+          Authorization: 'token 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',
+        },
+      });
       const resource = await response.json();
       const gitUrl = await fetch(resource.git_url);
       const file = await gitUrl.json();
@@ -33,8 +36,23 @@ export default (queryClient, queryConfig) => {
     });
   };
 
+  const useGetDataFromApi = (url) => {
+    return useQuery(['staging'], async () => {
+      const response = await fetch(url);
+      const resource = await response.json();
+      // const gitUrl = await fetch(resource.git_url);
+      // const file = await gitUrl.json();
+      // const fileBlob = file.content;
+      // const fileContents = Buffer.from(fileBlob, 'base64').toString();
+      // const versions = JSON.parse(fileContents);
+      // return versions.include;
+      return resource;
+    });
+  };
+
   return {
     useCurrent,
+    useGetJsonFromApi,
     useGetDataFromApi,
   };
 };

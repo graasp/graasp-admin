@@ -43,6 +43,8 @@ export const AUTHENTICATION_HOST =
   process.env.REACT_APP_AUTHENTICATION_HOST ||
   'http://localhost:3111';
 
+export const PAT = process.env.REACT_APP_PAT;
+
 export const DESCRIPTION_MAX_LENGTH = 30;
 
 export const DEFAULT_IMAGE_SRC =
@@ -284,6 +286,22 @@ export const environmentHeadCells = [
     align: 'right',
   },
 ];
+
+export const versionsFileHeadCells = [
+  {
+    id: 'name',
+    numeric: false,
+    label: 'File Name',
+    align: 'left',
+  },
+  {
+    id: 'actions',
+    numeric: false,
+    label: 'Actions',
+    align: 'right',
+  },
+];
+
 export const organizationsHeadCells = [
   {
     id: 'name',

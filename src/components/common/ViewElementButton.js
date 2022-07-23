@@ -8,11 +8,13 @@ import {
   buildCollectionPath,
   buildOrganizationPath,
   buildProjectPath,
+  buildVersionsFilePath,
 } from '../../config/paths';
 
 const ViewElementButton = ({ elementType, data }) => {
   const { push } = useHistory();
-  const handleClickOpen = () => {
+
+  const handleClick = () => {
     switch (elementType) {
       case ELEMENT_DATA_TYPES.PROJECT:
         push(buildProjectPath(data.id));
@@ -23,6 +25,12 @@ const ViewElementButton = ({ elementType, data }) => {
       case ELEMENT_DATA_TYPES.COLLECTION:
         push(buildCollectionPath(data.id));
         break;
+      case ELEMENT_DATA_TYPES.STAGING:
+        push(buildVersionsFilePath(elementType, data.name));
+        break;
+      case ELEMENT_DATA_TYPES.PRODUCTION:
+        push(buildVersionsFilePath(elementType, data.name));
+        break;
       default:
         break;
     }
@@ -30,7 +38,7 @@ const ViewElementButton = ({ elementType, data }) => {
 
   return (
     <>
-      <IconButton color="primary" onClick={() => handleClickOpen()}>
+      <IconButton color="primary" onClick={() => handleClick()}>
         <Visibility />
       </IconButton>
     </>
@@ -39,6 +47,7 @@ const ViewElementButton = ({ elementType, data }) => {
 ViewElementButton.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.string.isRequired,
+    name: PropTypes.string,
   }).isRequired,
   elementType: PropTypes.string.isRequired,
 };
