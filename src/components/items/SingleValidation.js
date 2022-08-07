@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteMatch } from 'react-router-dom';
 import {
   makeStyles,
@@ -41,6 +42,7 @@ const SingleValidation = () => {
   const [reason, setReason] = React.useState(null);
 
   const classes = useStyles();
+  const { t } = useTranslation();
   const match = useRouteMatch(buildItemPath());
   const itemId = match?.params?.itemId;
   const validationId = match?.params?.validationId;
@@ -93,7 +95,7 @@ const SingleValidation = () => {
   return (
     <div>
       <Typography variant="h5" className={classes.title}>
-        Validation Records
+        {t('Validation Records')}
       </Typography>
       <TableContainer component={Paper}>
         <Table className={classes.table}>
