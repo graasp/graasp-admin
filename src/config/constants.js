@@ -13,6 +13,7 @@ const {
   SHOW_NOTIFICATIONS: ENV_SHOW_NOTIFICATIONS,
   AUTHENTICATION_HOST: ENV_AUTHENTICATION_HOST,
   NODE_ENV: ENV_NODE_ENV,
+  DOMAIN: ENV_DOMAIN,
 } = env;
 
 export const APP_NAME = 'Graasp Admin Panel';
@@ -123,6 +124,7 @@ export const TABLE_TYPES = {
   ITEM: 'item',
   PERMISSION: 'permission',
   ADMIN: 'admin',
+  VALIDATION: 'validation',
 };
 
 export const memberHeadCell = [
@@ -260,3 +262,45 @@ export const permissionHeadCells = [
 export const AUTO_COMPLETE_WIDTH = 300;
 
 export const MAX_WIDTH_LIST = 360;
+
+export const DOMAIN = ENV_DOMAIN || process.env.REACT_APP_DOMAIN;
+
+export const CATEGORY_CHIP_HEIGHT = 50;
+export const CATEGORY_BUTTON_HEIGHT = 50;
+export const CATEGORY_SELECT_WIDTH = 200;
+
+export const ValidationCell = [
+  {
+    id: 'id',
+    numeric: false,
+    label: 'id',
+    align: 'left',
+  },
+  {
+    id: 'itemId',
+    numeric: false,
+    label: 'Item Id',
+    align: 'left',
+  },
+  {
+    id: 'reviewStatus',
+    numeric: false,
+    label: 'Review Status',
+    align: 'right',
+  },
+  {
+    id: 'itemValidationId',
+    numeric: false,
+    label: 'Validation Id',
+    align: 'right',
+  },
+  {
+    id: 'createdAt',
+    numeric: false,
+    label: 'Created At',
+    align: 'right',
+    type: ITEM_DATA_TYPES.DATE,
+  },
+];
+
+export const VALIDATION_TEXTFIELD_WIDTH = 300;

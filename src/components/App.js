@@ -9,6 +9,9 @@ import {
   HOME_PATH,
   ITEMS_PATH,
   MEMBERS_PATH,
+  CATEGORIES_PATH,
+  VALIDATIONS_PATH,
+  buildValidationPath,
 } from '../config/paths';
 import Main from './main/Main';
 import MembersView from './views/MembersView';
@@ -18,6 +21,9 @@ import ProfileView from './views/ProfileView';
 import SingleMember from './members/SingleMember';
 import AdminsView from './views/AdminsView';
 import SingleAdmin from './members/SingleAdmin';
+import CategoriesView from './views/CategoriesView';
+import ValidationsView from './views/ValidationsView';
+import SingleValidation from './items/SingleValidation';
 
 function App() {
   return (
@@ -27,11 +33,14 @@ function App() {
           <Route path={HOME_PATH} exact component={MembersView} />
           <Route path={MEMBERS_PATH} exact component={MembersView} />
           <Route path={ITEMS_PATH} exact component={ItemsView} />
+          <Route path={CATEGORIES_PATH} exact component={CategoriesView} />
+          <Route path={VALIDATIONS_PATH} exact component={ValidationsView} />
           <Route path={ADMIN_PROFILE_PATH} exact component={ProfileView} />
           <Route path={ADMINS_PATH} exact component={AdminsView} />
           <Route path={buildItemPath()} component={SingleItem} />
           <Route path={buildMemberPath()} component={SingleMember} />
           <Route path={buildAdminPath()} component={SingleAdmin} />
+          <Route path={buildValidationPath()} component={SingleValidation} />
         </Switch>
       </Main>
     </Router>

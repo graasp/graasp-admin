@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
-import _ from 'lodash';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -85,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomTable = ({
+const ValidationTable = ({
   rows,
   headCells,
   tableTitle,
@@ -100,7 +99,7 @@ const CustomTable = ({
   const { push } = useHistory();
   const [order, setOrder] = React.useState(ORDERING.DESC);
   const [filteredRows, setFilteredRows] = useState(rows);
-  const [orderBy, setOrderBy] = React.useState('updatedAt');
+  const [orderBy, setOrderBy] = React.useState('createdAt');
   const [selected, setSelected] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState('');
   const [page, setPage] = React.useState(0);
@@ -108,20 +107,19 @@ const CustomTable = ({
     ROWS_PER_PAGE_OPTIONS[0],
   );
 
-  const options = filteredRows
-    .toArray()
-    .map((item) => {
-      return item.name;
-    })
-    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  const options = filteredRows?.map((item) => {
+    return item.itemId;
+  });
 
+  // display rows which itemId containing search string
   useEffect(() => {
     if (!searchValue) {
       setFilteredRows(rows);
     } else {
       setFilteredRows(
-        rows.filter((row) =>
-          row.name.toLowerCase().startsWith(searchValue.toLowerCase()),
+        rows?.filter(
+          (row) =>
+            row.itemId.includes(searchValue) || row.id.includes(searchValue),
         ),
       );
     }
@@ -129,7 +127,8 @@ const CustomTable = ({
 
   // display empty rows to maintain the table height
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, filteredRows.size - page * rowsPerPage);
+    rowsPerPage -
+    Math.min(rowsPerPage, filteredRows?.size - page * rowsPerPage);
 
   // order and select rows to display given the current page and the number of entries displayed
   const rowsToDisplay = getRowsForPage(
@@ -147,7 +146,7 @@ const CustomTable = ({
     const checked =
       JSON.parse(event.target.dataset.indeterminate) || !event.target.checked;
     if (!checked) {
-      const newSelecteds = rowsToDisplay.map((n) => n.id).toJS();
+      const newSelecteds = rowsToDisplay?.map((n) => n.id).toJS();
       return setSelected(newSelecteds);
     }
     return setSelected([]);
@@ -162,8 +161,8 @@ const CustomTable = ({
     setPage(0);
   };
 
-  const handleOnClickRow = ({ id }) => {
-    push(link(id));
+  const handleOnClickRow = ({ id, itemId, itemValidationId }) => {
+    push(link(itemValidationId, itemId, id));
   };
 
   // format entry data given type
@@ -251,7 +250,7 @@ const CustomTable = ({
               checkBox={checkBox}
             />
             <TableBody>
-              {rowsToDisplay.map((row, index) => {
+              {rowsToDisplay?.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -326,7 +325,7 @@ const CustomTable = ({
   );
 };
 
-CustomTable.propTypes = {
+ValidationTable.propTypes = {
   rows: PropTypes.instanceOf(List),
   title: PropTypes.bool,
   tableTitle: PropTypes.string.isRequired,
@@ -342,7 +341,7 @@ CustomTable.propTypes = {
   arrayCell: PropTypes.string,
 };
 
-CustomTable.defaultProps = {
+ValidationTable.defaultProps = {
   rows: List(),
   empty: false,
   search: false,
@@ -354,4 +353,4 @@ CustomTable.defaultProps = {
   iconInfo: [],
 };
 
-export default CustomTable;
+export default ValidationTable;

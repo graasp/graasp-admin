@@ -1,12 +1,10 @@
 import React from 'react';
 import { Loader } from '@graasp/ui';
-import { hooks } from '../../config/queryClient';
 import { buildItemPath } from '../../config/paths';
 import { itemHeadCells, TABLE_TYPES } from '../../config/constants';
 import CustomTable from '../common/CustomTable';
 import ItemIcon from '../items/ItemIcon';
-
-const { useAllItems } = hooks;
+import { useAllItems } from '../../config/mock';
 
 const ItemsView = () => {
   const { data: allItems, isLoading } = useAllItems();
