@@ -4,12 +4,11 @@ import { Loader } from '@graasp/ui';
 import MemberDetails from './MemberDetails';
 import { buildItemPath, buildMemberPath } from '../../config/paths';
 
-import { hooks } from '../../config/queryClient';
 import { itemHeadCells, TABLE_TYPES } from '../../config/constants';
 import ItemIcon from '../items/ItemIcon';
 import CustomTable from '../common/CustomTable';
+import { useMember, useMemberItems } from '../../config/mock';
 
-const { useMember, useMemberItems } = hooks;
 const SingleMember = () => {
   const match = useRouteMatch(buildMemberPath());
 

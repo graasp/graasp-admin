@@ -20,15 +20,18 @@ import {
 } from '../../config/selectors';
 import { formatDate } from '../../utils/date';
 import TabPanel from '../common/TabPanel';
-import { hooks } from '../../config/queryClient';
 import {
   itemHeadCells,
   memberHeadCell,
   TABLE_TYPES,
 } from '../../config/constants';
 import CustomTable from '../common/CustomTable';
-
-const { useItem, useChildren, useItemMembers, useParents } = hooks;
+import {
+  useChildren,
+  useItem,
+  useItemMembers,
+  useParents,
+} from '../../config/mock';
 
 const useStyles = makeStyles((theme) => ({
   icon: {

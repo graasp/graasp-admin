@@ -12,7 +12,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { List, Map } from 'immutable';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { useRouteMatch } from 'react-router';
-import { hooks } from '../../config/queryClient';
 import MemberDetails from './MemberDetails';
 import Loader from '../common/Loader';
 import ExpandableListItem from '../common/ExpandableListItem';
@@ -28,13 +27,12 @@ import {
 } from '../../config/constants';
 import CustomTable from '../common/CustomTable';
 import ItemIcon from '../items/ItemIcon';
-
-const {
+import {
   useMember,
+  useMemberItems,
   useMembersRole,
   useRolesPermissions,
-  useMemberItems,
-} = hooks;
+} from '../../config/mock';
 
 const useStyles = makeStyles((theme) => ({
   root: {

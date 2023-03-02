@@ -1,15 +1,13 @@
 import React from 'react';
 import { Loader } from '@graasp/ui';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { hooks } from '../../config/queryClient';
 import { buildMemberPath } from '../../config/paths';
 import { memberHeadCell, TABLE_TYPES } from '../../config/constants';
 import CustomTable from '../common/CustomTable';
-
-const { useMembers } = hooks;
+import { useAllMembers } from '../../config/mock';
 
 const MembersView = () => {
-  const { data: allMembers, isLoading } = useMembers();
+  const { data: allMembers, isLoading } = useAllMembers();
 
   if (isLoading) {
     return <Loader />;

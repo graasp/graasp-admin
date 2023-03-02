@@ -12,6 +12,10 @@ const ProfileView = () => {
     return <Loader />;
   }
 
+  if (currentMember.isEmpty() || !currentMember?.get('id')) {
+    return 'You are not connected';
+  }
+
   return <SingleAdmin admin={currentMember} />;
 };
 

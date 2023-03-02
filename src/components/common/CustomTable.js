@@ -11,7 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Checkbox, Chip, TextField } from '@material-ui/core';
+import { Checkbox, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useHistory } from 'react-router';
 import { ORDERING, ITEM_DATA_TYPES } from '../../enums';
@@ -89,16 +89,12 @@ const CustomTable = ({
   rows,
   headCells,
   tableTitle,
-  iconInfo,
   tableType,
   empty,
   search,
   link,
-  icon,
-  iconCell,
   title,
   checkBox,
-  arrayCell,
 }) => {
   const classes = useStyles();
   const { push } = useHistory();
@@ -141,36 +137,6 @@ const CustomTable = ({
     { page, rowsPerPage },
   );
 
-  // transform filteredRows' information into displayable information
-  const mappedRows = rowsToDisplay.map((row) => {
-    const allowed = headCells.map((cell) => cell.id);
-    // TODO: this should be removed
-    allowed.push('id');
-    const display = _.pick(row, allowed);
-
-    if (iconCell) {
-      const iconValue = iconInfo ? _.pick(row, iconInfo) : icon;
-      display[iconCell] = (
-        <span className={classes.iconAndName}>
-          {iconValue}
-          <span className={classes.itemName}>{display[iconCell]}</span>
-        </span>
-      );
-    }
-
-    if (arrayCell) {
-      display[arrayCell] = (
-        <div className={classes.arrayCell}>
-          {display[arrayCell].map((d) => (
-            <Chip size="small" label={d} />
-          ))}
-        </div>
-      );
-    }
-
-    return display;
-  });
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === ORDERING.ASC;
     setOrder(isAsc ? ORDERING.DESC : ORDERING.ASC);
@@ -181,7 +147,7 @@ const CustomTable = ({
     const checked =
       JSON.parse(event.target.dataset.indeterminate) || !event.target.checked;
     if (!checked) {
-      const newSelecteds = mappedRows.map((n) => n.id).toJS();
+      const newSelecteds = rowsToDisplay.map((n) => n.id).toJS();
       return setSelected(newSelecteds);
     }
     return setSelected([]);
@@ -285,7 +251,7 @@ const CustomTable = ({
               checkBox={checkBox}
             />
             <TableBody>
-              {mappedRows.map((row, index) => {
+              {rowsToDisplay.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 

@@ -1,15 +1,13 @@
 import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { hooks } from '../../config/queryClient';
 import Loader from '../common/Loader';
 import { buildAdminPath } from '../../config/paths';
 import { adminsHeadCell, TABLE_TYPES } from '../../config/constants';
 import CustomTable from '../common/CustomTable';
-
-const { useAllAdmins } = hooks;
+import { useAdmins } from '../../config/mock';
 
 const AdminsView = () => {
-  const { data: allMember, isLoading } = useAllAdmins();
+  const { data: allMember, isLoading } = useAdmins();
 
   if (isLoading) {
     return <Loader />;
