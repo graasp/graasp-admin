@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
-import { Typography, Box } from '@material-ui/core';
+import { Typography, Box } from '@mui/material';
 import ReactJson from 'react-json-view';
 import { formatDate } from '../../utils/date';
 

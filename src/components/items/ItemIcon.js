@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MusicNoteIcon from '@material-ui/icons/MusicNote';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import { makeStyles } from '@material-ui/core';
-import FolderIcon from '@material-ui/icons/Folder';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-import LinkIcon from '@material-ui/icons/Link';
-import MovieIcon from '@material-ui/icons/Movie';
-import DescriptionIcon from '@material-ui/icons/Description';
-import ImageIcon from '@material-ui/icons/Image';
-import ShortcutIcon from '@material-ui/icons/Input';
+import MusicNoteIcon from '@mui/icons-material//MusicNote';
+import InsertDriveFileIcon from '@mui/icons-material//InsertDriveFile';
+import { makeStyles } from '@mui/material';
+import FolderIcon from '@mui/icons-material//Folder';
+import PictureAsPdfIcon from '@mui/icons-material//PictureAsPdf';
+import LinkIcon from '@mui/icons-material//Link';
+import MovieIcon from '@mui/icons-material//Movie';
+import DescriptionIcon from '@mui/icons-material//Description';
+import ImageIcon from '@mui/icons-material//Image';
+import ShortcutIcon from '@mui/icons-material//Input';
 import {
   ITEMS_TABLE_ROW_ICON_COLOR,
   MIME_TYPES,

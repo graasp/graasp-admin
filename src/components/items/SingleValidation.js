@@ -13,7 +13,7 @@ import {
   Paper,
   Typography,
   Button,
-} from '@material-ui/core';
+} from '@mui/material';
 import { Loader } from '@graasp/ui';
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';

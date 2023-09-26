@@ -1,6 +1,5 @@
 import React from 'react';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import { grey } from '@material-ui/core/colors';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import {
   QueryClientProvider,
@@ -8,7 +7,7 @@ import {
   ReactQueryDevtools,
 } from '../config/queryClient';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: '#6e6e73',
@@ -32,9 +31,9 @@ const Root = () => {
   return (
     <div>
       <QueryClientProvider client={queryClient}>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <App />
-        </MuiThemeProvider>
+        </ThemeProvider>
         <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>
     </div>

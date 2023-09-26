@@ -11,8 +11,8 @@ import {
   TextField,
   Typography,
   InputLabel,
-} from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
+} from '@mui/material';
+import SaveIcon from '@mui/icons-material//Save';
 import { hooks } from '../../config/queryClient';
 import {
   CATEGORY_BUTTON_HEIGHT,

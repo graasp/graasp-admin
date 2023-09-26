@@ -1,10 +1,10 @@
 import React from 'react';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Loader from '../common/Loader';
+import AccountCircleIcon from '@mui/icons-material//AccountCircle';
 import { buildAdminPath } from '../../config/paths';
 import { adminsHeadCell, TABLE_TYPES } from '../../config/constants';
 import CustomTable from '../common/CustomTable';
 import { useAdmins } from '../../config/mock';
+import { Loader } from '@graasp/ui';
 
 const AdminsView = () => {
   const { data: allMember, isLoading } = useAdmins();

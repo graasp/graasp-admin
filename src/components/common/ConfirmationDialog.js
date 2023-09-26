@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-} from '@material-ui/core';
+} from '@mui/material';
 import { Button } from '@graasp/ui';
 
 const ConfirmationDialog = ({

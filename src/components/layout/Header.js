@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import IconButton from '@material-ui/core/IconButton';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { makeStyles } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material//Menu';
+import MenuOpenIcon from '@mui/icons-material//MenuOpen';
+import IconButton from '@mui/material/IconButton';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 import { ReactComponent as GraaspLogo } from '../../resources/graasp-logo.svg';
 import { APP_NAME, HEADER_HEIGHT } from '../../config/constants';
 import SettingsHeader from '../common/SettingsHeader';

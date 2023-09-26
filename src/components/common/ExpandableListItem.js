@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, ListItem, ListItemText } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import List from '@material-ui/core/List';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { Collapse, ListItem, ListItemText } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material/';
+import List from '@mui/material/List';
+import makeStyles from '@mui/material/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   nested: {

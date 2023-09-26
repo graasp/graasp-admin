@@ -1,8 +1,8 @@
 import React from 'react';
-import Drawer from '@material-ui/core/Drawer';
+import Drawer from '@mui/material/Drawer';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import { CssBaseline } from '@material-ui/core';
+import { makeStyles } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 import PropTypes from 'prop-types';
 import { HEADER_HEIGHT, LEFT_MENU_WIDTH } from '../../config/constants';
 import MainMenu from './MainMenu';

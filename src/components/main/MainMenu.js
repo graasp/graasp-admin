@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ListItem from '@material-ui/core/ListItem';
-import PollIcon from '@material-ui/icons/Poll';
-import FolderIcon from '@material-ui/icons/Folder';
-import PeopleIcon from '@material-ui/icons/People';
-import PersonIcon from '@material-ui/icons/Person';
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-import CategoryIcon from '@material-ui/icons/Category';
-import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import SettingsIcon from '@mui/icons-material//Settings';
+import ListItem from '@mui/material/ListItem';
+import PollIcon from '@mui/icons-material//Poll';
+import FolderIcon from '@mui/icons-material//Folder';
+import PeopleIcon from '@mui/icons-material//People';
+import PersonIcon from '@mui/icons-material//Person';
+import SupervisedUserCircleIcon from '@mui/icons-material//SupervisedUserCircle';
+import CategoryIcon from '@mui/icons-material//Category';
+import LibraryAddCheckIcon from '@mui/icons-material//LibraryAddCheck';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router';
-import List from '@material-ui/core/List';
+import List from '@mui/material/List';
 import {
   ADMIN_PROFILE_PATH,
   ADMINS_PATH,

@@ -8,10 +8,10 @@ import {
   Tab,
   Tabs,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import ReactJson from 'react-json-view';
 import { Loader } from '@graasp/ui';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from '@mui/icons-material//AccountCircle';
 import { buildItemPath, buildMemberPath, ITEMS_PATH } from '../../config/paths';
 import ItemIcon from './ItemIcon';
 import {

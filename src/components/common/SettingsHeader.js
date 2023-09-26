@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Box from '@material-ui/core/Box';
+import { makeStyles } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
+import Box from '@mui/material/Box';
 import truncate from 'lodash';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem } from '@mui/material';
 import { Loader } from '@graasp/ui';
 import { USERNAME_MAX_LENGTH } from '../../config/constants';
 import { HEADER_USER_ID } from '../../config/selectors';

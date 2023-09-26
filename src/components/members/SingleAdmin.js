@@ -7,13 +7,12 @@ import {
   Box,
   List as ListComponent,
   Typography,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material//ExpandMore';
 import { List, Map } from 'immutable';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import makeStyles from '@mui/material/styles/makeStyles';
 import { useRouteMatch } from 'react-router';
 import MemberDetails from './MemberDetails';
-import Loader from '../common/Loader';
 import ExpandableListItem from '../common/ExpandableListItem';
 import {
   buildAdminPath,
@@ -33,6 +32,7 @@ import {
   useMembersRole,
   useRolesPermissions,
 } from '../../config/mock';
+import { Loader } from '@graasp/ui';
 
 const useStyles = makeStyles((theme) => ({
   root: {

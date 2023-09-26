@@ -1,6 +1,6 @@
 import React from 'react';
 import { Loader } from '@graasp/ui';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from '@mui/icons-material//AccountCircle';
 import { buildMemberPath } from '../../config/paths';
 import { memberHeadCell, TABLE_TYPES } from '../../config/constants';
 import CustomTable from '../common/CustomTable';
