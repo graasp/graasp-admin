@@ -1,5 +1,5 @@
-import membersData from '../data/membersData';
 import itemMembershipData from '../data/itemMembershipData';
+import membersData from '../data/membersData';
 
 export const getMembersByMemberships = (memberships) =>
   memberships.map((membership) =>

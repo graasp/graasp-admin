@@ -1,5 +1,6 @@
 // we use this file because the backend does not have the api we need yet
 import { List, Record } from 'immutable';
+
 import itemData from '../data/itemData';
 import memberData from '../data/membersData';
 
@@ -24,8 +25,7 @@ const ItemRecord = Record({
   updatedAt: '2021-06-01T11:50:30.859Z',
 });
 
-export const useAdmins = () => {
-  return {
+export const useAdmins = () => ({
     data: List([
       MemberRecord({
         id: '72a64a54-11b5-4678-81d7-0bb194924e41',
@@ -38,22 +38,16 @@ export const useAdmins = () => {
       }),
     ]),
     isLoading: false,
-  };
-};
+  });
 
-export const useAllItems = () => {
-  return { data: List(itemData), isLoading: false };
-};
+export const useAllItems = () => ({ data: List(itemData), isLoading: false });
 
-export const useAllValidationReviews = () => {
-  return {
+export const useAllValidationReviews = () => ({
     data: List(),
     isLoading: false,
-  };
-};
+  });
 
-export const useAllMembers = () => {
-  return {
+export const useAllMembers = () => ({
     data: List([
       MemberRecord({
         id: '72a64a54-11b5-4678-81d7-0bb194924e41',
@@ -66,32 +60,24 @@ export const useAllMembers = () => {
       }),
     ]),
     isLoading: false,
-  };
-};
+  });
 
-export const useRolesPermissions = () => {
-  return {
+export const useRolesPermissions = () => ({
     data: List(['read']),
     isLoading: false,
-  };
-};
+  });
 
-export const useMembersRole = () => {
-  return {
+export const useMembersRole = () => ({
     data: List(),
     isLoading: false,
-  };
-};
+  });
 
-export const useMemberItems = () => {
-  return {
+export const useMemberItems = () => ({
     data: List(),
     isLoading: false,
-  };
-};
+  });
 
-export const useMember = () => {
-  return {
+export const useMember = () => ({
     data: MemberRecord({
       id: '72a64a54-11b5-4678-81d7-0bb194924e41',
       name: 'Hadi',
@@ -102,33 +88,24 @@ export const useMember = () => {
       updatedAt: '2021-06-01T11:50:30.859Z',
     }),
     isLoading: false,
-  };
-};
+  });
 
-export const useItem = () => {
-  return {
+export const useItem = () => ({
     data: ItemRecord(itemData[0]),
     isLoading: false,
-  };
-};
+  });
 
-export const useChildren = () => {
-  return {
+export const useChildren = () => ({
     data: List([ItemRecord(itemData[1]), ItemRecord(itemData[2])]),
     isLoading: false,
-  };
-};
+  });
 
-export const useParents = () => {
-  return {
+export const useParents = () => ({
     data: List([ItemRecord(itemData[3]), ItemRecord(itemData[4])]),
     isLoading: false,
-  };
-};
+  });
 
-export const useItemMembers = () => {
-  return {
+export const useItemMembers = () => ({
     data: List(memberData.map((m) => MemberRecord(m))),
     isLoading: false,
-  };
-};
+  });
