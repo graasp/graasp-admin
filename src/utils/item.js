@@ -1,11 +1,10 @@
 // synchronous functions to manage items from redux
-
 import { UUID_LENGTH } from '../config/constants';
-import { ITEM_TYPES } from '../enums';
-import { getDocumentExtra, getEmbeddedLinkExtra } from './itemExtra';
 import itemData from '../data/itemData';
 import itemMembershipData from '../data/itemMembershipData';
 import membersData from '../data/membersData';
+import { ITEM_TYPES } from '../enums';
+import { getDocumentExtra, getEmbeddedLinkExtra } from './itemExtra';
 
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id) => id.replace(/\-/g, '_');
@@ -112,15 +111,11 @@ export const isItemValid = (item) => {
   return shouldHaveName && hasValidTypeProperties;
 };
 
-export const getOwner = (itemOwnerId) => {
-  return membersData.find(({ id }) => itemOwnerId === id);
-};
+export const getOwner = (itemOwnerId) => membersData.find(({ id }) => itemOwnerId === id);
 
 // Will be removed later
 export const insertCreatorWithItems = (items) =>
-  items.map((item) => {
-    return {
+  items.map((item) => ({
       ...item,
       owner: getOwner(item.creator).name,
-    };
-  });
+    }));

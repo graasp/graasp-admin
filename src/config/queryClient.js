@@ -1,6 +1,7 @@
 import { configureQueryClient } from '@graasp/query-client';
-import notifier from './notifier';
+
 import { API_HOST, DOMAIN } from './constants';
+import notifier from './notifier';
 
 const {
   queryClient,
