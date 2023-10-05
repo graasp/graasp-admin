@@ -5,7 +5,7 @@ import { useAllValidationReviews } from '../../config/mock';
 import { buildValidationPath } from '../../config/paths';
 import ValidationTable from '../common/ValidationTable';
 
-const ValidationsView = () => {
+const ValidationsView = (): JSX.Element => {
   // const { data: allValidationReviews, isLoading } = useAllValidationReviews();
   const { data: allValidationReviews, isLoading } = useAllValidationReviews();
 

@@ -8,11 +8,13 @@ import {
   queryClient,
 } from '../config/queryClient';
 import App from './App';
+import { CssBaseline } from '@mui/material';
 
 const Root = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
+        <CssBaseline/>
         <App />
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen />

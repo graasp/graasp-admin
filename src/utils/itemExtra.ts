@@ -1,4 +1,5 @@
 import { ItemType } from '@graasp/sdk';
+
 import PropTypes from 'prop-types';
 
 export const getFileExtra = (extra) => extra?.[ItemType.LOCAL_FILE];
@@ -19,16 +20,7 @@ export const buildShortcutExtra = (target) => ({
   [ItemType.SHORTCUT]: { target },
 });
 
-export const getShortcutTarget = (extra) =>
-  extra?.[ItemType.SHORTCUT]?.target;
-
-export const fileExtraPropTypes = PropTypes.shape({
-  mimetype: PropTypes.string.isRequired,
-});
-
-export const s3FileExtraPropTypes = PropTypes.shape({
-  contenttype: PropTypes.string.isRequired,
-});
+export const getShortcutTarget = (extra) => extra?.[ItemType.SHORTCUT]?.target;
 
 export const linkExtraPropTypes = PropTypes.shape({
   icons: PropTypes.arrayOf(PropTypes.string),

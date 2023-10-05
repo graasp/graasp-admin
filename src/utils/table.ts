@@ -1,12 +1,13 @@
-import { ORDERING } from '../enums';
+import { Ordering } from '@/enums/orderingTypes';
 
 /**
- * Custum sorting function depending on a given property name
- * @param {object} a
- * @param {object} b
- * @param {string} orderBy property name to sort a and b
+ * Custom sorting function depending on a given property name
  */
-export const descendingComparator = (a, b, orderBy) => {
+export const descendingComparator = <T, K extends keyof T>(
+  a: T,
+  b: T,
+  orderBy: K,
+): number => {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -16,14 +17,18 @@ export const descendingComparator = (a, b, orderBy) => {
   return 0;
 };
 
+type ComparatorFunc<T> = (a: T, b: T) => number;
 /**
  * Return a comparator function depending on the order and the field
  * @param {string} order ascending or descending order
  * @param {string} orderBy property name used when sorting
  * @returns {function(): number}
  */
-export const getComparator = (order, orderBy) =>
-  order === ORDERING.DESC
+export const getComparator = <T, K extends keyof T>(
+  order: Ordering,
+  orderBy: K,
+): ComparatorFunc<T> =>
+  order === Ordering.Desc
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 
@@ -33,8 +38,11 @@ export const getComparator = (order, orderBy) =>
  * @param {function(): number} comparator
  * @returns {array}
  */
-export const stableSort = (array, comparator) => {
-  let stabilizedThis = array.map((el, index) => [el, index]);
+export const stableSort = <T>(
+  array: T[],
+  comparator: ComparatorFunc<T>,
+): T[] => {
+  let stabilizedThis = array.map((el, index): [T, number] => [el, index]);
   stabilizedThis = stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
@@ -45,10 +53,8 @@ export const stableSort = (array, comparator) => {
 
 /**
  * Returns the correct portion of array given the current page number
- * @param {array} table
- * @param {number} page
- * @param {number} rowsPerPage
- * @returns {array}
  */
-export const getRowsForPage = (table, { page, rowsPerPage }) =>
-  table.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+export const getRowsForPage = <T>(
+  table: T[],
+  { page, rowsPerPage }: { page: number; rowsPerPage: number },
+): T[] => table.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);

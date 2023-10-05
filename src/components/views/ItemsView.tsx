@@ -1,13 +1,11 @@
-import React from 'react';
-
-import { ItemIcon, Loader } from '@graasp/ui';
+import { Loader } from '@graasp/ui';
 
 import { TABLE_TYPES, itemHeadCells } from '../../config/constants';
 import { useAllItems } from '../../config/mock';
 import { buildItemPath } from '../../config/paths';
 import CustomTable from '../common/CustomTable';
 
-const ItemsView = () => {
+const ItemsView = (): JSX.Element => {
   const { data: allItems, isLoading } = useAllItems();
 
   if (isLoading) {
@@ -15,18 +13,18 @@ const ItemsView = () => {
   }
   return (
     <CustomTable
-      link={buildItemPath}
+      buildItemLink={buildItemPath}
       tableType={TABLE_TYPES.ITEM}
       headCells={itemHeadCells}
       tableTitle="All Items"
       rows={allItems}
       checkBox
-      empty
-      icon={<ItemIcon />}
-      iconCell="name"
-      iconInfo={['name', 'extra', 'type']}
+      isEmpty
+      // icon={<ItemIcon />}
+      // iconCell="name"
+      // iconInfo={['name', 'extra', 'type']}
       search
-      title
+      hasTitle
     />
   );
 };

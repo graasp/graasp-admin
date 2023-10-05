@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material//AccountCircle';
 import { AppBar, Box, Breadcrumbs, Tab, Tabs, Typography } from '@mui/material';
 
+import { formatDate } from '@graasp/sdk';
 import { ItemIcon, Loader } from '@graasp/ui';
 
 import {
@@ -26,7 +27,6 @@ import {
 } from '../../config/selectors';
 import CustomTable from '../common/CustomTable';
 import TabPanel from '../common/TabPanel';
-import { formatDate } from '@graasp/sdk';
 
 const SingleItem = () => {
   const [value, setValue] = React.useState(0);
@@ -57,7 +57,7 @@ const SingleItem = () => {
   const ownerId = item.get('creator');
   const createdAt = item.get('createdAt');
   const updatedAt = item.get('updatedAt');
-console.log(name, createdAt)
+  console.log(name, createdAt);
   return (
     <div>
       <Box
@@ -86,10 +86,14 @@ console.log(name, createdAt)
               </Link>
             </Typography>
             <Typography align="left">
-              {`Created At: ${formatDate(createdAt, {locale: DEFAULT_LOCALE})}`}
+              {`Created At: ${formatDate(createdAt, {
+                locale: DEFAULT_LOCALE,
+              })}`}
             </Typography>
             <Typography align="left" id={buildNavigationLink(id)}>
-              {`Last time updated: ${formatDate(updatedAt, {locale: DEFAULT_LOCALE})}`}
+              {`Last time updated: ${formatDate(updatedAt, {
+                locale: DEFAULT_LOCALE,
+              })}`}
             </Typography>
 
             <Typography align="left" id={buildNavigationLink(id)}>

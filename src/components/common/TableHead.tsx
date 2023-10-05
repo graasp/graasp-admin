@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Checkbox from '@mui/material/Checkbox';
@@ -24,9 +24,11 @@ const CustomTableHead = (props) => {
     checkBox,
   } = props;
   const { t } = useTranslation();
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+  const createSortHandler =
+    (property: string): MouseEventHandler =>
+    (event) => {
+      onRequestSort(event, property);
+    };
 
   return (
     <TableHead>

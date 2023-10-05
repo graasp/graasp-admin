@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { Autocomplete } from '@mui/lab';
 import { Box, Checkbox, Stack, TextField } from '@mui/material';
@@ -11,9 +12,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
+import { formatDate } from '@graasp/sdk';
+
 import { List } from 'immutable';
-import _ from 'lodash';
-import PropTypes from 'prop-types';
 
 import {
   DEFAULT_LOCALE,
@@ -27,24 +28,36 @@ import {
   buildTableRowId,
   buildTableTitle,
 } from '../../config/selectors';
-import {  ORDERING } from '../../enums';
+import { ORDERING } from '../../enums';
 import { getComparator, getRowsForPage, stableSort } from '../../utils/table';
 import TableHead from './TableHead';
-import { useNavigate } from 'react-router';
-import { formatDate } from '@graasp/sdk';
+
+type Props = {
+  // todo: find a better type that suits the uses
+  rows: List<any>;
+  hasTitle?: boolean;
+  tableTitle: string;
+  tableType: string;
+  isEmpty?: boolean;
+  search?: boolean;
+  checkBox?: boolean;
+  // todo: adapt type
+  headCells: any;
+  buildItemLink: (id: string) => string;
+};
 
 const CustomTable = ({
   rows,
   headCells,
   tableTitle,
   tableType,
-  empty,
-  search,
-  link,
-  title,
-  checkBox,
-}) => {
-  const  push  = useNavigate();
+  isEmpty = false,
+  search = false,
+  buildItemLink,
+  hasTitle = false,
+  checkBox = false,
+}: Props): JSX.Element => {
+  const push = useNavigate();
   const [order, setOrder] = React.useState(ORDERING.DESC);
   const [filteredRows, setFilteredRows] = useState(rows);
   const [orderBy, setOrderBy] = React.useState('updatedAt');
@@ -57,9 +70,7 @@ const CustomTable = ({
 
   const options = filteredRows
     .toArray()
-    .map((item) => {
-      return item.name;
-    })
+    .map((item) => item.name)
     .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
   useEffect(() => {
@@ -80,6 +91,9 @@ const CustomTable = ({
 
   // order and select rows to display given the current page and the number of entries displayed
   const rowsToDisplay = getRowsForPage(
+    // todo: this needs to be adapted with correct types
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     stableSort(filteredRows, getComparator(order, orderBy)),
     { page, rowsPerPage },
   );
@@ -110,14 +124,14 @@ const CustomTable = ({
   };
 
   const handleOnClickRow = ({ id }) => {
-    push(link(id));
+    push(buildItemLink(id));
   };
 
   // format entry data given type
   const formatRowValue = ({ value, type }) => {
     switch (type) {
       case 'date':
-        return formatDate(value, {locale: DEFAULT_LOCALE});
+        return formatDate(value, { locale: DEFAULT_LOCALE });
       default:
         return value;
     }
@@ -148,7 +162,7 @@ const CustomTable = ({
     <Box>
       <Paper elevation={0}>
         <Stack>
-          {title && (
+          {hasTitle && (
             <Typography
               variant="h6"
               id={buildTableTitle(tableType, tableTitle)}
@@ -242,7 +256,7 @@ const CustomTable = ({
                   </TableRow>
                 );
               })}
-              {emptyRows > 0 && !empty && (
+              {emptyRows > 0 && !isEmpty && (
                 <TableRow
                   id={ITEMS_TABLE_EMPTY_ROW_ID}
                   style={{ height: EMPTY_ROW_HEIGHT * emptyRows }}
@@ -265,34 +279,6 @@ const CustomTable = ({
       </Paper>
     </Box>
   );
-};
-
-CustomTable.propTypes = {
-  rows: PropTypes.instanceOf(List),
-  title: PropTypes.bool,
-  tableTitle: PropTypes.string.isRequired,
-  tableType: PropTypes.string.isRequired,
-  empty: PropTypes.bool,
-  search: PropTypes.bool,
-  checkBox: PropTypes.bool,
-  iconCell: PropTypes.string,
-  iconInfo: PropTypes.arrayOf(PropTypes.string),
-  icon: PropTypes.node,
-  headCells: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-  link: PropTypes.func.isRequired,
-  arrayCell: PropTypes.string,
-};
-
-CustomTable.defaultProps = {
-  rows: List(),
-  empty: false,
-  search: false,
-  iconCell: '',
-  icon: null,
-  title: false,
-  checkBox: false,
-  arrayCell: '',
-  iconInfo: [],
 };
 
 export default CustomTable;

@@ -34,14 +34,13 @@
     "stylis-plugin-rtl": "2.1.1"
   },
   "scripts": {
-    "lint": "eslint .",
     "dev": "vite",
     "start": "yarn dev",
     "start:test": "vite --mode test",
-    "start:ci": "react-scripts -r @cypress/instrument-cra start",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "build:test": "vite build --mode test",
+    "lint": "eslint .",
     "preview": "vite preview",
     "preview:dev": "vite preview --mode development",
     "preview:test": "vite preview --mode test",
@@ -67,6 +66,7 @@
     "@commitlint/cli": "17.7.2",
     "@commitlint/config-conventional": "17.7.0",
     "@trivago/prettier-plugin-sort-imports": "4.2.0",
+    "@types/lodash": "4.14.199",
     "@typescript-eslint/eslint-plugin": "6.7.3",
     "@typescript-eslint/parser": "6.7.3",
     "@vitejs/plugin-react": "4.1.0",

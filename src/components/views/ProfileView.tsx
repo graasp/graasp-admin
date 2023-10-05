@@ -7,7 +7,7 @@ import SingleAdmin from '../members/SingleAdmin';
 
 const { useCurrentMember } = hooks;
 
-const ProfileView = () => {
+const ProfileView = (): JSX.Element => {
   const { data: currentMember, isLoading } = useCurrentMember();
 
   if (isLoading) {
@@ -15,7 +15,7 @@ const ProfileView = () => {
   }
 
   if (!currentMember || !currentMember?.get('id')) {
-    return 'You are not connected';
+    return <>You are not connected</>;
   }
 
   return <SingleAdmin admin={currentMember} />;
